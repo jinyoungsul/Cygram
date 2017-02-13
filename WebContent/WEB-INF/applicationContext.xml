@@ -7,11 +7,11 @@
 
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
 		<property name="driverClassName" 
-			value="com.mysql.jdbc.Driver"/>
+			value="oracle.jdbc.driver.OracleDriver"/>
 		<property name="url" 
-			value="jdbc:mysql://127.0.0.1:3306/jsp"/>
-		<property name="username" value="root"/>
-		<property name="password" value="sds902"/>	
+			value="jdbc:oracle:thin:@70.12.109.96:1521:xe"/>
+		<property name="username" value="cygram"/>
+		<property name="password" value="cygram"/>	
 	</bean>
 	
 	<bean id="factory" class="org.mybatis.spring.SqlSessionFactoryBean">
