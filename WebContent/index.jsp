@@ -7,6 +7,7 @@
 <body>
 <%
 	response.sendRedirect("friends.do");
+	// ºê·»Ä¡ º¯°æ
 %>
 </body>
 </html>
