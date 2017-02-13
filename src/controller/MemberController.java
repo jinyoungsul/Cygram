@@ -29,21 +29,25 @@ public class MemberController {
 	}
 
 	///////////////////////////////////////////////////////
-	@RequestMapping("/joinForm.do")
-	public String joinForm(){
-		return "join_form";
-	}
-	
 	@RequestMapping
 		(value="/join.do", method=RequestMethod.POST)
 	public ModelAndView join(Member member){
 		ModelAndView mv = new ModelAndView();
+		System.out.println("회원가입 : " +member.toString());
 		if(service.join(member)){
 			mv.setViewName("join_success");
 			mv.addObject("joinMemberInfo", member);
 		}else{
 			mv.setViewName("join_error");
 		}
+		return mv;
+	}
+	@RequestMapping("/login.do")
+	public ModelAndView login(String id,String password){
+		ModelAndView mv = new ModelAndView();
+		System.out.println("로그인 아이디 : "+id);
+		System.out.println("로그인 비밀번호 : "+password);
+		
 		return mv;
 	}
 	@RequestMapping("/friends.do")

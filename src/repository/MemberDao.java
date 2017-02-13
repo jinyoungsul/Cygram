@@ -20,6 +20,11 @@ public class MemberDao {
 		MemberMapper mapper = session.getMapper(MemberMapper.class);
 		return mapper.insertMember(member);
 	}
+	public Member selectMember(String id) {
+		MemberMapper mapper = session.getMapper(MemberMapper.class);
+		System.out.println("아이디 찾기 진입");
+		return mapper.selectMember(id);
+	}
 }
 
 

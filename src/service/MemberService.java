@@ -16,12 +16,15 @@ public class MemberService {
 	}
 ///////////////////////////////////////////////////////
 	public boolean join(Member member){
-		// 회원가입 절차에 필요한 부가작업이 있으면
-		// 여기에서 수행하고 insert 함.(지금은 없음)
+	
 		if(memberDao.insert(member)>0)
 			return true;
 		else
 			return false;
+	}
+	public Member selectMember(String id) {
+		
+		return memberDao.selectMember(id);
 	}
 }
 
