@@ -7,9 +7,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<insert id="insert" parameterType="Gallery"
 		useGeneratedKeys="true" keyProperty="galleryNo"
 		keyColumn="GALLERY_NO">
-	INSERT INTO GALLERY(TITLE,ID,WRITE_DATE,CONTENT,GALLERY_PATH,AUTHORITY_CODE)
+	INSERT INTO GALLERY(GALLERY_NO,TITLE,ID,WRITE_DATE,CONTENT,GALLERY_PATH,AUTHORITY_CODE)
 	VALUES
-	(#{title},#{id},#{writeDate},#{content},#{galleryPath},#{authorityCode})
+	(GALLERY_SEQ.NEXTVAL,#{title},#{id},#{writeDate},#{content},#{galleryPath},#{authorityCode})
 	</insert>
 	
 	<select id="selectGalleryCount" resultType="integer">
@@ -23,10 +23,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<select id="selectList" parameterType="Map"
 							resultMap="galleryMap">
-	SELECT * FROM GALLERY ORDER BY GALLERY_NO DESC LIMIT #{startRow},#{count}						
+<!-- 	SELECT * FROM GALLERY ORDER BY GALLERY_NO DESC LIMIT #{startRow}, #{count}	 -->
+
+	SELECT *
+	FROM (SELECT ROWNUM R, A.* FROM
+	(SELECT * FROM GALLERY
+	ORDER BY GALLERY_NO DESC) A)
+	WHERE R BETWEEN #{startRow} AND #{count}
+	
 	</select>
 	
-	<resultMap type="galleryMap" id="Gallery">
+	<resultMap type="Gallery" id="galleryMap">
 		<result column="gallery_no" property="galleryNo"/>
 		<result column="title" property="title"/>
 		<result column="id" property="id"/>

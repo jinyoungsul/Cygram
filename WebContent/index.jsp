@@ -6,7 +6,7 @@
 </head>
 <body>
 <%
-// 	response.sendRedirect(".do");
+	response.sendRedirect("writeForm.do");
 	
 %>
 </body>
