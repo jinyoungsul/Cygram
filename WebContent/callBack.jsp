@@ -16,8 +16,8 @@
 
 
 <form id="naverJoinForm" action="naverJoin.do" method="post">
-	<input type="text" name="id" value="${email }"><br>
-	<input type="text" name="name" value="${name }"><br>
+	<input type="hidden" name="id" value="${email }"><br>
+	<input type="hidden" name="name" value="${name }"><br>
 	<input type="hidden" name="naver" value="T"><br>
 </form>
 </body>

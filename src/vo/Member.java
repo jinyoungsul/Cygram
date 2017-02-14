@@ -6,7 +6,7 @@ public class Member {
 	private String email;
 	private String password;
 	private String phone;
-	private char naver;
+	private String naver;
 	public String getId() {
 		return id;
 	}
@@ -37,10 +37,10 @@ public class Member {
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
-	public char getNaver() {
+	public String getNaver() {
 		return naver;
 	}
-	public void setNaver(char naver) {
+	public void setNaver(String naver) {
 		this.naver = naver;
 	}
 	@Override
