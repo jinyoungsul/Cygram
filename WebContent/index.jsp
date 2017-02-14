@@ -6,7 +6,7 @@
 </head>
 <body>
 <%
-// 	response.sendRedirect("friends.do");
+// 	response.sendRedirect(".do");
 	// ºê·»Ä¡ º¯°æ
 %>
 </body>
