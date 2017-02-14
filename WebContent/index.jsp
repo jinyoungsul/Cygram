@@ -7,7 +7,7 @@
 <body>
 <%
 // 	response.sendRedirect(".do");
-	// ºê·»Ä¡ º¯°æ
+	
 %>
 </body>
 </html>
