@@ -6,6 +6,8 @@ public class Friend {
 	private String myNickname;
 	private String friendId;
 	private String friendNickname;
+	private String action;
+	private String accept;
 	public int getFriendNo() {
 		return friendNo;
 	}
@@ -35,6 +37,18 @@ public class Friend {
 	}
 	public void setFriendNickname(String friendNickname) {
 		this.friendNickname = friendNickname;
+	}
+	public String getAction() {
+		return action;
+	}
+	public void setAction(String action) {
+		this.action = action;
+	}
+	public String getAccept() {
+		return accept;
+	}
+	public void setAccept(String accept) {
+		this.accept = accept;
 	}
 	
 	

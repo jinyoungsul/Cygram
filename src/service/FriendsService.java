@@ -23,5 +23,9 @@ public class FriendsService {
 	public List<Friend> selectReceiveFriendsList(String id){
 		return friendsDao.selectReceiveFriendsList(id);
 	}
+
+	public int insertFriends(Friend friend) {
+		return friendsDao.insertFriends(friend);
+	}
 	
 }

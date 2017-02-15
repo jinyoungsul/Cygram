@@ -9,7 +9,7 @@
 <body>
 <img src="${friendInfo.minihomepage_img_path}"> 
 ${friendInfo.member.name }님께 일촌을 신청합니다.
-<form action="friendPlus.do" method="post">
+<form action="friendsPlus.do" method="post">
 	<input type="hidden" name="friendId" value="${friendInfo.id }">
 	<input type="hidden" name="myId" value="${myInfo.id }">
 	${friendInfo.member.name }님을 ${myInfo.member.name }님의 <input type="text" name="friendNickname">으로<br>

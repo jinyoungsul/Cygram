@@ -8,10 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import service.FriendsService;
-import service.MemberService;
 import service.MiniHomepageService;
 import vo.Friend;
-import vo.Member;
 import vo.MiniHomepage;
 
 @Controller
@@ -40,7 +38,7 @@ public class FriendsController {
 		return mv;
 	}
 	@RequestMapping("/friendsPlusForm.do")
-	public ModelAndView friendsPlus(String myId,String friendId){
+	public ModelAndView friendsPlusForm(String myId,String friendId){
 		ModelAndView mv = new ModelAndView();
 		MiniHomepage myInfo = homepageSerivce.selectMiniHomepage(myId);
 		MiniHomepage friendInfo = homepageSerivce.selectMiniHomepage(friendId);
@@ -49,6 +47,24 @@ public class FriendsController {
 		mv.addObject("myInfo", myInfo);
 		mv.addObject("friendInfo", friendInfo);
 		mv.setViewName("friendsPlus");
+		return mv;
+	}
+	@RequestMapping("/friendsPlus.do")
+	public ModelAndView friendsPlus(Friend my){
+		ModelAndView mv = new ModelAndView();
+		my.setAction("send");
+		my.setAccept("F");
+		//////////친구 정보///////////////
+		Friend friend = new Friend();
+		friend.setMyId(my.getFriendId());
+		friend.setMyNickname(my.getFriendNickname());
+		friend.setFriendId(my.getMyId());
+		friend.setFriendNickname(my.getMyNickname());
+		friend.setAction("receive");
+		friend.setAccept("F");
+		////////////////////////////////
+		friendsService.insertFriends(my);
+		friendsService.insertFriends(friend);
 		return mv;
 	}
 }

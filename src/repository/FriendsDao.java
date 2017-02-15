@@ -27,4 +27,8 @@ public class FriendsDao {
 		FriendMapper mapper = session.getMapper(FriendMapper.class);
 		return mapper.selectReceiveFriendsList(id);
 	}
+	public int insertFriends(Friend friend) {
+		FriendMapper mapper = session.getMapper(FriendMapper.class);
+		return mapper.insertFriends(friend);
+	}
 }
