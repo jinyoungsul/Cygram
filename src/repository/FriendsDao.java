@@ -23,4 +23,8 @@ public class FriendsDao {
 		FriendMapper mapper = session.getMapper(FriendMapper.class);
 		return mapper.selectSendFriendsList(id);
 	}
+	public List<Friend> selectReceiveFriendsList(String id) {
+		FriendMapper mapper = session.getMapper(FriendMapper.class);
+		return mapper.selectReceiveFriendsList(id);
+	}
 }

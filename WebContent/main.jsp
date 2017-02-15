@@ -25,8 +25,9 @@ $(function(){
 	</c:choose>
 		${member.id }<br>
 		${member.name }<br>
-<%-- 		<a href="miniHomepage.do?id=${member.id }">미니홈피</a> --%>
-<input type="hidden" id="id" value="${member.id}">
+	<input type="hidden" id="id" value="${member.id}">
 	<a href="#" id="goMini">미니홈피</a>
+	<a href="friends.do?id=${member.id }">일촌</a> 
+	<a href="minihomepageSearch.do">미니홈피 리스트</a>
 </body>
 </html>

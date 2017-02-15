@@ -22,8 +22,7 @@ public class MemberController {
 	private MemberService memberService;
 	@Autowired
 	private MiniHomepageService homepageService;
-	@Autowired
-	private FriendsDao dao;
+	
 	
 	/////////////////////////////////////////////////////////
 	
@@ -33,10 +32,6 @@ public class MemberController {
 	
 	public void setHomepageService(MiniHomepageService homepageService) {
 		this.homepageService = homepageService;
-	}
-
-	public void setDao(FriendsDao dao) {
-		this.dao = dao;
 	}
 
 	///////////////////////////////////////////////////////
@@ -69,16 +64,7 @@ public class MemberController {
 		}
 		return mv;
 	}
-	@RequestMapping("/friends.do")
-	public ModelAndView friends(){
-		String id = "sul";
-		System.out.println(id);
-		ModelAndView mv = new ModelAndView();
-		List<Friend> sendFriendsList = dao.selectSendFriendsList(id);
-		mv.addObject("sendFriendsList",sendFriendsList);
-		mv.setViewName("friends");
-		return mv;
-	}
+	
 }
 
 

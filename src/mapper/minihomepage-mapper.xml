@@ -6,13 +6,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="mapper.MiniHomepageMapper">
 	<insert id="createMiniHomepage" parameterType="String">
 		INSERT INTO MINIHOMEPAGE
-		VALUES (#{id},0,0,CONCAT(#{id},'님의 홈페이지 입니다!'),'안녕하세요.','/img/no_img.png')
+		VALUES (#{id},0,0,CONCAT(#{id},'님의 홈페이지 입니다!'),'안녕하세요.','img/no_img.png')
 	</insert>
 	
-	<select id="selectMiniHomepage" parameterType="String" resultMap="miniHomepageMap">
+	<select id="selectMiniHomepage" parameterType="String" resultMap="miniHomepageResult">
 		SELECT * 
-		FROM MINIHOMEPAGE
+		FROM MINIHOMEPAGE NATURAL JOIN MEMBER 
 		WHERE ID = #{id}
+	</select>
+	
+	<select id="selectMiniHomepageList" parameterType="String" resultMap="miniHomepageResult">
+		SELECT * 
+		FROM MINIHOMEPAGE NATURAL JOIN MEMBER 
+		WHERE ID like '%'||#{keyword}||'%'
 	</select>
 	
 	<resultMap type="MiniHomepage" id="miniHomepageMap">
@@ -23,4 +29,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result column="INTRODUCE" property="introduce"/>
 		<result column="MINIHOMEPAGE_IMG_PATH" property="minihomepage_img_path"/>
 	</resultMap>
+	<!-- 미니홈피 조인 멤버 (홈페이지 찾기)-->
+	<resultMap id="miniHomepageResult" type="MiniHomepage">
+		<id property="id" column="ID"/>
+		<result column="MINIHOMEPAGE_IMG_PATH" property="minihomepage_img_path"/>
+		<result column="TOTAL" property="total"/>
+		<association property="member" javaType="Member">
+    		<id property="id" column="ID"/>
+    		<result property="id" column="ID"/>
+    		<result property="name" column="name"/>
+  		</association>
+	</resultMap>
+	
 </mapper>

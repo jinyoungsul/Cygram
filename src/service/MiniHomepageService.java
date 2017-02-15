@@ -1,5 +1,7 @@
 package service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -20,5 +22,9 @@ public class MiniHomepageService {
 	}
 	public MiniHomepage selectMiniHomepage(String id){
 		return dao.selectMiniHomepage(id);
+	}
+
+	public List<MiniHomepage> selectMiniHomepageList(String keyword) {
+		return dao.selectMiniHomepageList(keyword);
 	}
 }

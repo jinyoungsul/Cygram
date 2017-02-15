@@ -7,6 +7,8 @@ public class MiniHomepage {
 	private String title;
 	private String introduce;
 	private String minihomepage_img_path;
+	private Member member;
+	
 	public String getId() {
 		return id;
 	}
@@ -44,10 +46,17 @@ public class MiniHomepage {
 	public void setMinihomepage_img_path(String minihomepage_img_path) {
 		this.minihomepage_img_path = minihomepage_img_path;
 	}
+	
+	public Member getMember() {
+		return member;
+	}
+	public void setMember(Member member) {
+		this.member = member;
+	}
 	@Override
 	public String toString() {
 		return "MiniHomepage [id=" + id + ", today=" + today + ", total=" + total + ", title=" + title + ", introduce="
-				+ introduce + ", minihomepage_img_path=" + minihomepage_img_path + "]";
+				+ introduce + ", minihomepage_img_path=" + minihomepage_img_path + ", member=" + member + "]";
 	}
 	
 }

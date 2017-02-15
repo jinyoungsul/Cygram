@@ -4,14 +4,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="mapper.FriendMapper">
+	<!-- 일촌신청 보낸 현황 -->
 	<select id="selectSendFriendsList" resultMap="friendsMap">
-		SELECT no,my_id,my_nickname,friend_id,friend_nickname
+		SELECT friend_no,my_id,my_nickname,friend_id,friend_nickname
 		FROM friend
-		WHERE my_id = #{id} and r_s = 'send' and is_ok ='f'
+		WHERE my_id = #{id} and action = 'send' and accept ='f'
+	</select>
+	<!-- 일촌신청 받은 현황 -->
+	<select id="selectReceiveFriendsList" resultMap="friendsMap">
+		SELECT friend_no,my_id,my_nickname,friend_id,friend_nickname
+		FROM friend
+		WHERE my_id = #{id} and action = 'receive' and accept ='f'
 	</select>
 	
 	<resultMap type="Friend" id="friendsMap">
-		<result property="friendNo" column="no"/>
+		<result property="friendNo" column="friend_no"/>
 		<result property="myId" column="my_id"/>
 		<result property="myNickname" column="my_nickname"/>
 		<result property="friendId" column="friend_id"/>
