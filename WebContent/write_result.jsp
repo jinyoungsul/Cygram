@@ -9,7 +9,7 @@
 <body>
 <h2>글쓰기를 완료하였습니다.</h2>
 	<a href="galleryList.do">[게시판으로]</a>
-	<a href="read.do?galleryNo=${galleryNo}"> 
+	<a href="read.do?galleryNo=${gallery_No}"> 
 		[내가 쓴 글 확인하기] 
 	</a>
 </body>

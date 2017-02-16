@@ -31,7 +31,7 @@
 		<tr>
 		<td>사진:</td>
 		<td>
-		${gallery.galleryPath}</td>
+		${gallery.photoList}</td>
 	</tr>
 </table>
 <a href="galleryList.do">[목록으로]</a>

@@ -17,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import service.GalleryService;
 import vo.Gallery;
+import vo.GalleryImg;
 
 @Controller
 public class GalleryController {
@@ -40,7 +41,9 @@ public class GalleryController {
 	}
 	
 	@RequestMapping(value="/write.do", method=RequestMethod.POST)
-	public ModelAndView write(HttpServletRequest request, HttpSession session, Gallery gallery){
+	public ModelAndView write
+	(HttpServletRequest request, HttpSession session, 
+			Gallery gallery, GalleryImg galleryImg){
 		
 		System.out.println("gallery:"+gallery);
 		
@@ -50,27 +53,28 @@ public class GalleryController {
 		if(dir.exists()==false){
 			dir.mkdirs();
 		}
-		
+		// 다중 업로드
 		//데이터 베이스 기록
 		for(MultipartFile f : gallery.getPhotoList()){
-			String savedName = galleryPath +"/"+new Random().nextInt(1000000)+f.getOriginalFilename();
+			String savedName = 
+					galleryPath +"/"+new Random().nextInt(1000000)+f.getOriginalFilename();
 			File saveFile = new File(savedName);
 			
 			// 업로드
 			try {
 				f.transferTo(saveFile);
-		
-				gallery.setGalleryPath(saveFile.getAbsolutePath());
-				System.out.println("path:"+gallery.getGalleryPath());
-							
+				
+				galleryImg = new GalleryImg();
+				galleryImg.setGalleryPath(saveFile.getAbsolutePath());
+				
 			} catch (IllegalStateException |IOException e) {
 				e.printStackTrace();
 			}	
 		}
 		
-		
 		ModelAndView mv = new ModelAndView("write_result");
-		mv.addObject("galleryNo", galleryService.write(gallery));
+		mv.addObject("galleryNo", galleryService.write(gallery, galleryImg));
+		mv.addObject("fileCount", gallery.getPhotoList().size());
 		return mv;
 	}
 	

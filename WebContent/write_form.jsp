@@ -5,6 +5,22 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 <title>글쓰기 화면</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<script type="text/javascript">
+	$(function(){
+		var fileCount=1;
+		
+		$('button').click(function(){
+			var inputElement ='<tr><td>사진 :</td>';
+			inputElement += '<td><input type="file" ';
+			inputElement += 'name="photoList"></td></tr>';
+			fileCount++;
+			
+			$('input[type="submit"]').before(inputElement);
+		})
+	})
+</script>
+
 </head>
 <body>
 <form action="write.do" method="post" enctype="multipart/form-data">
@@ -31,6 +47,9 @@
 				<td>사진:</td>
 				<td><input type="file" name="photoList"></td>
 			</tr>
+			<tr>
+				<td><button>파일추가</button></td>
+			</tr><br>
 			<tr>
 				<td colspan="2">
 					<input type="submit" value="작성완료">

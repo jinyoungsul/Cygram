@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 import repository.mapper.GalleryMapper;
 import vo.Gallery;
+import vo.GalleryImg;
 
 @Component
 public class GalleryDao {
@@ -24,7 +25,12 @@ public class GalleryDao {
 		GalleryMapper mapper = session.getMapper(GalleryMapper.class);
 		return mapper.insert(gallery);
 	}
-	
+
+	public int insertImg(GalleryImg galleryImg){
+		GalleryMapper mapper = session.getMapper(GalleryMapper.class);
+		return mapper.insertImg(galleryImg);
+	}
+
 	public Gallery select(int galleryNo){
 		GalleryMapper mapper = session.getMapper(GalleryMapper.class);
 		return mapper.select(galleryNo);

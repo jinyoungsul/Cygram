@@ -20,11 +20,12 @@ public class GalleryService {
 	}
 	//-----------------------------------------------//
 	
-	public int write(Gallery gallery){
+	public int write(Gallery gallery, GalleryImg galleryImg){
 		int result = 0;
 		
-		gallery.setWriteDate(new Date());
+		gallery.setWriteDate(new Date()); 
 		if(galleryDao.insert(gallery)>0)
+			galleryDao.insertImg(galleryImg);
 			result = gallery.getGalleryNo();
 		
 		System.out.println("service write file:");
