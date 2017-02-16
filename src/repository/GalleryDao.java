@@ -36,7 +36,7 @@ public class GalleryDao {
 		map.put("count", count);
 		
 		GalleryMapper mapper = session.getMapper(GalleryMapper.class);
-		return mapper.selectList(map);
+		return mapper.selectGalleryList(map);
 	}
 	
 	public int selectCount(){

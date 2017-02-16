@@ -4,42 +4,86 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="repository.mapper.GalleryMapper">
-	<insert id="insert" parameterType="Gallery"
-		useGeneratedKeys="true" keyProperty="galleryNo"
-		keyColumn="GALLERY_NO">
-	INSERT INTO GALLERY(GALLERY_NO,TITLE,ID,WRITE_DATE,CONTENT,GALLERY_PATH,AUTHORITY_CODE)
-	VALUES
-	(GALLERY_SEQ.NEXTVAL,#{title},#{id},#{writeDate},#{content},#{galleryPath},#{authorityCode})
-	</insert>
-	
-	<select id="selectGalleryCount" resultType="integer">
-		SELECT COUNT(*) FROM GALLERY
-	</select>
-	
-	<select id="select" parameterType="integer"
-							resultMap="galleryMap">
-	SELECT * FROM GALLERY WHERE GALLERY_NO=#{galleryNo}				
-	</select>
-	
-	<select id="selectList" parameterType="Map"
-							resultMap="galleryMap">
-<!-- 	SELECT * FROM GALLERY ORDER BY GALLERY_NO DESC LIMIT #{startRow}, #{count}	 -->
+	<insert id="insert" parameterType="Gallery">
+		<selectKey keyProperty="GALLERY_NO" resultType="int" order="BEFORE">
+			SELECT GALLERY_SEQ.NEXTVAL FROM DUAL
+		</selectKey>
 
-	SELECT *
-	FROM (SELECT ROWNUM R, A.* FROM
-	(SELECT * FROM GALLERY
-	ORDER BY GALLERY_NO DESC) A)
-	WHERE R BETWEEN #{startRow} AND #{count}
-	
+		INSERT INTO
+		GALLERY(GALLERY_NO,TITLE,ID,WRITE_DATE,CONTENT,AUTHORITY_CODE)
+		VALUES
+		(GALLERY_SEQ.NEXTVAL,#{title},#{id},#{writeDate},#{content},#{galleryPath},#{authorityCode})
+	</insert>
+
+	<insert id="insertImg" parameterType="GalleryImg">
+		INSERT INTO GALLERY_IMG(GALLERY_NO,GALLERY_IMG_NO,GALLERY_PATH)
+		VALUES
+		(#{galleryNo},GALLERY_IMG_SEQ.NEXTVAL,#{galleryPath})
+	</insert>
+
+	<select id="selectGalleryCount" resultType="integer">
+		SELECT COUNT(*) FROM
+		GALLERY
+	</select>
+
+	<select id="select" parameterType="integer" resultMap="galleryMap">
+		SELECT * FROM GALLERY WHERE GALLERY_NO=#{galleryNo}
+	</select>
+
+	<select id="selectList" parameterType="Map" resultMap="galleryMap">
+		<!-- SELECT * FROM GALLERY ORDER BY GALLERY_NO DESC LIMIT #{startRow}, 
+			#{count} -->
+
+		SELECT *
+		FROM (SELECT ROWNUM R, A.* FROM
+		(SELECT * FROM GALLERY
+		ORDER BY GALLERY_NO DESC) A)
+		WHERE R BETWEEN #{startRow} AND #{count}
 	</select>
 	
+	<select id="selectGalleryList" resultMap="galleryResultMap" parameterType="Map">
+	
+		SELECT * FROM (
+			SELECT ROWNUM R, A.* FROM(		
+				SELECT 
+					G.GALLERY_NO, ID, AUTHORITY_CODE, TITLE, 
+					CONTENT, WRITE_DATE,
+					GALLERY_IMG_NO, GALLERY_PATH
+				FROM 
+					GALLERY G, GALLERY_IMG IMG
+				WHERE 
+					G.GALLERY_NO=IMG.GALLERY_NO
+				ORDER BY 
+	 				G.GALLERY_NO DESC 
+				) A	)
+			START WITH G.GALLERY_NO
+			CONNECT BY PRIOR IMG.GALLERY_NO=G.GALLERY_NO 
+	 	WHERE R BETWEEN #{startRow} AND #{count}
+
+	</select>
+
 	<resultMap type="Gallery" id="galleryMap">
+		<result column="gallery_no" property="galleryNo" />
+		<result column="title" property="title" />
+		<result column="id" property="id" />
+		<result column="write_date" property="writeDate" />
+		<result column="content" property="content" />
+		<result column="authority_code" property="authorityCode" />
+	</resultMap>
+
+	<resultMap id="galleryResultMap" type="Gallery">
+<!-- 		<id property="galleryNo" column="g.gallery_no" /> -->
 		<result column="gallery_no" property="galleryNo"/>
-		<result column="title" property="title"/>
-		<result column="id" property="id"/>
-		<result column="write_date" property="writeDate"/>
-		<result column="content" property="content"/>
-		<result column="gallery_path" property="galleryPath"/>
-		<result column="authority_code" property="authorityCode"/>
+		<result column="title" property="title" />
+		<result column="id" property="id" />
+		<result column="write_date" property="writeDate" />
+		<result column="content" property="content" />
+		<result column="authority_code" property="authorityCode" />
+		<collection javaType="ArrayList" property="galleryImgList" ofType="GalleryImg">
+<!-- 			<id property="galleryNo" column="g.gallery_no" /> -->
+			<result column="gallery_no" property="galleryNo"/>
+			<result property="galleryImgNo" column="gallery_img_no" />
+			<result property="galleryPath" column="gallery_path" />
+		</collection>
 	</resultMap>
 </mapper>

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import repository.GalleryDao;
 import vo.Gallery;
+import vo.GalleryImg;
 import vo.GalleryPage;
 
 @Component
@@ -25,6 +26,8 @@ public class GalleryService {
 		gallery.setWriteDate(new Date());
 		if(galleryDao.insert(gallery)>0)
 			result = gallery.getGalleryNo();
+		
+		System.out.println("service write file:");
 		return result;
 	}
 	
@@ -37,6 +40,8 @@ public class GalleryService {
 		final int COUNT_PER_PAGE=3;
 		int totalGalleryCount = galleryDao.selectCount();
 		
+		System.out.println("total:"+totalGalleryCount);
+		
 		if(totalGalleryCount==0)
 			return new GalleryPage();
 		
@@ -44,6 +49,19 @@ public class GalleryService {
 		int endRow = startRow +2;
 		List<Gallery> galleryList = 
 				galleryDao.selectList(startRow, endRow);
+		
+		System.out.println("start:"+startRow+"/end:"+endRow);
+		System.out.println("list size:"+galleryList.size());
+		
+		
+		for(Gallery g: galleryList){
+			System.out.println("--글시작");
+			System.out.println("\t"+g.toString());
+			for(GalleryImg img: g.getGalleryImgList()){
+				System.out.println("\t\t"+img.toString());
+			}
+			System.out.println("--글끝");
+		}
 		
 		int totalPage = totalGalleryCount/COUNT_PER_PAGE;
 		if(totalGalleryCount%COUNT_PER_PAGE !=0)

@@ -1,6 +1,9 @@
 package vo;
 
 import java.util.Date;
+import java.util.List;
+
+import org.springframework.web.multipart.MultipartFile;
 
 public class Gallery {
 	private int galleryNo;
@@ -8,38 +11,25 @@ public class Gallery {
 	private String id;
 	private Date writeDate;
 	private String content;
-	private String galleryPath;
 	private int authorityCode;
-	//----------------------------------------------//
+	private List<GalleryImg> galleryImgList; 
 	
+	//----------------------------------------------//
 	public Gallery(){}
-	public Gallery(String title, String id, String content, String galleryPath) {
-		super();
-		this.title = title;
-		this.id = id;
-		this.content = content;
-		this.galleryPath = galleryPath;
-	}
-	public Gallery(String title, String id, String content, String galleryPath, int authorityCode) {
-		super();
-		this.title = title;
-		this.id = id;
-		this.content = content;
-		this.galleryPath = galleryPath;
-		this.authorityCode = authorityCode;
-	}
-	public Gallery(int galleryNo, String title, String id, Date writeDate, String content, String galleryPath,
-			int authorityCode) {
+	public Gallery(int galleryNo, String title, String id, Date writeDate, String content, int authorityCode,
+			List<GalleryImg> galleryImgList, List<MultipartFile> photoList) {
 		super();
 		this.galleryNo = galleryNo;
 		this.title = title;
 		this.id = id;
 		this.writeDate = writeDate;
 		this.content = content;
-		this.galleryPath = galleryPath;
 		this.authorityCode = authorityCode;
+		this.galleryImgList = galleryImgList;
+		this.photoList = photoList;
 	}
-	//----------------------------------------------//
+	
+	//-------------------------------------------------------------/
 	
 	public int getGalleryNo() {
 		return galleryNo;
@@ -71,16 +61,35 @@ public class Gallery {
 	public void setContent(String content) {
 		this.content = content;
 	}
-	public String getGalleryPath() {
-		return galleryPath;
-	}
-	public void setGalleryPath(String galleryPath) {
-		this.galleryPath = galleryPath;
-	}
 	public int getAuthorityCode() {
 		return authorityCode;
 	}
 	public void setAuthorityCode(int authorityCode) {
 		this.authorityCode = authorityCode;
 	}
+	public List<GalleryImg> getGalleryImgList() {
+		return galleryImgList;
+	}
+	public void setGalleryImgList(List<GalleryImg> galleryImgList) {
+		this.galleryImgList = galleryImgList;
+	}
+
+	@Override
+	public String toString() {
+		return "Gallery [galleryNo=" + galleryNo + ", title=" + title + ", id=" + id + ", writeDate=" + writeDate
+				+ ", content=" + content + ", authorityCode=" + authorityCode + ", galleryImgList=" + galleryImgList
+				+ ", photoList=" + photoList + "]";
+	}
+
+	//--------------------------------------------------------------------------//
+
+	private List<MultipartFile> photoList;
+
+	public List<MultipartFile> getPhotoList() {
+		return photoList;
+	}
+
+	public void setPhotoList(List<MultipartFile> photoList) {
+		this.photoList = photoList;
+	}	
 }

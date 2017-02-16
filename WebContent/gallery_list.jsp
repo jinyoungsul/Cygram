@@ -35,7 +35,12 @@
 						<td>${gallery.id}</td>
 						<td>${gallery.writeDate}</td>
 						<td>${gallery.content}</td>
-						<td>${gallery.galleryPath}</td>
+						<td>
+<%-- 						<img src="${gallery.galleryPath}" width="50sp" height="50sp"> --%>
+							<c:forEach var="galleryImg" items="${gallery.galleryImgList}">
+								path:${galleryImg.galleryPath}<br>
+							</c:forEach>
+						</td>
 						<td>${gallery.authorityCode}</td>
 					</tr>
 				</c:forEach>

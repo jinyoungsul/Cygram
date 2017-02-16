@@ -6,9 +6,12 @@
 
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
 		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
-		<property name="url" value="jdbc:oracle:thin:@70.12.109.96:1521:xe" />
-		<property name="username" value="cygram" />
-		<property name="password" value="cygram" />
+<!-- 		<property name="url" value="jdbc:oracle:thin:@70.12.109.96:1521:xe" /> -->
+<!-- 		<property name="username" value="cygram" /> -->
+<!-- 		<property name="password" value="cygram" /> -->
+		<property name="url" value="jdbc:oracle:thin:@localhost:1521:xe"/>
+		<property name="username" value="user01"/>
+		<property name="password" value="sds902"/>
 	</bean>
 
 	<bean id="factory" class="org.mybatis.spring.SqlSessionFactoryBean">

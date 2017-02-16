@@ -7,7 +7,7 @@
 <title>글쓰기 화면</title>
 </head>
 <body>
-<form action="write.do" method="post">
+<form action="write.do" method="post" enctype="multipart/form-data">
 		<table border="1">
 			<tr>
 				<td>제목:</td>
@@ -27,9 +27,9 @@
 				<td>작성권한:</td>
 				<td><input type="text" name="authorityCode"></td>
 			</tr>
-				<tr>
+			<tr>
 				<td>사진:</td>
-				<td><input type="text" name="galleryPath"></td>
+				<td><input type="file" name="photoList"></td>
 			</tr>
 			<tr>
 				<td colspan="2">

@@ -8,6 +8,6 @@ import vo.Gallery;
 public interface GalleryMapper {
 	public int insert(Gallery gallery);
 	public Gallery select(int galleryNo);
-	public List<Gallery> selectList(Map<String, Integer> map);
+	public List<Gallery> selectGalleryList(Map<String, Integer> map);
 	public int selectGalleryCount();
 }
