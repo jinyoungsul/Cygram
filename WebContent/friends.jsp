@@ -9,13 +9,6 @@
 </head>
 <body>
 	<table border="1">
-		<tr>
-			<th>글번호</th>
-			<th>제목</th>
-			<th>작성자</th>
-			<th>작성일</th>
-			<th>조회수</th>
-		</tr>
 		<c:choose>
 			<c:when test="${empty sendFriendsList}">
 			<tr>
@@ -36,7 +29,7 @@
 			</c:otherwise>
 		</c:choose>
 		<c:choose>
-			<c:when test="${empty sendFriendsList}">
+			<c:when test="${empty receiveFriendsList}">
 			<tr>
 				<td colspan="5">
 					게시글이 아직 존재하지 않습니다.

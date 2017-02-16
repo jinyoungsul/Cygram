@@ -151,7 +151,7 @@ public class NaverLoginController {
 		} else if(savedMember==null){	//아이디가 존재 하지 않으면
 			member.setEmail("null");	//왜 널값이 들어가면 안됨?
 			if(service.join(member)){	//가입 후 메인 이동
-				session.setAttribute("naverLoginId", member.getId());
+				session.setAttribute("loginId", member.getId());
 				System.out.println(((Member)session.getAttribute("naverLoginId")).getId());
 				mv.addObject("member", member);
 				mv.setViewName("main");

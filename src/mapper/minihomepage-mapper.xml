@@ -32,8 +32,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 미니홈피 조인 멤버 (홈페이지 찾기)-->
 	<resultMap id="miniHomepageResult" type="MiniHomepage">
 		<id property="id" column="ID"/>
-		<result column="MINIHOMEPAGE_IMG_PATH" property="minihomepage_img_path"/>
+		<result column="TODAY" property="today"/>
 		<result column="TOTAL" property="total"/>
+		<result column="TITLE" property="title"/>
+		<result column="INTRODUCE" property="introduce"/>
+		<result column="MINIHOMEPAGE_IMG_PATH" property="minihomepage_img_path"/>
 		<association property="member" javaType="Member">
     		<id property="id" column="ID"/>
     		<result property="id" column="ID"/>

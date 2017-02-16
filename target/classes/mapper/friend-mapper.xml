@@ -8,15 +8,26 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="selectSendFriendsList" resultMap="friendsMap">
 		SELECT friend_no,my_id,my_nickname,friend_id,friend_nickname
 		FROM friend
-		WHERE my_id = #{id} and action = 'send' and accept ='f'
+		WHERE my_id = #{id} and action = 'send' and accept ='F'
 	</select>
 	<!-- 일촌신청 받은 현황 -->
 	<select id="selectReceiveFriendsList" resultMap="friendsMap">
 		SELECT friend_no,my_id,my_nickname,friend_id,friend_nickname
 		FROM friend
-		WHERE my_id = #{id} and action = 'receive' and accept ='f'
+		WHERE my_id = #{id} and action = 'receive' and accept ='F'
 	</select>
-	
+	<!-- 일촌신청 삽입 -->
+	<insert id="insertFriends" parameterType="Friend">
+		INSERT INTO FRIEND
+		VALUES (FRIEND_SEQ.nextval,#{myId},#{myNickname},#{friendId},#{friendNickname},#{action},#{accept})
+	</insert>
+	<!-- 일촌신청 전 확인 -->
+	<select id="checkFriends" parameterType="Map" resultMap="friendsMap">
+		SELECT * 
+		FROM FRIEND
+		WHERE (my_id = #{myId} and friend_id = #{friendId} and accept = 'T') or (my_id = #{myId} and friend_id = #{friendId} and accept = 'F')
+		
+	</select>
 	<resultMap type="Friend" id="friendsMap">
 		<result property="friendNo" column="friend_no"/>
 		<result property="myId" column="my_id"/>

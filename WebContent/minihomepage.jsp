@@ -24,9 +24,11 @@ TODAY ${miniHomepage.today } / TOTAL ${miniHomepage.total }<br>
 소개글 : ${miniHomepage.introduce }<br>
 
 <c:if test="${sessionScope.loginId!=miniHomepage.id}">
-	<input type="hidden" id="myId" value="${sessionScope.loginId}">
-	<input type="hidden" id="friendId" value="${miniHomepage.id}">
-	<a href="#" id="goFriend">일촌신청</a>
+	<c:if test="${empty friend}">
+		<input type="hidden" id="myId" value="${sessionScope.loginId}">
+		<input type="hidden" id="friendId" value="${miniHomepage.id}">
+		<a href="#" id="goFriend">일촌신청</a>
+	</c:if>
 </c:if>
 </body>
 </html>

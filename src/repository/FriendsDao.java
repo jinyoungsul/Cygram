@@ -1,13 +1,14 @@
 package repository;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import mapper.FriendMapper;
-import mapper.MemberMapper;
 import vo.Friend;
 
 @Component
@@ -30,5 +31,12 @@ public class FriendsDao {
 	public int insertFriends(Friend friend) {
 		FriendMapper mapper = session.getMapper(FriendMapper.class);
 		return mapper.insertFriends(friend);
+	}
+	public Friend checkFriends(String myId, String friendId) {
+		FriendMapper mapper = session.getMapper(FriendMapper.class);
+		Map<String, String> map = new HashMap<>();
+		map.put("myId", myId);
+		map.put("friendId", friendId);
+		return mapper.checkFriends(map);
 	}
 }

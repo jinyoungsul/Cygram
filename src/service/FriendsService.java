@@ -27,5 +27,9 @@ public class FriendsService {
 	public int insertFriends(Friend friend) {
 		return friendsDao.insertFriends(friend);
 	}
+
+	public Friend checkFriend(String myId,String friendId) {
+		return friendsDao.checkFriends(myId,friendId);
+	}
 	
 }
