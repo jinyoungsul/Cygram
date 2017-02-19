@@ -2,6 +2,8 @@ package controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
@@ -48,6 +50,7 @@ public class GalleryController {
 		System.out.println("gallery:"+gallery);
 		
 		String galleryPath = request.getServletContext().getRealPath("img");
+		List<GalleryImg> galleryImgList = new ArrayList<>();
 		
 		File dir = new File(galleryPath);
 		if(dir.exists()==false){
@@ -66,6 +69,7 @@ public class GalleryController {
 				
 				galleryImg = new GalleryImg();
 				galleryImg.setGalleryPath(saveFile.getAbsolutePath());
+				galleryImgList.add(galleryImg);
 				
 			} catch (IllegalStateException |IOException e) {
 				e.printStackTrace();
@@ -73,7 +77,7 @@ public class GalleryController {
 		}
 		
 		ModelAndView mv = new ModelAndView("write_result");
-		mv.addObject("galleryNo", galleryService.write(gallery, galleryImg));
+		mv.addObject("galleryNo", galleryService.write(gallery, galleryImgList));
 		mv.addObject("fileCount", gallery.getPhotoList().size());
 		return mv;
 	}

@@ -37,6 +37,7 @@ public class GalleryDao {
 	}
 	
 	public List<Gallery> selectList(int startRow, int count){
+		System.out.println("리스트 보임?");
 		Map<String, Integer> map = new HashMap<>();
 		map.put("startRow", startRow);
 		map.put("count", count);

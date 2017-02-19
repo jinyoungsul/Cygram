@@ -20,16 +20,18 @@ public class GalleryService {
 	}
 	//-----------------------------------------------//
 	
-	public int write(Gallery gallery, GalleryImg galleryImg){
-		int result = 0;
-		
+	public int write(Gallery gallery, List<GalleryImg> galleryImgList){
 		gallery.setWriteDate(new Date()); 
-		if(galleryDao.insert(gallery)>0)
-			galleryDao.insertImg(galleryImg);
-			result = gallery.getGalleryNo();
+		int result = galleryDao.insert(gallery);
 		
+		if(result>0){
+			for(GalleryImg galleryImg : galleryImgList){
+				galleryImg.setGalleryNo(gallery.getGalleryNo());
+				galleryDao.insertImg(galleryImg);
+			}
+		}
 		System.out.println("service write file:");
-		return result;
+		return gallery.getGalleryNo();
 	}
 	
 	public Gallery read(int galleryNo){
