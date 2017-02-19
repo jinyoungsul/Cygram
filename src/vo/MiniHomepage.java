@@ -1,5 +1,7 @@
 package vo;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class MiniHomepage {
 	private String id;
 	private int today;
@@ -8,6 +10,7 @@ public class MiniHomepage {
 	private String introduce;
 	private String minihomepage_img_path;
 	private Member member;
+	private MultipartFile minihomepage_img;
 	
 	public String getId() {
 		return id;
@@ -53,10 +56,18 @@ public class MiniHomepage {
 	public void setMember(Member member) {
 		this.member = member;
 	}
+	
+	public MultipartFile getMinihomepage_img() {
+		return minihomepage_img;
+	}
+	public void setMinihomepage_img(MultipartFile minihomepage_img) {
+		this.minihomepage_img = minihomepage_img;
+	}
 	@Override
 	public String toString() {
 		return "MiniHomepage [id=" + id + ", today=" + today + ", total=" + total + ", title=" + title + ", introduce="
-				+ introduce + ", minihomepage_img_path=" + minihomepage_img_path + ", member=" + member + "]";
+				+ introduce + ", minihomepage_img_path=" + minihomepage_img_path + ", member=" + member
+				+ ", minihomepage_img=" + minihomepage_img + "]";
 	}
 	
 }

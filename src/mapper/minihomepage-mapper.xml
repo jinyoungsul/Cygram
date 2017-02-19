@@ -16,6 +16,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		UPDATE MINIHOMEPAGE SET TITLE = #{title}
 		WHERE ID = #{id}
 	</update>
+	<update id="introduceImgUpdate" parameterType="MiniHomepage" >
+		UPDATE MINIHOMEPAGE SET INTRODUCE = #{introduce} , MINIHOMEPAGE_IMG_PATH = #{minihomepage_img_path}
+		WHERE ID = #{id}
+	</update>
+	
+	
 	<select id="selectMiniHomepage" parameterType="String" resultMap="miniHomepageResult">
 		SELECT * 
 		FROM MINIHOMEPAGE NATURAL JOIN MEMBER 

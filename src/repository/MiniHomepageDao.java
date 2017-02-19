@@ -51,4 +51,10 @@ public class MiniHomepageDao {
 		map.put("title", title);
 		return mapper.titleUpdate(map);
 	}
+
+	public int introduceImgUpdate(MiniHomepage miniHomepage) {
+		System.out.println("미니홈피 introduce, img 수정  ");
+		MiniHomepageMapper mapper = session.getMapper(MiniHomepageMapper.class);
+		return mapper.introduceImgUpdate(miniHomepage);
+	}
 }

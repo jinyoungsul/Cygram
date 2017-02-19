@@ -27,8 +27,8 @@ public class FriendCommentController {
 		friendComment.setContent(content);
 		System.out.println(friendComment);
 		friendCommentService.insertFriendsComment(friendComment);
-		List<FriendComment> friendCommentList;
-		return null;
+		List<FriendComment> friendCommentList = friendCommentService.selectFriendsComment(friendId);
+		return friendCommentList;
 	}
 	
 }

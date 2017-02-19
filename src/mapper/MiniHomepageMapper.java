@@ -11,4 +11,5 @@ public interface MiniHomepageMapper {
 	public List<MiniHomepage> selectMiniHomepageList(String keyword);
 	public int increaseTodayTotal(String id);
 	public int titleUpdate(Map<String, String> map);
+	public int introduceImgUpdate(MiniHomepage miniHomepage);
 }

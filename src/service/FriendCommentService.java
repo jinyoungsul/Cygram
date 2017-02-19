@@ -1,5 +1,7 @@
 package service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -13,6 +15,10 @@ public class FriendCommentService {
 	
 	public int insertFriendsComment(FriendComment friendComment) {
 		return friendCommentDao.insertFriendsComment(friendComment);
+	}
+
+	public List<FriendComment> selectFriendsComment(String friendId) {
+		return friendCommentDao.selectFriendsComment(friendId);
 	}
 
 }

@@ -36,4 +36,8 @@ public class MiniHomepageService {
 	public int titleUpdate(String id, String title) {
 		return dao.titleUpdate(id,title);
 	}
+
+	public int introduceImgUpdate(MiniHomepage miniHomepage) {
+		return dao.introduceImgUpdate(miniHomepage);
+	}
 }

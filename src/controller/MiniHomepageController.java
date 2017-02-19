@@ -1,7 +1,10 @@
 package controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -9,12 +12,13 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.servlet.ModelAndView;
 
 import service.FriendsService;
@@ -94,9 +98,38 @@ public class MiniHomepageController {
 		mv.setViewName("homepageList");
 		return mv;
 	}
-	@RequestMapping(value="homepageTitleUpdate.do",method=RequestMethod.POST)
+	@RequestMapping(value="/homepageTitleUpdate.do",method=RequestMethod.POST)
 	public @ResponseBody int homepageTitleUpdate(String id,String title){
 		int result = homepageService.titleUpdate(id,title);
 		return result;
+	}
+	
+	@RequestMapping(value="/editIntoduceAndImgForm.do")
+	public ModelAndView editIntoduceAndImgForm(){
+		return new ModelAndView("editIntoduceAndImgForm");
+	}
+	@RequestMapping(value="/homepageIntroduceAndImgUpdate.do",method=RequestMethod.POST)
+	public @ResponseBody int homepageIntroduceAndImgUpdate(MiniHomepage miniHomepage,HttpServletRequest request){
+		String homepageImgPath = request.getServletContext().getRealPath("img");
+		File dir = new File(homepageImgPath);
+		if(dir.exists()==false){
+			dir.mkdirs();
+		}
+//		데이터 베이스 기록
+			MultipartFile f = (MultipartFile) miniHomepage.getMinihomepage_img();
+			String savedName = 
+					homepageImgPath +"/"+new Random().nextInt(1000000)+f.getOriginalFilename();
+			File saveFile = new File(savedName);
+			
+			// 업로드
+			try {
+				f.transferTo(saveFile);
+				miniHomepage.setMinihomepage_img_path(saveFile.getAbsolutePath());
+				homepageService.introduceImgUpdate(miniHomepage);
+			} catch (IllegalStateException |IOException e) {
+				e.printStackTrace();
+			}	
+		
+		return 0; 
 	}
 }

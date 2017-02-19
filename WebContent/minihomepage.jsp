@@ -17,6 +17,12 @@ $(function(){
 		$('#title').attr("readonly" ,false);
 		$('#editTitleOk').show();
 	})
+	$('#editIntoduceAndImg').click(function(){
+		alert('메인사진, 소개글 수정 클릭');
+		 var status = "toolbar=no,scrollbars=no,resizable=no,status=no,menubar=no,width=400, height=300, top=0,left=20";
+		 var popup = window.open('editIntoduceAndImgForm.do','editIntoduceAndImg',status);
+	})
+	
 	$('#editTitleOk').click(function(){
 		$.ajax({
 			url : "homepageTitleUpdate.do",
@@ -45,7 +51,11 @@ $(function(){
 					
 			},
 			success : function(data){
-				alert('성공');
+				$.each(data,function(index,value){
+					var friendComment = value;
+					var result = "<p>"+friendComment.myId+" ("+friendComment.friend.myNickname+") "+friendComment.content+" "+friendComment.writeDate+"</p>";
+					$('#friendsSayList').prepend(result);
+				})
 			},
 			error : function(){
 				alert('error');
@@ -70,13 +80,18 @@ TODAY ${miniHomepage.today } / TOTAL ${miniHomepage.total }<br>
 </c:if>
 <br>
 소개글 : ${miniHomepage.introduce }<br>
-
+<c:if test="${sessionScope.loginId==miniHomepage.id}">
+	<a href="#" id="editIntoduceAndImg">수정</a>
+</c:if>
 <c:if test="${sessionScope.loginId!=miniHomepage.id}">
 	<c:if test="${empty friend}">
 		<a href="#" id="goFriend">일촌신청</a>
 	</c:if>
 </c:if>
 <p>Friends Say : <input type="text" id="friendsCotent" placeholder="일촌과 나누고 싶은 이야기를 남겨보세요~!"><a href="#" id="friendsCommentBtn">확인</a></p>
+<div id='friendsSayList'>
+
+</div>
 <input type="hidden" id="myId" value="${sessionScope.loginId}">
 <input type="hidden" id="friendId" value="${miniHomepage.id}">
 </body>
