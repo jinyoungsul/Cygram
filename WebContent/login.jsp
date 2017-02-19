@@ -18,7 +18,7 @@
 	<input type="submit" value="가입">
 	</form>
 	계정이 있으신가요?
-	<form action="login.do" action="post">
+	<form action="login.do" method="post">
 		아이디<input type="text" name="id"><br>
 		비밀번호<input type="text" name="password">
 		<input type="submit" value="로그인">

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.FriendCommentMapper">
+	<!-- 일촌평 등록 -->
+	<insert id="insertFriendsComment" parameterType="FriendComment">
+		INSERT INTO FRIEND_COMMENT
+		VALUES(FRIEND_COMMENT_SEQ.nextval,#{myId},#{friendId},#{content},SYSDATE)
+	</insert>
+	
+	<!-- 일촌평 불러오기 -->
+	<select id="selectFriendsComment" resultMap="FriendCommentResult">
+		SELECT B.MY_ID,FRIEND.MY_NICKNAME,B.CONTENT
+		FROM FRIEND , FRIEND_COMMENT B
+		WHERE  B.FRIEND_ID = #{id} and (FRIEND.MY_ID = B.MY_ID and FRIEND.FRIEND_ID = B.FRIEND_ID)
+	</select>
+	
+	
+	<resultMap id="FriendCommentResult" type="FriendComment">
+		<result property="friendCommentNo" column="FRIEND_COMMENT_NO"/>
+		<result property="myId" column="MY_ID"/>
+		<result property="friendId" column="FRIEND_ID"/>
+		<result property="CONTENT" column="FRIEND_COMMENT_NO"/>
+		<result property="writeDate" column="WRITE_DATE"/>
+		<association property="friend" javaType="Friend">
+			<result property="friendId" column="FRIEND_ID"/>
+		</association>
+	</resultMap>
+</mapper>

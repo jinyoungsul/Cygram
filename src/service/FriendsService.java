@@ -27,5 +27,25 @@ public class FriendsService {
 	public int insertFriends(Friend friend) {
 		return friendsDao.insertFriends(friend);
 	}
+
+	public Friend checkFriend(String myId,String friendId) {
+		return friendsDao.checkFriends(myId,friendId);
+	}
+
+	public Friend selectFriends(int friendNo) {
+		return friendsDao.selectFriends(friendNo);
+	}
+
+	public int cancelFriends(int friendNo) {
+		return friendsDao.cancelFriends(friendNo);
+	}
+
+	public int acceptFriends(int friendNo) {
+		return friendsDao.acceptFriends(friendNo);
+	}
+
+	public List<Friend> selectAcceptFriends(String id) {
+		return friendsDao.selectAcceptFriends(id);
+	}
 	
 }
