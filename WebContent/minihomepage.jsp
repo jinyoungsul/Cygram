@@ -8,10 +8,35 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 <script>
 $(function(){
+	
 	$('#goFriend').click(function(){
 		window.open('friendsPlusForm.do?myId='+$('#myId').val()+'&friendId='+$('#friendId').val(),"","width=400, height=300");
 	})
+	$('#editTitle').click(function(){
+		alert('수정 클릭');
+		$('#title').attr("readonly" ,false);
+		$('#editTitleOk').show();
+	})
+	$('#editTitleOk').click(function(){
+		$.ajax({
+			url : "homepageTitleUpdate.do",
+			method : "post",
+			data : {"title" : $('#title').val(),
+					"id" : 	$('#myId').val()
+			},
+			success : function(data){
+				$('#title').attr("readonly" ,true);
+				$('#editTitleOk').hide();
+			},
+			error : function() {
+				alert("error");
+			}
+			
+		})
+	})
+	
 })
+	
 </script>
 <title>Insert title here</title>
 </head>
@@ -20,15 +45,21 @@ $(function(){
 ${miniHomepage.id }<br>
 TODAY ${miniHomepage.today } / TOTAL ${miniHomepage.total }<br> 
 
-타이틀 : ${miniHomepage.title }<br>
+타이틀 : <input type="text" name="title" id="title" style="border:none;" value="${miniHomepage.title }" readonly>
+<c:if test="${sessionScope.loginId==miniHomepage.id}">
+	<a href="#" id="editTitle">수정</a>
+	<a href="#" id="editTitleOk" style="display:none;">수정완료</a>
+</c:if>
+<br>
 소개글 : ${miniHomepage.introduce }<br>
 
 <c:if test="${sessionScope.loginId!=miniHomepage.id}">
 	<c:if test="${empty friend}">
-		<input type="hidden" id="myId" value="${sessionScope.loginId}">
-		<input type="hidden" id="friendId" value="${miniHomepage.id}">
 		<a href="#" id="goFriend">일촌신청</a>
 	</c:if>
 </c:if>
+
+<input type="hidden" id="myId" value="${sessionScope.loginId}">
+<input type="hidden" id="friendId" value="${miniHomepage.id}">
 </body>
 </html>

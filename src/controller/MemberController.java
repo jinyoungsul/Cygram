@@ -49,7 +49,7 @@ public class MemberController {
 		}
 		return mv;
 	}
-	@RequestMapping("/login.do")
+	@RequestMapping(value="/login.do",method=RequestMethod.POST)
 	public ModelAndView login(String id,String password,HttpSession session){
 		ModelAndView mv = new ModelAndView();
 		System.out.println("로그인 아이디 : "+id);

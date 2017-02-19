@@ -8,7 +8,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		INSERT INTO MINIHOMEPAGE
 		VALUES (#{id},0,0,CONCAT(#{id},'님의 홈페이지 입니다!'),'안녕하세요.','img/no_img.png')
 	</insert>
-	
+	<update id="increaseTodayTotal" parameterType="String">
+		UPDATE MINIHOMEPAGE SET TODAY = TODAY + 1 , TOTAL = TOTAL +1
+		WHERE ID = #{id}
+	</update>
+	<update id="titleUpdate" parameterType="Map" >
+		UPDATE MINIHOMEPAGE SET TITLE = #{title}
+		WHERE ID = #{id}
+	</update>
 	<select id="selectMiniHomepage" parameterType="String" resultMap="miniHomepageResult">
 		SELECT * 
 		FROM MINIHOMEPAGE NATURAL JOIN MEMBER 

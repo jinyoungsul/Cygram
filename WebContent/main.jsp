@@ -9,7 +9,19 @@
 <script type="text/javascript">
 $(function(){
 	$('#goMini').click(function(){
-		window.open('miniHomepage.do?id='+$('#id').val(),"","width=400, height=300");
+// 		window.open('miniHomepage.do?id='+$('#id').val(),"","width=400, height=300");
+		 var frm = document.frmPopup; 
+		 var url    ="miniHomepage.do";
+		 var title  = 'minihomepage';
+  	     var status = "toolbar=no,directories=no,scrollbars=no,resizable=no,status=no,menubar=no,width=400, height=300, top=0,left=20"; 
+		 window.open("", title,status); //window.open(url,title,status); window.open 함수에 url을 앞에와 같이
+		                                            //인수로  넣어도 동작에는 지장이 없으나 form.action에서 적용하므로 생략
+		                                            //가능합니다.
+		  frm.target = title;                    //form.target 이 부분이 빠지면 form값 전송이 되지 않습니다. 
+		  frm.action = url;                    //form.action 이 부분이 빠지면 action값을 찾지 못해서 제대로 된 팝업이 뜨질 않습니다.
+		  frm.method = "post";
+		  frm.id.value = $('#id').val();
+		  frm.submit();     
 	})
 })
 </script>
@@ -25,7 +37,10 @@ $(function(){
 	</c:choose>
 		${member.id }<br>
 		${member.name }<br>
-	<input type="hidden" id="id" value="${member.id}">
+	
+	<form name="frmPopup">
+		<input type="hidden" name="id" id="id" value="${member.id}">
+	</form>
 	<a href="#" id="goMini">미니홈피</a>
 	<a href="friends.do?id=${member.id }">일촌</a> 
 	<a href="minihomepageSearch.do">미니홈피 리스트</a>

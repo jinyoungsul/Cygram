@@ -8,6 +8,7 @@ public class Friend {
 	private String friendNickname;
 	private String action;
 	private String accept;
+	private MiniHomepage miniHomepage;
 	public int getFriendNo() {
 		return friendNo;
 	}
@@ -51,5 +52,17 @@ public class Friend {
 		this.accept = accept;
 	}
 	
+	public MiniHomepage getMiniHomepage() {
+		return miniHomepage;
+	}
+	public void setMiniHomepage(MiniHomepage miniHomepage) {
+		this.miniHomepage = miniHomepage;
+	}
+	@Override
+	public String toString() {
+		return "Friend [friendNo=" + friendNo + ", myId=" + myId + ", myNickname=" + myNickname + ", friendId="
+				+ friendId + ", friendNickname=" + friendNickname + ", action=" + action + ", accept=" + accept
+				+ ", miniHomepage=" + miniHomepage + "]";
+	}
 	
 }
