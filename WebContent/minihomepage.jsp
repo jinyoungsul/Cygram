@@ -34,6 +34,24 @@ $(function(){
 			
 		})
 	})
+	$('#friendsCommentBtn').click(function(){
+		$.ajax({
+			url : "friendsCommentUpdate.do",
+			method : "post",
+			data : {
+					content : $('#friendsCotent').val(),
+					myId : $('#myId').val(),
+					friendId : $('#friendId').val()
+					
+			},
+			success : function(data){
+				alert('성공');
+			},
+			error : function(){
+				alert('error');
+			}
+		})
+	})
 	
 })
 	
@@ -58,7 +76,7 @@ TODAY ${miniHomepage.today } / TOTAL ${miniHomepage.total }<br>
 		<a href="#" id="goFriend">일촌신청</a>
 	</c:if>
 </c:if>
-
+<p>Friends Say : <input type="text" id="friendsCotent" placeholder="일촌과 나누고 싶은 이야기를 남겨보세요~!"><a href="#" id="friendsCommentBtn">확인</a></p>
 <input type="hidden" id="myId" value="${sessionScope.loginId}">
 <input type="hidden" id="friendId" value="${miniHomepage.id}">
 </body>
