@@ -111,6 +111,7 @@ public class MiniHomepageController {
 	@RequestMapping(value="/homepageIntroduceAndImgUpdate.do",method=RequestMethod.POST)
 	public @ResponseBody int homepageIntroduceAndImgUpdate(MiniHomepage miniHomepage,HttpServletRequest request){
 		String homepageImgPath = request.getServletContext().getRealPath("img");
+		System.out.println(homepageImgPath);
 		File dir = new File(homepageImgPath);
 		if(dir.exists()==false){
 			dir.mkdirs();
@@ -119,12 +120,15 @@ public class MiniHomepageController {
 			MultipartFile f = (MultipartFile) miniHomepage.getMinihomepage_img();
 			String savedName = 
 					homepageImgPath +"/"+new Random().nextInt(1000000)+f.getOriginalFilename();
+			System.out.println("Cygram 위치:"+savedName.indexOf("Cygram"));
+			String realPath = "/"+savedName.substring((savedName.indexOf("Cygram")));
+			System.out.println("이미지경로:"+savedName.substring((savedName.indexOf("Cygram"))));
 			File saveFile = new File(savedName);
 			
 			// 업로드
 			try {
 				f.transferTo(saveFile);
-				miniHomepage.setMinihomepage_img_path(saveFile.getAbsolutePath());
+				miniHomepage.setMinihomepage_img_path(realPath);
 				homepageService.introduceImgUpdate(miniHomepage);
 			} catch (IllegalStateException |IOException e) {
 				e.printStackTrace();

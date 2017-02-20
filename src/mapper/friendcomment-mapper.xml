@@ -12,7 +12,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 일촌평 불러오기 -->
 	<select id="selectFriendsComment" resultMap="FriendCommentResult">
-		SELECT B.MY_ID,FRIEND.MY_NICKNAME,B.CONTENT
+		SELECT *
 		FROM FRIEND , FRIEND_COMMENT B
 		WHERE  B.FRIEND_ID = #{id} and (FRIEND.MY_ID = B.MY_ID and FRIEND.FRIEND_ID = B.FRIEND_ID)
 	</select>
@@ -22,10 +22,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="friendCommentNo" column="FRIEND_COMMENT_NO"/>
 		<result property="myId" column="MY_ID"/>
 		<result property="friendId" column="FRIEND_ID"/>
-		<result property="CONTENT" column="FRIEND_COMMENT_NO"/>
+		<result property="content" column="CONTENT"/>
 		<result property="writeDate" column="WRITE_DATE"/>
 		<association property="friend" javaType="Friend">
+			<result property="myId" column="MY_ID"/>
+			<result property="myNickname" column="MY_NICKNAME"/>
 			<result property="friendId" column="FRIEND_ID"/>
+			<result property="friendNickname" column="FRIEND_NICKNAME"/>
 		</association>
 	</resultMap>
 </mapper>

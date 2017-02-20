@@ -38,7 +38,7 @@ $(document).on('click','#goMini',function() {
 			<tr><td colspan="4">미니홈피 리스트</td></tr>
 			<c:forEach var="homepage" items="${homepageList }">
 				<tr>
-					<td><img src="${homepage.minihomepage_img_path}"></td>
+					<td><img src="${homepage.minihomepage_img_path}" width="50" height="50"></td>
 					<td>${homepage.member.id} ${homepage.member.name }</td>
 					<td>방문자수 : ${homepage.total }</td>
 					<td>

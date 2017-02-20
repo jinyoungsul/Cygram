@@ -6,6 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<script src="js/date.format.js"></script>
 <script>
 $(function(){
 	
@@ -41,6 +42,9 @@ $(function(){
 		})
 	})
 	$('#friendsCommentBtn').click(function(){
+		loadFriendsSay();	
+	})
+	function loadFriendsSay(){
 		$.ajax({
 			url : "friendsCommentUpdate.do",
 			method : "post",
@@ -51,25 +55,29 @@ $(function(){
 					
 			},
 			success : function(data){
+				$('#friendsSayList').empty();
 				$.each(data,function(index,value){
 					var friendComment = value;
-					var result = "<p>"+friendComment.myId+" ("+friendComment.friend.myNickname+") "+friendComment.content+" "+friendComment.writeDate+"</p>";
-					$('#friendsSayList').prepend(result);
+					var JsonDate = "/Date("+friendComment.writeDate+")/";
+					var date = new Date(parseInt(JsonDate.substr(6)));
+					var writeDate = date.format("yyyy/mm/dd h:MM:ss");
+					var result = "<p>"+friendComment.myId+" ("+friendComment.friend.myNickname+") "+friendComment.content+" "+writeDate+"</p>";
+					$('#friendsSayList').append(result);
 				})
 			},
 			error : function(){
 				alert('error');
 			}
 		})
-	})
-	
+	}
+	loadFriendsSay();
 })
 	
 </script>
 <title>Insert title here</title>
 </head>
 <body>
-<img src="${miniHomepage.minihomepage_img_path}" width="50" height="50">
+<img src="${miniHomepage.minihomepage_img_path }" width="50" height="50">
 ${miniHomepage.id }<br>
 TODAY ${miniHomepage.today } / TOTAL ${miniHomepage.total }<br> 
 
@@ -88,7 +96,10 @@ TODAY ${miniHomepage.today } / TOTAL ${miniHomepage.total }<br>
 		<a href="#" id="goFriend">일촌신청</a>
 	</c:if>
 </c:if>
-<p>Friends Say : <input type="text" id="friendsCotent" placeholder="일촌과 나누고 싶은 이야기를 남겨보세요~!"><a href="#" id="friendsCommentBtn">확인</a></p>
+<c:if test="${sessionScope.loginId!=miniHomepage.id}">
+	<p>Friends Say : <input type="text" id="friendsCotent" placeholder="일촌과 나누고 싶은 이야기를 남겨보세요~!"><a href="#" id="friendsCommentBtn">확인</a></p>
+</c:if>
+
 <div id='friendsSayList'>
 
 </div>
