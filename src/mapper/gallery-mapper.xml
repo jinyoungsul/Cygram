@@ -3,7 +3,7 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="repository.mapper.GalleryMapper">
+<mapper namespace="mapper.GalleryMapper">
 	<insert id="insert" parameterType="Gallery">
 		    <selectKey order="BEFORE" resultType="Integer" keyProperty="galleryNo">
       		  SELECT GALLERY_SEQ.NEXTVAL FROM DUAL

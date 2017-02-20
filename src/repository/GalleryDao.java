@@ -8,7 +8,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import repository.mapper.GalleryMapper;
+import mapper.GalleryMapper;
 import vo.Gallery;
 import vo.GalleryImg;
 
@@ -37,7 +37,7 @@ public class GalleryDao {
 	}
 	
 	public List<Gallery> selectList(int startRow, int count){
-		System.out.println("¸®½ºÆ® º¸ÀÓ?");
+		System.out.println("ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½?");
 		Map<String, Integer> map = new HashMap<>();
 		map.put("startRow", startRow);
 		map.put("count", count);

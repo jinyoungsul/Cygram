@@ -1,4 +1,4 @@
-package repository.mapper;
+package mapper;
 
 import vo.Profile;
 

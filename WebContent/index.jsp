@@ -5,9 +5,8 @@
 <title>Insert title here</title>
 </head>
 <body>
-<%
-	response.sendRedirect("writeForm.do");
-	
-%>
+<script type="text/javascript">
+ 	location.href="naverLogin.do";
+</script>
 </body>
 </html>
