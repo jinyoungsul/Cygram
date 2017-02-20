@@ -5,7 +5,6 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
@@ -50,7 +49,6 @@ $(function(){
 	<form name="frmPopup">
 		<input type="hidden" name="id" id="id" value="${member.id}">
 	</form>
-	<a href="minihomepageSearch.do">미니홈피 리스트</a>
 	
 	<div class="jumbotron">
 	<h4>어제 담은 당신의 일상, 오늘은 선물이 되어 돌아옵니다.<img src="/Cygram/img/newlogo.png"></h4>
@@ -105,12 +103,12 @@ $(function(){
 					</button>
 					<a href="friends.do?id=${member.id }">
 					<button type="button" class="btn btn-default btn-lg" >
-  						<span class="glyphicon glyphicon-user" aria-hidden="true" ></span>일촌
+  						<span class="glyphicon glyphicon-user" aria-hidden="true" ></span> 일촌
 					</button>
 					</a>
-					<a href="friends.do?id=${member.id }">
+					<a href="minihomepageSearch.do">
 					<button type="button" class="btn btn-default btn-lg" >
-  						<span class="glyphicon glyphicon-user" aria-hidden="true" ></span>미니홈피 리스트
+  						<span class="glyphicon glyphicon-th-list" aria-hidden="true" ></span> 미니홈피 리스트
 					</button>
 					</a>
 				  <br>

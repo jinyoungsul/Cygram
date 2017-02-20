@@ -7,11 +7,12 @@
 <title>Insert title here</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 <script>
-	alert('가입성공');
-	location.href="/Cygram";
+	$(function(){
+		window.open('about:blank', '_self').close();
+	})
 </script>
 </head>
 <body>
-	가입 성공
+
 </body>
 </html>

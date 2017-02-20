@@ -109,7 +109,7 @@ public class MiniHomepageController {
 		return new ModelAndView("editIntoduceAndImgForm");
 	}
 	@RequestMapping(value="/homepageIntroduceAndImgUpdate.do",method=RequestMethod.POST)
-	public @ResponseBody int homepageIntroduceAndImgUpdate(MiniHomepage miniHomepage,HttpServletRequest request){
+	public ModelAndView homepageIntroduceAndImgUpdate(MiniHomepage miniHomepage,HttpServletRequest request){
 		String homepageImgPath = request.getServletContext().getRealPath("img");
 		System.out.println(homepageImgPath);
 		File dir = new File(homepageImgPath);
@@ -134,6 +134,6 @@ public class MiniHomepageController {
 				e.printStackTrace();
 			}	
 		
-		return 0; 
+		return new ModelAndView("editIntoduceAndImgSuccess"); 
 	}
 }
