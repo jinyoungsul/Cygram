@@ -56,6 +56,8 @@ $(function(){
 			</p>
 		</div>
 	</form>
-	<a href="#" class="btn" id="addFile">파일추가</a>
+	<a href="#" class="btn" id="addFile">파일추가</a><br>
+	
+	<a href="readProfile.do">[프로필 화면으로]</a>
 </body>
 </html>
