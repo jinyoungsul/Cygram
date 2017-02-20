@@ -31,9 +31,9 @@ public class GalleryController {
 	//----------------------------------------------------------//
 	
 	@RequestMapping("/galleryList.do")
-	public ModelAndView galleryList(@RequestParam(value="page",defaultValue="1") int page){
+	public ModelAndView galleryList(@RequestParam(value="page",defaultValue="1") int page,HttpSession session){
 		ModelAndView mv = new ModelAndView("gallery_list");
-		mv.addObject("galleryPage", galleryService.makePage(page));
+		mv.addObject("galleryPage", galleryService.makePage(page,(String)session.getAttribute("loginId")));
 		return mv;
 	}
 	
@@ -56,19 +56,22 @@ public class GalleryController {
 		if(dir.exists()==false){
 			dir.mkdirs();
 		}
-		// ´ÙÁß ¾÷·Îµå
-		//µ¥ÀÌÅÍ º£ÀÌ½º ±â·Ï
+		// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Îµï¿½
+		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ì½ï¿½ ï¿½ï¿½ï¿½
 		for(MultipartFile f : gallery.getPhotoList()){
 			String savedName = 
 					galleryPath +"/"+new Random().nextInt(1000000)+f.getOriginalFilename();
+			System.out.println("Cygram ìœ„ì¹˜:"+savedName.indexOf("Cygram"));
+			String realPath = "/"+savedName.substring((savedName.indexOf("Cygram")));
+			System.out.println("ì´ë¯¸ì§€ê²½ë¡œ:"+savedName.substring((savedName.indexOf("Cygram"))));
 			File saveFile = new File(savedName);
 			
-			// ¾÷·Îµå
+			// ï¿½ï¿½ï¿½Îµï¿½
 			try {
 				f.transferTo(saveFile);
 				
 				galleryImg = new GalleryImg();
-				galleryImg.setGalleryPath(saveFile.getAbsolutePath());
+				galleryImg.setGalleryPath(realPath);
 				galleryImgList.add(galleryImg);
 				
 			} catch (IllegalStateException |IOException e) {

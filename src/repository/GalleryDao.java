@@ -1,5 +1,6 @@
 package repository;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,18 +37,24 @@ public class GalleryDao {
 		return mapper.select(galleryNo);
 	}
 	
-	public List<Gallery> selectList(int startRow, int count){
-		System.out.println("����Ʈ ����?");
+	public List<Gallery> selectList(int startRow, int count,String id){
+		System.out.println("selectList error");
 		Map<String, Integer> map = new HashMap<>();
-		map.put("startRow", startRow);
-		map.put("count", count);
-		
+		Map<String, Object> map2 = new HashMap<>();
+		map2.put("startRow", startRow);
+		map2.put("count", count);
+		map2.put("id",id);
 		GalleryMapper mapper = session.getMapper(GalleryMapper.class);
-		return mapper.selectGalleryList(map);
+		return mapper.selectGalleryList(map2);
 	}
 	
 	public int selectCount(){
 		GalleryMapper mapper = session.getMapper(GalleryMapper.class);
 		return mapper.selectGalleryCount();
+	}
+
+	public List<GalleryImg> selectImgList(int galleryNo) {
+		GalleryMapper mapper = session.getMapper(GalleryMapper.class);
+		return mapper.selectImgList(galleryNo);
 	}
 }

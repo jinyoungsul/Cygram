@@ -39,7 +39,7 @@ public class GalleryService {
 		return gallery;
 	}
 	
-	public GalleryPage makePage(int currentPage){
+	public GalleryPage makePage(int currentPage,String id){
 		final int COUNT_PER_PAGE=3;
 		int totalGalleryCount = galleryDao.selectCount();
 		
@@ -51,19 +51,17 @@ public class GalleryService {
 		int startRow = ((currentPage-1)*COUNT_PER_PAGE)+1;
 		int endRow = startRow +2;
 		List<Gallery> galleryList = 
-				galleryDao.selectList(startRow, endRow);
+				galleryDao.selectList(startRow, endRow,id);
 		
 		System.out.println("start:"+startRow+"/end:"+endRow);
 		System.out.println("list size:"+galleryList.size());
 		
-		
+		System.out.println("ÏÇ¨ÏßÑÏ≤©Î¶¨Ïä§Ìä∏ ÌôïÏù∏");
 		for(Gallery g: galleryList){
-			System.out.println("--±€Ω√¿€");
-			System.out.println("\t"+g.toString());
-			for(GalleryImg img: g.getGalleryImgList()){
-				System.out.println("\t\t"+img.toString());
-			}
-			System.out.println("--±€≥°");
+			int galleryNo = g.getGalleryNo();
+			List<GalleryImg> galleryImgList = galleryDao.selectImgList(galleryNo);
+			g.setGalleryImgList(galleryImgList);
+			System.out.println(g);
 		}
 		
 		int totalPage = totalGalleryCount/COUNT_PER_PAGE;

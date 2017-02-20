@@ -31,17 +31,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT * FROM GALLERY WHERE GALLERY_NO=#{galleryNo}
 	</select>
 	
-	<select id="selectGalleryImg" parameterType="integer" resultMap="galleryImgMap">
+	<select id="selectImgList" parameterType="integer" resultMap="galleryImgMap">
 		SELECT * FROM GALLERY_IMG WHERE GALLERY_NO = #{galleryNo}
 	</select>
 
-	<select id="selectGalleryList" parameterType="Map" resultMap="galleryResultMap" >
+	<select id="selectGalleryList" parameterType="Map" resultMap="galleryMap" >
 		SELECT * FROM (
 			SELECT ROWNUM R, A.* FROM(	
-				SELECT G.GALLERY_NO, G.TITLE, G.ID, G.WRITE_DATE, G.CONTENT, G.AUTHORITY_CODE, 
-		      	 IMG.GALLERY_IMG_NO, IMG.GALLERY_PATH
-		      	 FROM GALLERY G, GALLERY_IMG IMG
-		      	 WHERE G.GALLERY_NO = IMG.GALLERY_NO
+				SELECT *
+		      	 FROM GALLERY G
+		      	 WHERE G.ID = #{id}
 		      	 ORDER BY G.GALLERY_NO DESC
 			) A	)
 		WHERE R BETWEEN #{startRow} AND #{count}
@@ -62,18 +61,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="authorityCode" column="authority_code" />
 	</resultMap>
 
-	<resultMap id="galleryResultMap" type="Gallery">
-		<id property="galleryNo" column="g.gallery_no" />
-		<result property="galleryNo" column="gallery_no" />
-		<result property="title" column="title" />
-		<result property="id" column="id" />
-		<result property="writeDate" column="write_date" />
-		<result property="content" column="content" />
-		<result property="authorityCode" column="authority_code" />
-		<result property="galleryImgNo" column="gallery_img_no" />
-		<result property="galleryPath" column="gallery_path" />
-		<collection property="galleryImgList" column="GALLERY_NO"
-			select="selectGalleryImg" ofType="galleryImgMap" javaType="ArrayList" />
-	</resultMap>
+<!-- 	<resultMap id="galleryResultMap" type="Gallery"> -->
+<!-- 		<id property="galleryNo" column="g.gallery_no" /> -->
+<!-- 		<result property="galleryNo" column="gallery_no" /> -->
+<!-- 		<result property="title" column="title" /> -->
+<!-- 		<result property="id" column="id" /> -->
+<!-- 		<result property="writeDate" column="write_date" /> -->
+<!-- 		<result property="content" column="content" /> -->
+<!-- 		<result property="authorityCode" column="authority_code" /> -->
+<!-- 		<result property="galleryImgNo" column="gallery_img_no" /> -->
+<!-- 		<result property="galleryPath" column="gallery_path" /> -->
+<!-- 		<collection property="galleryImgList" column="GALLERY_NO" -->
+<!-- 			select="selectGalleryImg" ofType="galleryImgMap" javaType="ArrayList" /> -->
+<!-- 	</resultMap> -->
 	
 </mapper>

@@ -24,6 +24,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import service.MemberService;
+import service.MiniHomepageService;
 import vo.Member;
 
 @Controller
@@ -34,8 +35,15 @@ public class NaverLoginController {
 	@Autowired
 	private MemberService service;
 	
+	@Autowired
+	private MiniHomepageService homepageService;
+	
 	public void setService(MemberService service) {
 		this.service = service;
+	}
+	
+	public void setHomepageService(MiniHomepageService homepageService) {
+		this.homepageService = homepageService;
 	}
 
 	@RequestMapping(value = "/naverLogin.do")
@@ -137,22 +145,27 @@ public class NaverLoginController {
 		ModelAndView mv = new ModelAndView();
 		
 		
-		System.out.println(member.toString());
+		System.out.println("네이버 가입"+member.toString());
 		
 		//////////////////가입 되어 있는지 한번 확인////////////
 		Member savedMember = new Member();
 		savedMember = service.selectMember(member.getId());
-		
+		System.out.println("아이디 찾았어?:"+savedMember);
 		if(savedMember!=null){	//아이디가 존재 하면 바로 메인 이동 
-			
-			session.setAttribute("naverLoginId", savedMember.getId());
+			System.out.println("네이버 아이디 존재");
+			session.setAttribute("loginId", savedMember.getId());
 			mv.addObject("member", savedMember);
 			mv.setViewName("main");
 		} else if(savedMember==null){	//아이디가 존재 하지 않으면
+			System.out.println("네이버 아이디 X");
+			System.out.println("네이버 회원가입 :"+savedMember);
 			member.setEmail("null");	//왜 널값이 들어가면 안됨?
+			member.setPassword("null");	//왜 널값이 들어가면 안됨?
+			member.setPhone("null");	//왜 널값이 들어가면 안됨?
 			if(service.join(member)){	//가입 후 메인 이동
 				session.setAttribute("loginId", member.getId());
-				System.out.println(((Member)session.getAttribute("naverLoginId")).getId());
+				System.out.println("네이버 가입시 미니홈피");
+				homepageService.createMiniHomepage(member.getId());
 				mv.addObject("member", member);
 				mv.setViewName("main");
 			} else {
