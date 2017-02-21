@@ -19,10 +19,16 @@
 body{
 background-image: url("img/background2.png");
 }
+div#list {
+	margin-left: 270px;
+	margin-top: 120px;
+}
 </style>
 </head>
 <body>
+
 <Button id="refresh">홈</Button>
+<div id="list">
 		<div id='visitorList'>
 			<c:choose>
 				<c:when test="${empty visitorPage.visitorList}">
@@ -69,7 +75,7 @@ background-image: url("img/background2.png");
 
 
 		<a href="writeVisitorForm.do?id=${sessionScope.loginId}"><button>방명록 쓰기</button></a>
-	
+	</div>
 </body>
 </html>
 

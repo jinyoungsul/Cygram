@@ -18,14 +18,21 @@
 body{
 background-image: url("img/background2.png");
 }
+
+div#result{
+margin-left: 280px;
+margin-top: 120px;
+}
 </style>
 </head>
 <body>
+<div id="result">
 <Button id="refresh">홈</Button>
 <h2>글쓰기를 완료하였습니다.</h2>
 	<a href="galleryList.do">[게시판으로]</a>
 	<a href="read.do?galleryNo=${gallery_No}"> 
 		[내가 쓴 글 확인하기] 
 	</a>
+	</div>
 </body>
 </html>

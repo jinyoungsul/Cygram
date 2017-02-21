@@ -38,10 +38,10 @@ div#list {
 			<c:otherwise>
 				<c:forEach var="gallery" items="${galleryPage.galleryList}">
 				<div>
-						<p>${gallery.id}                            ${gallery.writeDate}</p>
-						<p>${gallery.content}/<p>
+						<p><b> 제목 </b>${gallery.title}                            ${gallery.writeDate}</p>
+						<p><b> 내용 </b>${gallery.content}/<p>
 							<c:forEach var="galleryImg" items="${gallery.galleryImgList}">
-								<p><img src="${galleryImg.galleryPath}" width="50sp" height="50sp">/<p>
+								<img src="${galleryImg.galleryPath}" width="130sp" height="130sp">
 							</c:forEach>
 						<p>권한 ${gallery.authorityCode}</p>
 				</div>

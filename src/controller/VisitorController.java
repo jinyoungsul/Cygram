@@ -38,9 +38,9 @@ public class VisitorController {
 	@RequestMapping("/visitorList.do")
 	public ModelAndView visitorList(@RequestParam(value="page",defaultValue="1") int page, String id){
 		ModelAndView mv = new ModelAndView("visitor_list");
-		System.out.println(page+','+id);
+		System.out.println("방명록리스트"+page+' '+id);
 //		System.out.println("방명록 리스트"+visitorService.makePage(page, id));
-//		mv.addObject("visitorPage", visitorService.makePage(page, id));
+		mv.addObject("visitorPage", visitorService.makePage(page, id));
 		return mv;
 	}
 	

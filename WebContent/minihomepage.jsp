@@ -20,12 +20,10 @@ $(function(){
 		window.open('friendsPlusForm.do?myId='+$('#myId').val()+'&friendId='+$('#friendId').val(),"","width=1050, height=350,top=250,left=200");
 	})
 	$('#editTitle').click(function(){
-		alert('수정 클릭');
 		$('#title').attr("readonly" ,false);
 		$('#editTitleOk').show();
 	})
 	$('#editIntoduceAndImg').click(function(){
-		alert('메인사진, 소개글 수정 클릭');
 		 var status = "toolbar=no,scrollbars=no,resizable=no,status=no,menubar=no,width=400, height=300, top=0,left=20";
 		 var popup = window.open('editIntoduceAndImgForm.do','editIntoduceAndImg',status);
 	})
@@ -98,36 +96,45 @@ margin-left:60px;
 }
 
 div#profile{
-margin-left: 680px;
-margin-top: 45px;
+margin-left: 710px;
+margin-top: 20px;
 
 }
 
 div#diary{
-margin-left: 680px;
+margin-left: 710px;
 margin-top: 10px;
 
 }
 
 div#gallery{
-margin-left: 680px;
+margin-left: 710px;
 margin-top: -140px;
 
 }
 
 div#visitor{
-margin-left: 680px;
+margin-left: 710px;
 margin-top: 158px;
 
 }
+
+div#friendsSayList{ 
+ margin-left: 280px; 
+margin-top: 120px; 
+
+ } 
+
 
 
 </style>
 </head>
 <body>
 <Button id="refresh">홈</Button>
-<div id="title1">
+
 <img src="${miniHomepage.minihomepage_img_path }" width="50" height="50">
+
+<div id="title1">
 ${miniHomepage.id }<br>
 TODAY ${miniHomepage.today } / TOTAL ${miniHomepage.total }<br> 
 
@@ -178,6 +185,7 @@ TODAY ${miniHomepage.today } / TOTAL ${miniHomepage.total }<br>
 <div id='friendsSayList'>
 
 </div>
+
 <input type="hidden" id="myId" value="${sessionScope.loginId}">
 <input type="hidden" id="friendId" value="${miniHomepage.id}">
 </body>

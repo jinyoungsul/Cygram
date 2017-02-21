@@ -25,7 +25,7 @@ $(document).on('click','#goMini',function() {
 	var frm = document.frmPopup
 	 var url    ="miniHomepage.do";
 	 var title  = 'minihomepage';
-	 var status = "toolbar=no,directories=no,scrollbars=no,resizable=no,status=no,menubar=no,width=900, height=600, top=130,left=180"; 
+	 var status = "toolbar=no,directories=no,scrollbars=no,resizable=no,status=no,menubar=no,width=950, height=600, top=130,left=180"; 
 	 window.open("", title,status); //window.open(url,title,status); window.open 함수에 url을 앞에와 같이
 	                                            //인수로  넣어도 동작에는 지장이 없으나 form.action에서 적용하므로 생략
 	                                            //가능합니다.

@@ -18,17 +18,19 @@
 body{
 background-image: url("img/background2.png");
 }
+div#write_visitor {
+	margin-left: 270px;
+	margin-top: 120px;
+}
 </style>
 </head>
 <body>
 	<Button id="refresh">홈</Button>
+	<div id="write_visitor">
 	<form action="writeVisitor.do" method="post" >
 		<input type="hidden" name="friendId" value=${friendId }>
+		<input type="hidden" name="myId" value="${sessionScope.loginId}">
 		<table border="1">
-			<tr>
-				<td>작성자:</td>
-				<td><input type="hidden" name="myId" value="${sessionScope.loginId}"></td>
-			</tr>
 			<tr>
 				<td>내용:</td>
 				<td><textarea cols="20" rows="5" name="content"></textarea></td>
@@ -44,5 +46,6 @@ background-image: url("img/background2.png");
 	</form>
 	
 	<a href="visitorList.do?id=${friendId}">[방명록 화면으로]</a>
+	</div>
 </body>
 </html>
