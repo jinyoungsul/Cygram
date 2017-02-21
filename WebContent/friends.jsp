@@ -24,7 +24,7 @@ $(document).on('click','#goMini',function() {
 	var frm = document.frmPopup
 	 var url    ="miniHomepage.do";
 	 var title  = 'minihomepage';
-	 var status = "toolbar=no,directories=no,scrollbars=no,resizable=no,status=no,menubar=no,width=400, height=300, top=0,left=20"; 
+	 var status = "toolbar=no,directories=no,scrollbars=no,resizable=no,status=no,menubar=no,width=900, height=600, top=130,left=180"; 
 	 window.open("", title,status); //window.open(url,title,status); window.open 함수에 url을 앞에와 같이
 	                                            //인수로  넣어도 동작에는 지장이 없으나 form.action에서 적용하므로 생략
 	                                            //가능합니다.
@@ -85,7 +85,7 @@ $(document).on('click','#goMini',function() {
 					result += "<td><img src='" + friend.miniHomepage.minihomepage_img_path + "' width='100' heigth='100'></td>"
 					result += "<td>" + friend.miniHomepage.member.name				
 					result += "<br>("+friend.friendNickname+ ")</td>"
-					result += "<td><button type='button' class='btn btn-default btn-lg'>"
+					result += "<td><button type='button' class='btn btn-default btn-lg' id='goMini' value='"+friend.friendId+"'>"
 					result += "<span class='glyphicon glyphicon-home' aria-hidden='true' id='goMini' value='"+friend.friendId+"'></span> 미니홈피 </button>"
 					result += "<td><Button id='deleteFriend' value='"+friend.friendNo+"'>삭제</Button></td>"
 					result += "</tr>"
@@ -118,7 +118,7 @@ $(document).on('click','#goMini',function() {
 		
 		<form name="frmPopup">
 		<input type="hidden" name="id" id="id" value="${member.id}">
-	</form>
+		</form>
 	
 	<div class="jumbotron">
 	<h4>어제 담은 당신의 일상, 오늘은 선물이 되어 돌아옵니다.<img src="/Cygram/img/newlogo.png"></h4>
@@ -175,13 +175,12 @@ $(document).on('click','#goMini',function() {
 				
 					<table class="table">
 						<c:forEach var="friend" items="${receiveFriendsList}">
-					
-						<td>${friend.friendNo}</td>
-						<td>나 : ${friend.myId} 일촌명 : ${friend.myNickname}</td>
-						<td>상대방 : ${friend.friendId} 일촌명 : ${friend.friendNickname}</td>
-						<td><Button id="accept" value="${friend.friendNo}">수락하기</Button></td>
-						<td><Button id="accept_cancel" value="${friend.friendNo}">거절하기</Button></td>
-					
+						<tr>
+							<td>나 : ${friend.myId} 일촌명 : ${friend.myNickname}</td>
+							<td>상대방 : ${friend.friendId} 일촌명 : ${friend.friendNickname}</td>
+							<td><Button id="accept" value="${friend.friendNo}">수락하기</Button></td>
+							<td><Button id="accept_cancel" value="${friend.friendNo}">거절하기</Button></td>
+						</tr>
 				</c:forEach>
 					</table>
 			</c:otherwise>
@@ -201,11 +200,13 @@ $(document).on('click','#goMini',function() {
 				
 			       <c:choose>
 					<c:when test="${member.naver == 'T'}">
-						<img src="img/naver_badge.png" width="15" height="15">
-					</c:when>		
+						<h3>${member.id } (${member.name }) <img src="img/naver_badge.png" width="25" height="25"></h3><br>
+					</c:when>	
+					<c:otherwise>
+						<h3>${member.id } (${member.name })</h3><br>
+					</c:otherwise>	
 				   </c:choose>	
-					<h3>${member.id } (${member.name })</h3><br>
-					<button type="button" class="btn btn-default btn-lg" id="goMini">
+					<button type="button" class="btn btn-default btn-lg" id="goMini" value="${sessionScope.loginId }">
   						<span class="glyphicon glyphicon-home" aria-hidden="true" id="goMini"></span> 미니홈피
 					</button>
 					<a href="friends.do?id=${member.id }">

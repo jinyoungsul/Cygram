@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.DiaryMapper">
+	<insert id="insert" parameterType="Diary">
+		INSERT INTO DIARY(DIARY_NO,ID,TITLE,CONTENT,WRITE_DATE,AUTHORITY_CODE)
+		VALUES(DIARY_SEQ.NEXTVAL,#{id},#{title},#{content},#{writeDate},#{authorityCode})
+	</insert>
+	
+	<update id="update" parameterType="Diary">
+		UPDATE DIARY SET TITLE = #{title}, CONTENT=#{content},AUTHORITY_CODE=#{authorityCode}
+      	WHERE DIARY_NO = #{diaryNo}
+	</update>
+	
+	<select id="selectDiaryCount" resultType="integer">
+		SELECT COUNT(*) FROM
+		DIARY
+	</select>
+	
+	<select id="select" parameterType="String" resultMap="diaryMap">
+		SELECT * FROM DIARY WHERE DIARY_NO = #{diaryNo}
+	</select>
+	
+	<select id="selectDiaryList" parameterType="Map" resultMap="diaryMap" >
+	SELECT * FROM (
+		SELECT ROWNUM R, A.* FROM(
+			SELECT DIARY_NO,ID,TITLE,CONTENT,WRITE_DATE,AUTHORITY_CODE
+			FROM DIARY
+			WHERE ID=#{id}
+		ORDER BY DIARY_NO DESC
+	) A )
+	WHERE R BETWEEN #{startRow} AND #{count}
+	</select>
+
+	<resultMap type="Diary" id="diaryMap">
+		<result property="diaryNo" column="DIARY_NO"/>
+		<result property="id" column="ID"/>
+		<result property="title" column="TITLE"/>
+		<result property="content" column="CONTENT"/>
+		<result property="writeDate" column="WRITE_DATE"/>
+		<result property="authorityCode" column="AUTHORITY_CODE"/>
+	</resultMap>
+</mapper>

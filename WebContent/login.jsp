@@ -82,6 +82,8 @@
 			       <input type="text" name="id" id="id" class="form-control" placeholder="id" required>
 			       <label for="password" class="sr-only">비밀번호</label>
 			       <input type="password" name="password" id="password" class="form-control" placeholder="Password" required>
+			       <label for="naver" class="sr-only">비밀번호</label>
+			       <input type="hidden" name="naver" id="naver" class="form-control" value="F">
 			       <button class="btn btn-lg btn-primary btn-block" type="submit">가입</button>
       			</form>
       			<br>

@@ -18,10 +18,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.servlet.ModelAndView;
 
 import service.FriendsService;
+import service.MemberService;
 import service.MiniHomepageService;
 import vo.Friend;
 import vo.MiniHomepage;
@@ -32,6 +32,8 @@ public class MiniHomepageController {
 	private MiniHomepageService homepageService;
 	@Autowired
 	private FriendsService friendsService;
+	@Autowired
+	private MemberService memberService; 
 	
 	public void setService(MiniHomepageService homepageService) {
 		this.homepageService = homepageService;
@@ -39,7 +41,10 @@ public class MiniHomepageController {
 	public void setFriendsService(FriendsService friendsService) {
 		this.friendsService = friendsService;
 	}
-
+	public void setMemberService(MemberService memberService) {
+		this.memberService = memberService;
+	}
+	
 	@RequestMapping(value="/miniHomepage.do",method=RequestMethod.POST)
 	public ModelAndView miniHomepage(String id,HttpSession session,HttpServletRequest request,HttpServletResponse response){
 		ModelAndView mv = new ModelAndView();
@@ -53,12 +58,14 @@ public class MiniHomepageController {
 			//쿠키 서치
 			boolean create = true;
 			for(Cookie cookie : cookies){
+				System.out.println(cookie.getName());
 				if(cookie.getName().equals(myId+friendId)){
 					System.out.println("쿠키 찾음 id = "+cookie.getValue());
 					create = false;
 				}
 			}
 			if(create){
+				System.out.println("이거 실행 안될텐데?");
 				//쿠키 생성
 				Cookie cookie = new Cookie(myId+friendId,"visit");
 				Date expireday = new Date();
@@ -91,10 +98,12 @@ public class MiniHomepageController {
 	}
 	@RequestMapping(value="/minihomepageSearch.do")
 	public ModelAndView miniHomepageSearch(
-			@RequestParam(value="keyword",defaultValue="")String keyword ){
+			@RequestParam(value="keyword",defaultValue="")String keyword,HttpSession session ){
 		ModelAndView mv = new ModelAndView();
 		List<MiniHomepage> homepageList = homepageService.selectMiniHomepageList(keyword);
+		String id = (String)session.getAttribute("loginId");
 		mv.addObject("homepageList", homepageList);
+		mv.addObject("member", memberService.selectMember(id));
 		mv.setViewName("homepageList");
 		return mv;
 	}

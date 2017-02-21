@@ -16,6 +16,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import service.FriendsService;
+import service.MemberService;
 import service.MiniHomepageService;
 import vo.Friend;
 import vo.MiniHomepage;
@@ -27,6 +28,9 @@ public class FriendsController {
 	@Autowired
 	private MiniHomepageService homepageSerivce;
 	
+	@Autowired
+	private MemberService memberService;
+	
 	public void setFriendService(FriendsService friendsService) {
 		this.friendsService = friendsService;
 	}
@@ -34,6 +38,11 @@ public class FriendsController {
 	public void setHomepageSerivce(MiniHomepageService homepageSerivce) {
 		this.homepageSerivce = homepageSerivce;
 	}
+	
+	public void setMemberService(MemberService memberService) {
+		this.memberService = memberService;
+	}
+
 	@RequestMapping(value="/friends.do")
 	public ModelAndView friends(String id){
 
@@ -45,6 +54,7 @@ public class FriendsController {
 		mv.addObject("sendFriendsList",sendFriendsList);
 		mv.addObject("receiveFriendsList",receiveFriendsList);
 		mv.addObject("friendsList", friendsList);
+		mv.addObject("member", memberService.selectMember(id));
 		System.out.println("sendFriendsList.size " +sendFriendsList.size());
 		System.out.println("receiveFriendsList.size " +receiveFriendsList.size());
 		

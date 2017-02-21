@@ -76,20 +76,6 @@ $(document).on('click','#goMini',function() {
           <div class="row">
             <div class=".col-md-4">
             <h2>미니홈피 목록</h2>
-           	<table class="table">
-            <tr>
-								<td><img src="${homepage.minihomepage_img_path}" width="50" height="50"></td>
-								<td>ㅁㄴㅇㅁㄴㅇㅁㄴㅇㅁㄴㅇ</td>
-								<td>방문자수 : 1000000000</td>
-								<td><Button id="goMini" value="">미니홈피</Button></td>
-							</tr>
-							  <tr>
-								<td><img src="${homepage.minihomepage_img_path}" width="50" height="50"></td>
-								<td>ㅁㄴㅇㅁㄴㅇㅁㄴㅇㅁㄴㅇ</td>
-								<td>방문자수 : 1000000000</td>
-								<td><Button id="goMini" value="">미니홈피</Button></td>
-							</tr>
-							</table>
             <c:choose>
 			<c:when test="${empty homepageList }">
 					
@@ -116,11 +102,13 @@ $(document).on('click','#goMini',function() {
 				
 			       <c:choose>
 					<c:when test="${member.naver == 'T'}">
-						<img src="img/naver_badge.png" width="15" height="15">
-					</c:when>		
+						<h3>${member.id } (${member.name }) <img src="img/naver_badge.png" width="25" height="25"></h3><br>
+					</c:when>	
+					<c:otherwise>
+						<h3>${member.id } (${member.name })</h3><br>
+					</c:otherwise>	
 				   </c:choose>	
-					<h3>${member.id } (${member.name })</h3><br>
-					<button type="button" class="btn btn-default btn-lg" id="goMini">
+					<button type="button" class="btn btn-default btn-lg" id="goMini" value="${sessionScope.loginId }">
   						<span class="glyphicon glyphicon-home" aria-hidden="true" id="goMini"></span> 미니홈피
 					</button>
 					<a href="friends.do?id=${member.id }">
@@ -144,12 +132,14 @@ $(document).on('click','#goMini',function() {
         <p>&copy; Company 2017</p>
       </footer>
 
-    </div><!--/.container-->
+    </div>
+    
+    <!--/.container-->
+    <form name="frmPopup">
+	<input type="hidden" name="id" id="id" >
+	</form>
 		<!-- Bootstrap core JavaScript
 
-<form name="frmPopup">
-	<input type="hidden" name="id" id="id" >
-</form>
 		<!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->

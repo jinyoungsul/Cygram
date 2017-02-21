@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="mapper.VisitorMapper">
+	<insert id="insert" parameterType="Visitor">
+		INSERT INTO VISITOR(VISITOR_NO,MY_ID,FRIEND_ID,CONTENT,AUTHORITY_CODE,WRITE_DATE)
+		VALUES(VISITOR_SEQ.NEXTVAL,#{myId},#{friendId},#{content},#{authorityCode},#{writeDate})
+	</insert>
+	
+	<update id="update" parameterType="Visitor">
+		UPDATE VISITOR SET CONTENT=#{content}
+      	WHERE VISITOR_NO = #{visitorNo}
+	</update>
+	
+	<select id="selectVisitorCount" resultType="integer">
+		SELECT COUNT(*) FROM
+		VISITOR
+	</select>
+	
+	<select id="select" parameterType="String" resultMap="visitorMap">
+		SELECT * FROM DIARY WHERE VISITOR = #{visitorNo}
+	</select>
+	
+	<select id="selectVisitorList" parameterType="Map" resultMap="visitorMap" >
+	SELECT * FROM (
+		SELECT ROWNUM R, A.* FROM(
+			SELECT VISITOR_NO,MY_ID,FRIEND_ID,CONTENT,AUTHORITY_CODE,WRITE_DATE
+			FROM VISITOR
+			WHERE MY_ID=#{myId}
+		ORDER BY VISITOR_NO DESC
+	) A )
+	WHERE R BETWEEN #{startRow} AND #{count}
+	</select>
+
+	<resultMap type="Visitor" id="visitorMap">
+		<result property="visitorNo" column="VISITOR_NO"/>
+		<result property="myId" column="MY_ID"/>
+		<result property="friendId" column="FRIEND_ID"/>
+		<result property="content" column="CONTENT"/>
+		<result property="writeDate" column="WRITE_DATE"/>
+		<result property="authorityCode" column="AUTHORITY_CODE"/>
+	</resultMap>
+</mapper>

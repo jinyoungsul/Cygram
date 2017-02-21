@@ -5,6 +5,16 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 <title>글쓰기 화면</title>
+
+<style type="text/css">
+body{
+background-image: url("img/background2.png");
+}
+div#write {
+	margin-left: 270px;
+	margin-top: 120px;
+}
+</style>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 <script type="text/javascript">
@@ -22,11 +32,18 @@ $(function(){
 	$('a[name=delete]').click(function(){
 		$(this).parent().remove();
 	})
+		$('#refresh').click(function(){
+// 		location.reload(true);
+// 		location.href = location.href;
+		history.go(-1);
+	})
 })
 </script>
 
 </head>
 <body>
+<Button id="refresh">홈</Button>
+<div id="write">
 	<form action="write.do" method="post" enctype="multipart/form-data">
 		<table border="1">
 			<tr>
@@ -35,7 +52,7 @@ $(function(){
 			</tr>
 			<tr>
 				<td>작성자:</td>
-				<td><input type="text" name="id"></td>
+				<td><input type="hidden" value="${sessionScope.loginId}"></td>
 			</tr>
 			<tr>
 				<td>내용:</td>
@@ -59,5 +76,6 @@ $(function(){
 	<a href="#" class="btn" id="addFile">파일추가</a><br>
 	
 	<a href="readProfile.do">[프로필 화면으로]</a>
+</div>
 </body>
 </html>

@@ -3,7 +3,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 	<script>
@@ -13,39 +13,36 @@
 		history.go(-1);
 	})
 	</script>
-<title>프로필 글쓰기 화면</title>
+<title>방명록 글쓰기 화면</title>
 <style type="text/css">
 body{
 background-image: url("img/background2.png");
 }
-div#write_profile {
-	margin-left: 270px;
-	margin-top: 120px;
-}
 </style>
 </head>
 <body>
-<Button id="refresh">홈</Button>
-<div id="write_profile">
-<form action="writeProfile.do" method="post" >
+	<Button id="refresh">홈</Button>
+	<form action="writeVisitor.do" method="post" >
+		<input type="hidden" name="friendId" value=${friendId }>
 		<table border="1">
 			<tr>
-				<td>제목:</td>
-				<td><input type="text" name="title"></td>
-			</tr>
-			<tr>
 				<td>작성자:</td>
-				<td><input type="hidden" name="id" value="${sessionScope.loginId}"></td>
+				<td><input type="hidden" name="myId" value="${sessionScope.loginId}"></td>
 			</tr>
 			<tr>
 				<td>내용:</td>
 				<td><textarea cols="20" rows="5" name="content"></textarea></td>
 			</tr>
 			<tr>
+				<td>작성권한:</td>
+				<td><input type="text" name="authorityCode"></td>
+			</tr>
+			<tr>
 				<td colspan="2"><input type="submit" value="작성완료"></td>
 			</tr>
 		</table>
 	</form>
-	</div>
+	
+	<a href="visitorList.do?id=${friendId}">[방명록 화면으로]</a>
 </body>
 </html>

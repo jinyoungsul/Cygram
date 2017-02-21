@@ -4,9 +4,24 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+	<script>
+	$('#refresh').click(function(){
+// 		location.reload(true);
+// 		location.href = location.href;
+		history.go(-1);
+	})
+	</script>
 <title>글쓰기 완료</title>
+<style type="text/css">
+body{
+background-image: url("img/background2.png");
+}
+</style>
 </head>
 <body>
+<Button id="refresh">홈</Button>
 <h2>글쓰기를 완료하였습니다.</h2>
 	<a href="galleryList.do">[게시판으로]</a>
 	<a href="read.do?galleryNo=${gallery_No}"> 

@@ -22,8 +22,7 @@ public class ProfileService {
 		
 		profile.setWriteDate(new Date());
 		
-		if(result>0)
-			result=profileDao.insert(profile);
+		result=profileDao.insert(profile);
 		return result;
 	}
 	

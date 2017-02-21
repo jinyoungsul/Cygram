@@ -34,14 +34,15 @@ public class ProfileController {
 	public ModelAndView writeProfile(HttpSession session, Profile profile) {
 		String id = (String) session.getAttribute("loginId");
 		profile.setId(id);
+		profileService.write(profile);
 		ModelAndView mv = new ModelAndView("read_profile");
+		mv.addObject("profile", profile);
 		return mv;
 	}
 
 	@RequestMapping("/readProfile.do")
 	public ModelAndView read(HttpSession session, String id) {
-		String loginId = (String) session.getAttribute("loginId");
-		Profile profile = profileService.read(loginId);
+		Profile profile = profileService.read(id);
 
 		ModelAndView mv = new ModelAndView("read_profile");
 		mv.addObject("profile", profile);
@@ -61,6 +62,7 @@ public class ProfileController {
 	public ModelAndView modifyProfile(HttpSession session, Profile profile) {
 		String id = (String) session.getAttribute("loginId");
 		profile.setId(id);
+		profileService.modify(profile, id);
 		ModelAndView mv = new ModelAndView("read_profile");
 		return mv;
 	}
