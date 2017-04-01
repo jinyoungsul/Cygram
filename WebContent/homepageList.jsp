@@ -24,19 +24,110 @@ $(document).on('click','#goMini',function() {
 	var id = $(this).attr('value');
 	var frm = document.frmPopup
 	 var url    ="miniHomepage.do";
-	 var title  = 'minihomepage';
+	 var name  = id;
 	 var status = "toolbar=no,directories=no,scrollbars=no,resizable=no,status=no,menubar=no,width=950, height=600, top=130,left=180"; 
-	 window.open("", title,status); //window.open(url,title,status); window.open 함수에 url을 앞에와 같이
+	 window.open("", name,status); //window.open(url,title,status); window.open 함수에 url을 앞에와 같이
 	                                            //인수로  넣어도 동작에는 지장이 없으나 form.action에서 적용하므로 생략
 	                                            //가능합니다.
-	  frm.target = title;                    //form.target 이 부분이 빠지면 form값 전송이 되지 않습니다. 
+	  frm.target = name;                    //form.target 이 부분이 빠지면 form값 전송이 되지 않습니다. 
 	  frm.action = url;                    //form.action 이 부분이 빠지면 action값을 찾지 못해서 제대로 된 팝업이 뜨질 않습니다.
 	  frm.method = "post";
 	  frm.id.value = id;
 	  frm.submit();    
 })
 	
-
+	$(function(){
+		var startRow = 1;
+		$('#searchBtn').click(function(){
+			startRow = 1;
+			$.ajax({
+				url : "minihomepageSearchKeyword.do",
+				method : "GET",
+				data : {
+							"keyword" : $('#keyword').val(),
+							"startRow" : startRow,
+							"count" : startRow + 9
+				},
+				success : function(data){
+					if(data.length==0){
+						alert('가져온 데이터가 없습니다.');
+					} else {
+						
+						$('#homepageList').empty();
+						$.each(data,function(index,value){
+							var homepage = value;
+							
+							var result = '<tr>';
+							result += '<td><img src="'+homepage.minihomepage_img_path+'" width="50" height="50"></td>';
+							result += '<td>'+homepage.member.id +' '+ homepage.member.name +'</td>';
+							result += '<td>방문자수 : ' + homepage.total + '</td>';
+							result += '<td><Button id="goMini" value="'+homepage.member.id+'">미니홈피</Button></td>';
+							result += '</tr>';
+							$('#homepageList').append(result);
+						})
+						var result = '<tr><td><div id="emptyHomepage" style="display : none;">더 이상 검색결과가 없습니다.</div></td></tr>';
+						result += '<tr><td><Button id="moreHomepageList" style="display : none;">더보기</Button></td></tr>';
+						$('#homepageList').append(result);
+						if(data.length < 10){
+							$('#emptyHomepage').show();
+						} else {
+							$('#moreHomepageList').show(); 
+						}
+					}
+									
+				},
+				error : function(){
+					alert('에러');
+				}
+			})
+		})
+		///////// 홈페이지 리스트 더보기 ///////////////
+		$(document).on('click','#moreHomepageList',function(){
+		alert('더보기 클릭');
+		$('#emptyHomepage').remove();
+		$('#moreHomepageList').remove(); 
+		startRow += 10;
+		$.ajax({
+			url : "minihomepageSearchKeyword.do",
+			method : "GET",
+			data : {
+						"keyword" : $('#keyword').val(),
+						"startRow" : startRow,
+						"count" : startRow + 9
+			},
+			success : function(data){
+				if(data.length==0){
+					alert('가져온 데이터가 없습니다.');
+				} else {
+					$.each(data,function(index,value){
+						var homepage = value;
+						
+						var result = '<tr>';
+						result += '<td><img src="'+homepage.minihomepage_img_path+'" width="50" height="50"></td>';
+						result += '<td>'+homepage.member.id +' '+ homepage.member.name +'</td>';
+						result += '<td>방문자수 : ' + homepage.total + '</td>';
+						result += '<td><Button id="goMini" value="'+homepage.member.id+'">미니홈피</Button></td>';
+						result += '</tr>';
+						$('#homepageList').append(result);
+					})
+					var result = '<tr><td><div id="emptyHomepage" style="display : none;">더 이상 검색결과가 없습니다.</div></td></tr>';
+					result += '<tr><td><Button id="moreHomepageList" style="display : none;">더보기</Button></td></tr>';
+					$('#homepageList').append(result);
+					if(data.length < 10){
+						$('#emptyHomepage').show();
+					} else {
+						$('#moreHomepageList').show(); 
+					}
+				}
+								
+			},
+			error : function(){
+				alert('에러');
+			}
+		})
+	})
+	})
+	
 </script>
 <title>Insert title here</title>
 <style type="text/css">
@@ -75,25 +166,11 @@ $(document).on('click','#goMini',function() {
           </div>
           <div class="row">
             <div class=".col-md-4">
+            <p><input type="text" id="keyword" placeholder="아이디, 이름 "><button id="searchBtn">검색</button></p>
             <h2>미니홈피 목록</h2>
-            <c:choose>
-			<c:when test="${empty homepageList }">
-					
-			</c:when>
-			<c:otherwise>
-				
-					<table class="table">
-						<c:forEach var="homepage" items="${homepageList }">
-							<tr>
-								<td><img src="${homepage.minihomepage_img_path}" width="50" height="50"></td>
-								<td>${homepage.member.id} ${homepage.member.name }</td>
-								<td>방문자수 : ${homepage.total }</td>
-								<td><Button id="goMini" value="${homepage.member.id}">미니홈피</Button></td>
-							</tr>
-						</c:forEach>
-					</table>
-			</c:otherwise>
-		</c:choose>
+			<table id="homepageList">
+			
+			</table>
             </div><!--/.col-xs-6.col-lg-4-->
           </div><!--/row-->
         </div><!--/.col-xs-12.col-sm-9-->

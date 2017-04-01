@@ -55,7 +55,7 @@ public class NaverLoginController {
 		// 세션 또는 별도의 저장 공간에 상태 토큰을 저장
 		session.setAttribute("state", state);
 		try {
-			redirect_uri = URLEncoder.encode("http://70.12.109.96:8088/Cygram/naverCallBack.do", "UTF-8");
+			redirect_uri = URLEncoder.encode("http://127.0.0.1:8088/Cygram/naverCallBack.do", "UTF-8");
 		} catch (UnsupportedEncodingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

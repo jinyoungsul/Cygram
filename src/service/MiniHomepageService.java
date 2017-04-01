@@ -24,8 +24,8 @@ public class MiniHomepageService {
 		return dao.selectMiniHomepage(id);
 	}
 
-	public List<MiniHomepage> selectMiniHomepageList(String keyword) {
-		return dao.selectMiniHomepageList(keyword);
+	public List<MiniHomepage> selectMiniHomepageList(String keyword,int startRow,int count) {
+		return dao.selectMiniHomepageList(keyword,startRow,count);
 	}
 
 	public int increaseTodayTotal(String id) {

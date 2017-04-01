@@ -14,7 +14,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="selectFriendsComment" resultMap="FriendCommentResult">
 		SELECT *
 		FROM FRIEND , FRIEND_COMMENT B
-		WHERE  B.FRIEND_ID = #{id}
+		WHERE  (B.FRIEND_ID = #{id} AND FRIEND.FRIEND_ID = #{id}) AND B.MY_ID = FRIEND.MY_ID
 	</select>
 	
 	

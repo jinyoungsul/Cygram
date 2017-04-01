@@ -24,6 +24,7 @@ import service.FriendsService;
 import service.MemberService;
 import service.MiniHomepageService;
 import vo.Friend;
+import vo.Member;
 import vo.MiniHomepage;
 
 @Controller
@@ -89,23 +90,36 @@ public class MiniHomepageController {
 			System.out.println("쿠키 생성 else = "+cookie.getName());
 		}
 		Friend friend = friendsService.checkFriend(myId,friendId);
+		List<Friend> friendsList = friendsService.selectAcceptFriends(friendId);
 		System.out.println("선청되어 있는 일촌인가? : "+friend);
 		MiniHomepage miniHomepage = homepageService.selectMiniHomepage(friendId);
 		mv.setViewName("minihomepage");
 		mv.addObject("friend", friend);
 		mv.addObject("miniHomepage", miniHomepage);
+		mv.addObject("friendsList", friendsList);
+		System.out.println(friendsList);
 		return mv;
 	}
 	@RequestMapping(value="/minihomepageSearch.do")
-	public ModelAndView miniHomepageSearch(
-			@RequestParam(value="keyword",defaultValue="")String keyword,HttpSession session ){
+	public ModelAndView miniHomepageSearch(HttpSession session ){
 		ModelAndView mv = new ModelAndView();
-		List<MiniHomepage> homepageList = homepageService.selectMiniHomepageList(keyword);
 		String id = (String)session.getAttribute("loginId");
-		mv.addObject("homepageList", homepageList);
 		mv.addObject("member", memberService.selectMember(id));
 		mv.setViewName("homepageList");
 		return mv;
+	}
+	@RequestMapping(value="/minihomepageSearchKeyword.do")
+	public @ResponseBody List<MiniHomepage> miniHomepageSearchKeyword(
+			@RequestParam(value="keyword",defaultValue="")String keyword,int startRow,int count){
+		ModelAndView mv = new ModelAndView();
+		System.out.println("keyword : "+ keyword);
+		System.out.println("startRow : "+ startRow);
+		System.out.println("count : "+ count);
+		
+		List<MiniHomepage> homepageList = homepageService.selectMiniHomepageList(keyword,startRow,count);
+		mv.addObject("homepageList", homepageList);
+		System.out.println(homepageList);
+		return homepageList;
 	}
 	@RequestMapping(value="/homepageTitleUpdate.do",method=RequestMethod.POST)
 	public @ResponseBody int homepageTitleUpdate(String id,String title){

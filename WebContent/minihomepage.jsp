@@ -75,6 +75,22 @@ $(function(){
 		})
 	}
 	loadFriendsSay();
+	
+	//파도타기 시작
+	$("select").on("change",function(){
+		var id = $(this).val();
+		var frm = document.frmPopup;
+		var url    = "miniHomepage.do";
+		var name  = id;
+		var status = "toolbar=no,directories=no,scrollbars=no,resizable=no,status=no,menubar=no,width=950, height=600, top=130,left=180";
+		window.open("",id,status);
+		frm.target = name;
+		frm.action = url;
+		frm.method = "POST";
+		frm.id.value = id;
+		frm.submit();
+	})
+	//파도타기 끝
 })
 	
 </script>
@@ -181,6 +197,30 @@ TODAY ${miniHomepage.today } / TOTAL ${miniHomepage.total }<br>
 <c:if test="${sessionScope.loginId!=miniHomepage.id}">
 	<p>Friends Say : <input type="text" id="friendsCotent" placeholder="일촌과 나누고 싶은 이야기를 남겨보세요~!"><a href="#" id="friendsCommentBtn">확인</a></p>
 </c:if>
+
+<!-- 일촌 파도타기 시작 -->
+<div>
+	<select name="friendsList">
+		<option value="파도타기" selected>파도타기</option>
+		<c:choose>
+				<c:when test="${empty friendsList }">
+				</c:when>
+				
+				<c:otherwise>
+						<c:forEach var="friend" items="${friendsList }">
+							<option value="${friend.friendId }">${friend.miniHomepage. member.name} (${friend.friendNickname})</option>
+						</c:forEach>
+				</c:otherwise>
+		</c:choose>
+	</select>	
+</div>
+<!-- 일촌 파도타기 끝 -->
+
+<!-- 미니홈페이지 이동 시작 -->
+<form name="frmPopup">
+	<input type="hidden" name="id">
+</form>
+<!-- 미니홈페이지 이동 끝 -->
 
 <div id='friendsSayList'>
 

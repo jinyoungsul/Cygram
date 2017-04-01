@@ -32,6 +32,11 @@
             <name>ORACLE JDBC Repository</name>
             <url>https://maven.atlassian.com/3rdparty</url>
         </repository>
+<!--         <repository> -->
+<!--             <id>oracle</id> -->
+<!--             <name>ORACLE JDBC Repository</name> -->
+<!--             <url>http://maven.jahia.org/maven2</url> -->
+<!--         </repository> -->
     </repositories>
 	<dependencies>
 		<dependency>
@@ -82,7 +87,7 @@
 		<dependency>
 			<groupId>org.mybatis</groupId>
 			<artifactId>mybatis</artifactId>
-			<version>3.4.1</version>
+			<version>3.2.8</version>
 		</dependency>
 		
 		<!-- https://mvnrepository.com/artifact/org.mybatis/mybatis-spring -->
@@ -127,5 +132,12 @@
 		    <artifactId>ojdbc6</artifactId>
 		    <version>11.2.0.4.0-atlassian-hosted</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/com.oracle/ojdbc6 -->
+<!-- 		<dependency> -->
+<!-- 		    <groupId>com.oracle</groupId> -->
+<!-- 		    <artifactId>ojdbc6</artifactId> -->
+<!-- 		    <version>11.1.0.7.0</version> -->
+<!-- 		</dependency> -->
+		
 	</dependencies>
 </project>

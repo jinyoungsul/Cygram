@@ -49,11 +49,9 @@ public class FriendsController {
 		ModelAndView mv = new ModelAndView();
 		List<Friend> sendFriendsList = friendsService.selectSendFriendsList(id);
 		List<Friend> receiveFriendsList = friendsService.selectReceiveFriendsList(id);
-		List<Friend> friendsList = friendsService.selectAcceptFriends(id);
 		System.out.println("일촌신청 보기:"+id);
 		mv.addObject("sendFriendsList",sendFriendsList);
 		mv.addObject("receiveFriendsList",receiveFriendsList);
-		mv.addObject("friendsList", friendsList);
 		mv.addObject("member", memberService.selectMember(id));
 		System.out.println("sendFriendsList.size " +sendFriendsList.size());
 		System.out.println("receiveFriendsList.size " +receiveFriendsList.size());

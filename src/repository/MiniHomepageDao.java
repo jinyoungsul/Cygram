@@ -31,10 +31,14 @@ public class MiniHomepageDao {
 		return mapper.selectMiniHomepage(id);
 	}
 
-	public List<MiniHomepage> selectMiniHomepageList(String keyword) {
+	public List<MiniHomepage> selectMiniHomepageList(String keyword,int startRow,int count) {
 		System.out.println("미니홈피 찾기 , keyword = "+keyword);
 		MiniHomepageMapper mapper = session.getMapper(MiniHomepageMapper.class);
-		return mapper.selectMiniHomepageList(keyword);
+		Map<String,Object> map = new HashMap<>();
+		map.put("keyword", keyword);
+		map.put("startRow", startRow);
+		map.put("count", count);
+		return mapper.selectMiniHomepageList(map);
 	}
 
 	public int increaseTodayTotal(String id) {

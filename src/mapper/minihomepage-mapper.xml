@@ -28,10 +28,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE ID = #{id}
 	</select>
 	
-	<select id="selectMiniHomepageList" parameterType="String" resultMap="miniHomepageResult">
-		SELECT * 
-		FROM MINIHOMEPAGE NATURAL JOIN MEMBER 
-		WHERE ID like '%'||#{keyword}||'%'
+	<select id="selectMiniHomepageList" parameterType="Map" resultMap="miniHomepageResult">
+		SELECT * FROM(
+		SELECT ROWNUM R,A.* FROM
+		(
+			SELECT * 
+			FROM MINIHOMEPAGE NATURAL JOIN MEMBER 
+			WHERE ID like '%'||#{keyword}||'%' OR NAME LIKE '%'||#{keyword}||'%'
+		)A )
+		WHERE R BETWEEN #{startRow} AND #{count}
 	</select>
 	
 	<resultMap type="MiniHomepage" id="miniHomepageMap">
