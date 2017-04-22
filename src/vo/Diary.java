@@ -1,6 +1,7 @@
 package vo;
 
 import java.util.Date;
+import java.util.List;
 
 public class Diary {
 	private int diaryNo;
@@ -9,19 +10,14 @@ public class Diary {
 	private String content;
 	private Date writeDate;
 	private int authorityCode;
-	
-	
-	public Diary(){};
-	public Diary(int diaryNo, String id, String title, String content, Date writeDate, int authorityCode) {
-		super();
-		this.diaryNo = diaryNo;
-		this.id = id;
-		this.title = title;
-		this.content = content;
-		this.writeDate = writeDate;
-		this.authorityCode = authorityCode;
+	private List<CommentDiary> commentDiaryList;
+		
+	public List<CommentDiary> getCommentDiaryList() {
+		return commentDiaryList;
 	}
-	
+	public void setCommentDiaryList(List<CommentDiary> commentDiaryList) {
+		this.commentDiaryList = commentDiaryList;
+	}
 	public int getDiaryNo() {
 		return diaryNo;
 	}
@@ -58,5 +54,12 @@ public class Diary {
 	public void setAuthorityCode(int authorityCode) {
 		this.authorityCode = authorityCode;
 	}
+	
+	@Override
+	public String toString() {
+		return "Diary [diaryNo=" + diaryNo + ", id=" + id + ", title=" + title + ", content=" + content + ", writeDate="
+				+ writeDate + ", authorityCode=" + authorityCode + ", commentDiaryList=" + commentDiaryList + "]";
+	}
+	
 	
 }
