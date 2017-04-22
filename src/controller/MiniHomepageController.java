@@ -23,9 +23,11 @@ import org.springframework.web.servlet.ModelAndView;
 import service.FriendsService;
 import service.MemberService;
 import service.MiniHomepageService;
+import service.MusicService;
 import vo.Friend;
 import vo.Member;
 import vo.MiniHomepage;
+import vo.Music;
 
 @Controller
 public class MiniHomepageController {
@@ -35,6 +37,8 @@ public class MiniHomepageController {
 	private FriendsService friendsService;
 	@Autowired
 	private MemberService memberService; 
+	@Autowired
+	private MusicService musicService;
 	
 	public void setService(MiniHomepageService homepageService) {
 		this.homepageService = homepageService;
@@ -45,13 +49,14 @@ public class MiniHomepageController {
 	public void setMemberService(MemberService memberService) {
 		this.memberService = memberService;
 	}
-	
+	public void setMusicService(MusicService musicService) {
+		this.musicService = musicService;
+	}
 	@RequestMapping(value="/miniHomepage.do",method=RequestMethod.POST)
 	public ModelAndView miniHomepage(String id,HttpSession session,HttpServletRequest request,HttpServletResponse response){
 		ModelAndView mv = new ModelAndView();
 		String friendId = id;
 		String myId = (String)session.getAttribute("loginId");
-		System.out.println("로그인 세션 확인 : "+myId);
 		
 		///////////////방문자 수 (쿠키)//////////////////////////
 		Cookie[] cookies = request.getCookies();
@@ -61,12 +66,10 @@ public class MiniHomepageController {
 			for(Cookie cookie : cookies){
 				System.out.println(cookie.getName());
 				if(cookie.getName().equals(myId+friendId)){
-					System.out.println("쿠키 찾음 id = "+cookie.getValue());
 					create = false;
 				}
 			}
 			if(create){
-				System.out.println("이거 실행 안될텐데?");
 				//쿠키 생성
 				Cookie cookie = new Cookie(myId+friendId,"visit");
 				Date expireday = new Date();
@@ -75,7 +78,6 @@ public class MiniHomepageController {
 				cookie.setMaxAge(expire);
 				response.addCookie(cookie);
 				homepageService.increaseTodayTotal(id);
-				System.out.println("쿠키 생성 = "+cookie.getName());
 			}
 			
 		} else {
@@ -87,17 +89,17 @@ public class MiniHomepageController {
 			cookie.setMaxAge(expire);
 			response.addCookie(cookie);
 			homepageService.increaseTodayTotal(id);
-			System.out.println("쿠키 생성 else = "+cookie.getName());
 		}
 		Friend friend = friendsService.checkFriend(myId,friendId);
 		List<Friend> friendsList = friendsService.selectAcceptFriends(friendId);
-		System.out.println("선청되어 있는 일촌인가? : "+friend);
 		MiniHomepage miniHomepage = homepageService.selectMiniHomepage(friendId);
+		List<Music> bgmList = musicService.bgmList(friendId);
 		mv.setViewName("minihomepage");
 		mv.addObject("friend", friend);
 		mv.addObject("miniHomepage", miniHomepage);
 		mv.addObject("friendsList", friendsList);
-		System.out.println(friendsList);
+		mv.addObject("bgmList", bgmList);
+		System.out.println(bgmList);
 		return mv;
 	}
 	@RequestMapping(value="/minihomepageSearch.do")
