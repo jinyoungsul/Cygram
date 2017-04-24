@@ -22,8 +22,8 @@ public class CommentDiaryService {
 		return commentDiaryDao.insertCommentDiary(commentDiary);
 	}
 	
-	public List<CommentDiary> selectCommentDiary(String myId){
-		return commentDiaryDao.selectCommentDiary(myId);
+	public List<CommentDiary> selectCommentDiary(int diaryNo){
+		return commentDiaryDao.selectCommentDiary(diaryNo);
 	}
 
 }

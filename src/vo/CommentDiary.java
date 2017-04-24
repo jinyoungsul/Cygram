@@ -7,7 +7,6 @@ public class CommentDiary {
 	private int diaryNo;
 	private String content;
 	private String myId;
-	private String friendId;
 	private Date writeDate;
 	private Member member;
 	
@@ -41,12 +40,6 @@ public class CommentDiary {
 	public void setMyId(String myId) {
 		this.myId = myId;
 	}
-	public String getFriendId() {
-		return friendId;
-	}
-	public void setFriendId(String friendId) {
-		this.friendId = friendId;
-	}
 	public Date getWriteDate() {
 		return writeDate;
 	}
@@ -57,7 +50,7 @@ public class CommentDiary {
 	@Override
 	public String toString() {
 		return "CommentDiary [commentDiaryNo=" + commentDiaryNo + ", diaryNo=" + diaryNo + ", content=" + content
-				+ ", myId=" + myId + ", friendId=" + friendId + ", writeDate=" + writeDate + "]";
+				+ ", myId=" + myId + ", writeDate=" + writeDate + ", member=" + member + "]";
 	}
 	
 }

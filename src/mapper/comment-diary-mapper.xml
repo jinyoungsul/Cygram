@@ -6,7 +6,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="mapper.CommentDiaryMapper">
 <!-- 다이어리 댓글 등록 -->
 	<insert id="insertCommentDiary" parameterType="CommentDiary">
-		INSERT INTO COMMENT_DIARY(COMMENT_DIARY_NO,DIARY_NO,CONTENT,MY_ID,WRITE_DATE)
+		INSERT INTO COMMENT_DIARY(COMMENT_DIARY_NO,DIARY_NO,COMMENT_TEXT,MY_ID,WRITE_DATE)
 		VALUES
 		(COMMENT_DIARY_SEQ.NEXTVAL,#{diaryNo},#{content},#{myId},SYSDATE)
 	</insert>
@@ -15,28 +15,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <!-- 다이어리 댓글 불러오기 -->
 	<select id="selectCommentDiary" resultMap="CommentDiaryResult">
 		SELECT * 
-		FROM MEMBER , COMMENT_DIARY C
-		WHERE C.MY_ID = #{id}
+		FROM MEMBER , COMMENT_DIARY
+		WHERE COMMENT_DIARY.DIARY_NO = #{diaryNo} AND MEMBER.ID = COMMENT_DIARY.MY_ID 
 	</select>
-
-<!-- 다이어리 댓글 리스트 불러오기 -->
-	<select id="selectCommentList" parameterType="integer" resultMap="CommentDiaryList">
-		SELECT * FROM COMMENT_DIARY WHERE DIARY_NO = #{diaryNo}
-	</select>
-	
-	<resultMap id="CommentDiaryList" type="CommentDiary">
-		<result property="commentDiaryNo" column="COMMENT_DIARY_NO" />
-		<result property="diaryNo" column="DIARY_NO" />
-		<result property="myId" column="MY_ID" />
-		<result property="writeDate" column="WRITE_DATE" />
-	</resultMap>
 
 	<resultMap id="CommentDiaryResult" type="CommentDiary">
 		<result property="commentDiaryNo" column="COMMENT_DIARY_NO" />
 		<result property="diaryNo" column="DIARY_NO" />
 		<result property="content" column="COMMENT_TEXT" />
 		<result property="myId" column="MY_ID" />
-		<result property="friendId" column="FRIEND_ID" />
 		<result property="writeDate" column="WRITE_DATE" />
 		<association property="member" javaType="MEMBER">
 			<result property="id" column="ID" />

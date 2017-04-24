@@ -154,6 +154,7 @@ textarea {
 		});	
 		
 		function loadCommentList(diaryNo){
+			var result = '<div id="commentList"'+diaryNo+' style="background-color :#f8f8f8;">';
 			var diaryNo=diaryNo;
 			var content = $('#save_content'+diaryNo).val();
 			var myId = $('#myId').val();
@@ -167,27 +168,20 @@ textarea {
 					"myId" : myId
 				},
 				success : function(data){
-					$('#commentList'+diaryNo).empty();
+					$('#commentList'+diaryNo).remove();
 					$.each(data,function(index,value){
 						var commentDiary = value;
 						var JsonDate = "/Date("+commentDiary.writeDate+")/";
 						var date = new Date(parseInt(JsonDate.substr(6)));
 						var writeDate = date.format("yyyy/mm/dd h:MM:ss");						
-						var result = '<tr><td id="commentParentText" colspan="6" style="padding-left : 5px; white-space: nowrap; class="c_name">'+myId+'&nbsp;'+':'+'&nbsp;'+
-					        '<span class="comment">'+content+'</span>'+ '&nbsp;'+'<span class="c_date">'+writeDate+'</span>'+'&nbsp;</td></tr>'
-					   
-	 				 	$('#commentList'+diaryNo).append(result);
-					        
-					//테이블의 tr자식이 있으면 tr 뒤에 붙인다. 없으면 테이블 안에 tr을 붙인다.
-// 					if($('#commentParentText').contents().size()==0){
-// 					 $('#commentParentText').append(result);
-// 					}else{
-// 					 $('#commentParentText span:last').after(result);
-// 					}
-					$("#save_comment").val("");
+						result += '<div id="commentParentText" style="padding-left:5px; white-space:nowarp;"><span class="c_name">'+commentDiary.myId +'('+ commentDiary.member.name+')</span>&nbsp;:&nbsp';
+						result += '<span class="comment">'+commentDiary.content+'</span>&nbsp;';
+						result += '<span class="c_date">+'+writeDate+'+</span>&nbsp;</div>';
 
 					})
-					alert("ajax통신");
+					result += '</div>';
+					$('#save_content'+diaryNo).val("");
+					$('#commentListStart'+diaryNo).append(result);
 				},
 				error : function(){
 					alert('ajax통신에러');
@@ -197,37 +191,6 @@ textarea {
 		}
 	})
  	
-// 	$(document).ready(function(){
-// 		$(document).on("click","#btnComment",function(){
-// 			var commentText=$("#commentText").val();
-// 			var diaryNo=$(this).val();
-// 			$.ajax({
-// 				type:"post",
-// 				url:"writeCommentDiary.do",
-// 				data:{
-// 					"commentText" : commentText,
-// 					"diaryNo" : diaryNo
-
-// 				},
-// 				success:function(data){
-// 					$('#commentDiaryList').empty();
-// 					$.each(data,function(index,value){
-// 						var commentDiary = value;
-// 						var JsonDate = "/Date("+commentDiary.commentDate+")/";
-// 						var date = new Date(parseInt(JsonDate.substr(6)));
-// 						var commentDate = date.format("yyyy/mm/dd h:MM:ss");
-// 						var result = "<p>"+friendComment.myId+" ("+friendComment.friend.myNickname+") "+friendComment.content+" "+writeDate+"</p>";
-// 						$('#commentDiaryList').append(result);
-// 					})
-// 					alert("ajax통신");
-					
-// 				},
-// 				error : function(data){
-// 					alert("ajax통신에러");
-// 				}
-// 		});
-// 	})
-// 	})
 
 </script>
 </head>
@@ -274,26 +237,21 @@ textarea {
 </tr>	
 
 <!-- 댓글이 달아졌을 때 보이는 부분 -->
-<table id="commentList${diary.diaryNo}" width="63%" border="0" cellspacing="0" cellpadding="0">
-<%-- 							<tr id="commentList${diary.diaryNo}" height="50"> --%>
+<tr>
+	<td colspan="6">
+		<div id="commentListStart${diary.diaryNo }"></div>
+		<div id="commentList${diary.diaryNo }" style="background-color :#f8f8f8;"> 
+			<c:forEach var="commentDiary" items="${diary.commentDiaryList }">
+				<div id="commentParentText" style="padding-left: 5px; white-space: nowrap;">
+					<span class="c_name">${commentDiary.myId} (${commentDiary.member.name})</span>&nbsp;:&nbsp; 
+					<span class="comment">${commentDiary.content}</span>&nbsp; 
+					<span class="c_date">+${commentDiary.writeDate}+</span>&nbsp;
+				</div>
+			</c:forEach>
+		</div>
+	</td>
+</tr>
 
-								<c:forEach var="commentDiary" items="${diary.commentDiaryList }">
-									<tr bgColor="#f8f8f8"  >
-										<td id="commentParentText" colspan="6"
-											style="padding-left: 5px; white-space: nowrap;"><span
-											class="c_name">${commentDiary.myId}</span>&nbsp;:&nbsp; <span
-											class="comment">${commentDiary.content}</span>&nbsp; <span
-											class="c_date">+${commentDiary.writeDate}+</span>&nbsp;
-										</td>
-									</tr>
-								</c:forEach>
-<!-- 							</tr> -->
-</table>
-
-							<%-- 		<span class="c_name" style="white-space: nowrap">${diary.id}</span>&nbsp;:&nbsp; --%>
-<%--         <span class="comment">댓글 내용이 길다면 어떻게 될까? !</span> &nbsp;<span class="c_date">(${diary.writeDate})</span>&nbsp; --%>
-            
-            
 <!-- 댓글 수정 삭제 부분     -->
 
 <%--         <a href="javascript:list_box('<?=$list_id?>', 'r');" title="이 댓글에 댓글달기" class="bbs"> --%>
@@ -339,7 +297,6 @@ textarea {
 
 		<a href="writeDiaryForm.do?id=${sessionScope.loginId}"><button>다이어리쓰기</button></a>
 	</div>
-	<div id='commentDiaryList'></div>
 
 	<input type="hidden" id="myId" value="${sessionScope.loginId}">
 </body>
