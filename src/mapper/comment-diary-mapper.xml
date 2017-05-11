@@ -15,9 +15,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <!-- 다이어리 댓글 불러오기 -->
 	<select id="selectCommentDiary" resultMap="CommentDiaryResult">
 		SELECT * 
-		FROM MEMBER , COMMENT_DIARY C
-		WHERE C.MY_ID = #{id}
-	</select>
+		FROM MEMBER M, COMMENT_DIARY C
+ 		WHERE C.DIARY_NO = #{diaryNo} AND M.ID = C.MY_ID 
+  	</select>
 
 	<resultMap id="CommentDiaryResult" type="CommentDiary">
 		<result property="commentDiaryNo" column="COMMENT_DIARY_NO" />

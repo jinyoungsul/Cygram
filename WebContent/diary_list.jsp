@@ -5,64 +5,47 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-	<script>
-	$('#refresh').click(function(){
-// 		location.reload(true);
-// 		location.href = location.href;
-		history.go(-1);
-	})
-	</script>
 <title>다이어리 리스트</title>
 <style type="text/css">
-body{
-background-image: url("img/background2.png");
+body {
+	background-image: url("img/background2.png");
 }
 div#list {
-	margin-left: 270px;
+	margin-left: 250px;
 	margin-top: 120px;
 }
-
 div#commentDiaryList {
 	margin-left: 10px;
 	margin-top: 10px;
 }
-
 /*  ------------ 게시판 관련 스타일 적용 ------------ */
 .bbs_form {
 	margin: 0;
 }
-
 .bbs_linei {
 	background-color: #D6D2C7;
 	height: 1px;
 }
-
 //
 게시판 줄 색깔 바꾸기
 .bbs_lineo {
 	background-color: #FFFFFF;
 	height: 10px;
 }
-
 //
 게시판 줄 색깔 바꾸기
 .bbs_no {
 	background-color: blue;
 	height: 30px;
 }
-
 //
 게시판 내용 글씨
 .bbs_fs {
 	color: gray;
 	font-size: 11px;
 }
-
 //
 게시판 날짜
-
 .bbs_ft {
 	font-size: 9pt;
 	width: 100%;
@@ -73,59 +56,48 @@ div#commentDiaryList {
 	color: #000000;
 	overflow: auto
 }
-
 .bbs_tt {
 	CURSOR: pointer;
 }
-
 .num {
 	color: 333333;
 	margin-right: 10;
 	font-family: tahoma;
 	font-size: 7pt;
 }
-
 .name {
 	color: #000000;
 	text-decoration: none font-size:7pt;
 }
-
 .date {
 	color: #aaaaaa;
 	font-family: tahoma;
 	font-size: 7pt;
 }
-
 .c_name {
 	color: #aaaaaa;
 	text-decoration: none font-size:8pt;
 }
-
 .c_date {
 	color: #aaaaaa;
 	font-family: tahoma;
 	font-size: 7pt;
 }
-
 a.bbs:link, a.bbs:visited, a.bbs:active {
 	text-decoration: none;
 }
-
 a.bbs:hover {
 	text-decoration: none;
 	color: #3366cc;
 }
-
 .comment {
 	font-family: tahoma;
 	font-size: 9pt;
 }
-
 .edit {
 	font-family: tahoma;
 	font-size: 8pt;
 }
-
 .delete {
 	font-family: tahoma;
 	font-size: 8pt;
@@ -173,11 +145,11 @@ textarea {
 						var commentDiary = value;
 						var JsonDate = "/Date("+commentDiary.writeDate+")/";
 						var date = new Date(parseInt(JsonDate.substr(6)));
-						var writeDate = date.format("yyyy/mm/dd h:MM:ss");						
+						var writeDate = date.format("yyyy/mm/dd h:MM:ss");		
+						
 						result += '<div id="commentParentText" style="padding-left:5px; white-space:nowarp;"><span class="c_name">'+commentDiary.myId +'('+ commentDiary.member.name+')</span>&nbsp;:&nbsp';
 						result += '<span class="comment">'+commentDiary.content+'</span>&nbsp;';
 						result += '<span class="c_date">+'+writeDate+'+</span>&nbsp;</div>';
-
 					})
 					result += '</div>';
 					$('#save_content'+diaryNo).val("");
@@ -190,8 +162,6 @@ textarea {
 			});
 		}
 	})
- 	
-
 </script>
 </head>
 <body>
@@ -238,20 +208,21 @@ textarea {
 
 <!-- 댓글이 달아졌을 때 보이는 부분 -->
 <tr>
-	<td colspan="6">
-		<div id="commentListStart${diary.diaryNo }"></div>
-		<div id="commentList${diary.diaryNo }" style="background-color :#f8f8f8;"> 
-			<c:forEach var="commentDiary" items="${diary.commentDiaryList }">
-				<div id="commentParentText" style="padding-left: 5px; white-space: nowrap;">
-					<span class="c_name">${commentDiary.myId} (${commentDiary.member.name})</span>&nbsp;:&nbsp; 
-					<span class="comment">${commentDiary.content}</span>&nbsp; 
-					<span class="c_date">+${commentDiary.writeDate}+</span>&nbsp;
-				</div>
-			</c:forEach>
-		</div>
-	</td>
+ 	<td colspan="6">
+ 		<div id="commentListStart${diary.diaryNo }"></div>
+ 		<div id="commentList${diary.diaryNo }" style="background-color :#f8f8f8;"> 
+ 			<c:forEach var="commentDiary" items="${diary.commentDiaryList }">
+ 				<div id="commentParentText" style="padding-left: 5px; white-space: nowrap;">
+ 					<span class="c_name">${commentDiary.myId} (${commentDiary.member.name})</span>&nbsp;:&nbsp; 
+ 					<span class="comment">${commentDiary.content}</span>&nbsp; 
+ 					<span class="c_date">+${commentDiary.writeDate}+</span>&nbsp;
+ 				</div>
+ 			</c:forEach>
+ 		</div>
+ 	</td>
 </tr>
 
+                 
 <!-- 댓글 수정 삭제 부분     -->
 
 <%--         <a href="javascript:list_box('<?=$list_id?>', 'r');" title="이 댓글에 댓글달기" class="bbs"> --%>
@@ -301,4 +272,3 @@ textarea {
 	<input type="hidden" id="myId" value="${sessionScope.loginId}">
 </body>
 </html>
-

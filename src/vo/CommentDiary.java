@@ -7,6 +7,7 @@ public class CommentDiary {
 	private int diaryNo;
 	private String content;
 	private String myId;
+	
 	private Date writeDate;
 	private Member member;
 	
@@ -47,11 +48,11 @@ public class CommentDiary {
 	public void setWriteDate(Date writeDate) {
 		this.writeDate = writeDate;
 	}
-	
 	@Override
 	public String toString() {
 		return "CommentDiary [commentDiaryNo=" + commentDiaryNo + ", diaryNo=" + diaryNo + ", content=" + content
 				+ ", myId=" + myId + ", writeDate=" + writeDate + ", member=" + member + "]";
 	}
 	
+
 }
