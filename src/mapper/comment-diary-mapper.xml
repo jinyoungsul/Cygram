@@ -19,24 +19,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE C.MY_ID = #{id}
 	</select>
 
-<!-- 다이어리 댓글 리스트 불러오기 -->
-	<select id="selectCommentList" parameterType="integer" resultMap="CommentDiaryList">
-		SELECT * FROM COMMENT_DIARY WHERE DIARY_NO = #{diaryNo}
-	</select>
-	
-	<resultMap id="CommentDiaryList" type="CommentDiary">
-		<result property="commentDiaryNo" column="COMMENT_DIARY_NO" />
-		<result property="diaryNo" column="DIARY_NO" />
-		<result property="myId" column="MY_ID" />
-		<result property="writeDate" column="WRITE_DATE" />
-	</resultMap>
-
 	<resultMap id="CommentDiaryResult" type="CommentDiary">
 		<result property="commentDiaryNo" column="COMMENT_DIARY_NO" />
 		<result property="diaryNo" column="DIARY_NO" />
 		<result property="content" column="COMMENT_TEXT" />
 		<result property="myId" column="MY_ID" />
-		<result property="friendId" column="FRIEND_ID" />
 		<result property="writeDate" column="WRITE_DATE" />
 		<association property="member" javaType="MEMBER">
 			<result property="id" column="ID" />

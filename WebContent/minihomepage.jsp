@@ -76,6 +76,60 @@ $(function(){
 		})
 	}
 	loadFriendsSay();
+	
+	//파도타기 시작
+	$("select").on("change",function(){
+		var id = $(this).val();
+		var frm = document.frmPopup;
+		var url    = "miniHomepage.do";
+		var name  = id;
+		var status = "toolbar=no,directories=no,scrollbars=no,resizable=no,status=no,menubar=no,width=950, height=600, top=130,left=180";
+		window.open("",id,status);
+		frm.target = name;
+		frm.action = url;
+		frm.method = "POST";
+		frm.id.value = id;
+		frm.submit();
+	})
+	//파도타기 끝
+	
+	//bgm 시작
+	init();
+	function init(){
+	    var current = 0;
+	    var audio = $('#audio');
+	    var playlist = $('#playlist');
+	    var tracks = playlist.find('li a');
+	    var len = tracks.length - 1;
+	    audio[0].volume = 0.5;
+	    audio[0].src = $(playlist.find('a')[0]).attr('href');
+	    audio[0].play();
+	    playlist.find('a').click(function(e){
+	        e.preventDefault();
+	        link = $(this);
+	        current = link.parent().index();
+	        run(link, audio[0]);
+	    });
+	    audio[0].addEventListener('ended',function(e){
+	        //len = 마지막 음악 리스트 인덱스
+	    	if(current == len){
+	            current = 0;
+	            link = playlist.find('a')[0];
+	        }else{
+	        	current++;
+	            link = playlist.find('a')[current];    
+	        }
+	        run($(link),audio[0]);
+	    });
+	}
+	function run(link, player){
+	        player.src = link.attr('href');
+	        par = link.parent();
+	        par.addClass('active').siblings().removeClass('active');
+	        player.load();
+	        player.play();
+	}
+	//bgm 끝
 })
 	
 </script>
@@ -126,7 +180,13 @@ margin-top: 120px;
 
  } 
 
-
+#playlist,audio{background:#666;width:400px;padding:20px;}
+.active a{color:#5DB0E6;text-decoration:none;}
+li a{color:#eeeedd;background:#333;padding:5px;display:block;}
+li a:hover{text-decoration:none;}
+ul#playlist {
+	list-style-type: none;
+}
 
 </style>
 </head>
@@ -163,7 +223,49 @@ TODAY ${miniHomepage.today } / TOTAL ${miniHomepage.total }<br>
 	<div id="gallery">
 	<a href="galleryList.do?id=${miniHomepage.id}">____</a>
 	</div>
-
+	<!-- 배경음악  플레이어 시작 -->
+	<audio id="audio" controls >
+		Your browser does not support the audio element.
+	</audio>
+	<!-- 배경음악 플레이어 끝 -->
+	
+	<!-- 배경음악 플레이 리스트-->
+	<ul id="playlist">
+<!--         <li class="active"> -->
+<!--             <a href="music/Beethoven-MoonlightSonata.mp3"> -->
+<!--                 Beethoven-MoonlightSonata.mp3 -->
+<!--             </a> -->
+<!--         </li> -->
+<!--         <li> -->
+<!--             <a href="music/Bolero.mp3"> -->
+<!--                 Bolero.mp3 -->
+<!--             </a> -->
+<!--         </li> -->
+<!--         <li> -->
+<!--             <a href="music/CanoninD.mp3"> -->
+<!--                 CanoninD.mp3 -->
+<!--             </a> -->
+<!--         </li> -->
+		<c:forEach var="music" items="${bgmList }" varStatus="status" begin="0">
+				<c:choose>
+					<c:when test="${status.index==0 }">
+						<li class="active"> 
+							<a href="${music.musicFilePath}">
+								${music.musicName}  ${music.artist }
+							</a>
+						</li>
+					</c:when>
+					<c:otherwise>
+						<li>
+						<a href="${music.musicFilePath}">
+								${music.musicName}  ${music.artist }
+						</a>
+					</li>	
+					</c:otherwise>
+				</c:choose>
+		</c:forEach>
+    </ul>
+	<!-- 배경음악 플레이 리스트 끝 -->
 <br>
 
 <div id="title2">
@@ -182,6 +284,30 @@ TODAY ${miniHomepage.today } / TOTAL ${miniHomepage.total }<br>
 <c:if test="${sessionScope.loginId!=miniHomepage.id}">
 	<p>Friends Say : <input type="text" id="friendsCotent" placeholder="일촌과 나누고 싶은 이야기를 남겨보세요~!"><a href="#" id="friendsCommentBtn">확인</a></p>
 </c:if>
+
+<!-- 일촌 파도타기 시작 -->
+<div>
+	<select name="friendsList">
+		<option value="파도타기" selected>파도타기</option>
+		<c:choose>
+				<c:when test="${empty friendsList }">
+				</c:when>
+				
+				<c:otherwise>
+						<c:forEach var="friend" items="${friendsList }">
+							<option value="${friend.friendId }">${friend.miniHomepage. member.name} (${friend.friendNickname})</option>
+						</c:forEach>
+				</c:otherwise>
+		</c:choose>
+	</select>	
+</div>
+<!-- 일촌 파도타기 끝 -->
+
+<!-- 미니홈페이지 이동 시작 -->
+<form name="frmPopup">
+	<input type="hidden" name="id">
+</form>
+<!-- 미니홈페이지 이동 끝 -->
 
 <div id='friendsSayList'>
 

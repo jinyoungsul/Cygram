@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.MusicMapper">
+	<insert id="uploadMusic" parameterType="Music">
+		INSERT INTO MUSIC VALUES(MUSIC_SEQ.NEXTVAL,#{musicName},#{artist},#{albumImgPath},#{musicFilePath})
+	</insert>
+	
+	<select id="selectMusicList" resultMap="MusicMap">
+		SELECT * FROM MUSIC
+	</select>
+	
+	<select id="selectMusic" parameterType="Integer" resultMap="MusicMap">
+		SELECT * FROM MUSIC
+		WHERE MUSIC_NO = #{musicNo}
+	</select>
+	
+	<select id="selectBgmList" parameterType="String" resultMap="MusicMap">
+		SELECT * 
+		FROM BGM,MUSIC
+		WHERE id = #{id} and BGM.MUSIC_NO = MUSIC.MUSIC_NO
+	</select>
+	
+	<insert id="buyMusic">
+		INSERT INTO BGM VALUES (#{loginId},#{musicNo}) 
+	</insert>
+	
+	<resultMap type="Music" id="MusicMap">
+		<result column="MUSIC_NO" property="musicNo"/>
+		<result column="MUSIC_NAME" property="musicName"/>
+		<result column="ARTIST" property="artist"/>
+		<result column="ALBUM_IMG_PATH" property="albumImgPath"/>
+		<result column="MUSIC_FILE_PATH" property="musicFilePath"/>
+	</resultMap>
+</mapper>

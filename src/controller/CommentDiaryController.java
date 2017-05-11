@@ -33,7 +33,7 @@ public class CommentDiaryController {
 		if(content.length()>0)
 			commentDiaryService.insertCommentDiary(commentDiary);
 		
-		List<CommentDiary> commentDiaryList = commentDiaryService.selectCommentDiary(myId);
+		List<CommentDiary> commentDiaryList = commentDiaryService.selectCommentDiary(diaryNo);
 		System.out.println(commentDiary);
 		
 		return commentDiaryList;

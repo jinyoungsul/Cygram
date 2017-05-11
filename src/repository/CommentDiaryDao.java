@@ -25,13 +25,8 @@ public class CommentDiaryDao {
 		return mapper.insertCommentDiary(commentDiary);
 	}
 	
-	public List<CommentDiary> selectCommentDiary(String id){
+	public List<CommentDiary> selectCommentDiary(int diaryNo){
 		CommentDiaryMapper mapper = session.getMapper(CommentDiaryMapper.class);
-		return mapper.selectCommentDiary(id);	
-	}
-	
-	public List<CommentDiary> selectCommentList(int diaryNo){
-		CommentDiaryMapper mapper = session.getMapper(CommentDiaryMapper.class);
-		return mapper.selectCommentList(diaryNo);
+		return mapper.selectCommentDiary(diaryNo);	
 	}
 }

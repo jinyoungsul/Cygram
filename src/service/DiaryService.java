@@ -72,7 +72,7 @@ public class DiaryService {
 		
 		for(Diary diary : diaryList){
 			int diaryNo = diary.getDiaryNo();
-			List<CommentDiary> commentDiaryList = commentDiary.selectCommentList(diaryNo);
+			List<CommentDiary> commentDiaryList = commentDiary.selectCommentDiary(diaryNo);
 			diary.setCommentDiaryList(commentDiaryList);
 		}
 		int totalPage = totalDiaryCount/COUNT_PER_PAGE;
