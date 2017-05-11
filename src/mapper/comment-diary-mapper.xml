@@ -22,7 +22,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<resultMap id="CommentDiaryResult" type="CommentDiary">
 		<result property="commentDiaryNo" column="COMMENT_DIARY_NO" />
 		<result property="diaryNo" column="DIARY_NO" />
-		<result property="content" column="COMMENT_TEXT" />
+		<result property="content" column="CONTENT" />
 		<result property="myId" column="MY_ID" />
 		<result property="writeDate" column="WRITE_DATE" />
 		<association property="member" javaType="MEMBER">

@@ -28,7 +28,7 @@ public class CommentDiaryController {
 		CommentDiary commentDiary = new CommentDiary();
 		commentDiary.setDiaryNo(diaryNo);
 		commentDiary.setMyId(myId);		
-		commentDiary.setContent(content);;
+		commentDiary.setContent(content);
 		
 		if(content.length()>0)
 			commentDiaryService.insertCommentDiary(commentDiary);
