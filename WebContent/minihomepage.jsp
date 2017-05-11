@@ -72,6 +72,7 @@ $(function(){
 			error : function(){
 				alert('error');
 			}
+			
 		})
 	}
 	loadFriendsSay();

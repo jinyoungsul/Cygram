@@ -3,6 +3,7 @@ package mapper;
 import java.util.List;
 import java.util.Map;
 
+import vo.CommentDiary;
 import vo.Diary;
 
 public interface DiaryMapper {

@@ -34,6 +34,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	WHERE R BETWEEN #{startRow} AND #{count}
 	</select>
 
+
 	<resultMap type="Diary" id="diaryMap">
 		<result property="diaryNo" column="DIARY_NO"/>
 		<result property="id" column="ID"/>
