@@ -31,11 +31,12 @@ public class FriendsService {
 	public Friend checkFriend(String myId,String friendId) {
 		return friendsDao.checkFriends(myId,friendId);
 	}
-
+	public Friend isOkFriend(String myId,String friendId) {
+		return friendsDao.isOkFriends(myId,friendId);
+	}
 	public Friend selectFriends(int friendNo) {
 		return friendsDao.selectFriends(friendNo);
 	}
-
 	public int cancelFriends(int friendNo) {
 		return friendsDao.cancelFriends(friendNo);
 	}

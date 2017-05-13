@@ -11,5 +11,9 @@ public interface DiaryMapper {
 	public int update(Diary diary);
 	public Diary select(int diaryNo);
 	public List<Diary> selectDiaryList(Map<String, Object> map);
-	public int selectDiaryCount();	
+	public int selectDiaryCount(String id);
+	public List<Diary> selectDiaryListFriend(Map<String, Object> map);
+	public List<Diary> selectDiaryListNotFriend(Map<String, Object> map);
+	public int selectDiaryCountFriend(String id);
+	public int selectDiaryCountNotFriend(String id);	
 }

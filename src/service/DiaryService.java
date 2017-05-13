@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import repository.CommentDiaryDao;
 import repository.DiaryDao;
+import repository.FriendsDao;
 import vo.CommentDiary;
 import vo.Diary;
 import vo.DiaryPage;
@@ -25,9 +26,11 @@ public class DiaryService {
 	public void setCommentDiary(CommentDiaryDao commentDiary) {
 		this.commentDiary = commentDiary;
 	}
-	
-	//-----------------------------------------------//
-	
+	@Autowired
+	private FriendsDao friendsDao;
+	public void setFriendsDao(FriendsDao friendsDao) {
+		this.friendsDao = friendsDao;
+	}
 
 	public int write(Diary diary, String id){
 		diary.setWriteDate(new Date());
@@ -55,20 +58,28 @@ public class DiaryService {
 		return diary;
 	}
 	
-	public DiaryPage makePage(int currentPage, String id){
+	public DiaryPage makePage(int currentPage, String id,String loginId){
 		final int COUNT_PER_PAGE=3;
-		int totalDiaryCount = diaryDao.selectDiaryCount();
+		int totalDiaryCount = 0;
+		int startRow = ((currentPage-1)*COUNT_PER_PAGE)+1;
+		int endRow = startRow +2;
+		List<Diary> diaryList;
+		if(id.equals(loginId)){
+			totalDiaryCount = diaryDao.selectDiaryCount(id);
+			diaryList = diaryDao.selectDiaryList(startRow, endRow, id);
+		} else if(friendsDao.isOkFriends(loginId, id)!=null){
+			totalDiaryCount = diaryDao.selectDiaryCountFriend(id);
+			diaryList = diaryDao.selectDiaryListFriend(startRow, endRow, id);
+		} 
+		else {
+			totalDiaryCount = diaryDao.selectDiaryCountNotFriend(id);
+			diaryList = diaryDao.selectDiaryListNotFriend(startRow, endRow, id);
+		}
 		
 		System.out.println("total:"+totalDiaryCount);
 		
 		if(totalDiaryCount==0)
 			return new DiaryPage();
-		
-		int startRow = ((currentPage-1)*COUNT_PER_PAGE)+1;
-		int endRow = startRow +2;
-		
-		List<Diary> diaryList = 
-				diaryDao.selectDiaryList(startRow, endRow, id);
 		
 		for(Diary diary : diaryList){
 			int diaryNo = diary.getDiaryNo();
@@ -85,6 +96,5 @@ public class DiaryService {
 			endPage = totalPage;
 		
 		return new DiaryPage(diaryList, startPage, endPage, currentPage, totalPage);
-	}		
-	
+	}
 }

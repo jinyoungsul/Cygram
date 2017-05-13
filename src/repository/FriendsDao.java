@@ -39,6 +39,13 @@ public class FriendsDao {
 		map.put("friendId", friendId);
 		return mapper.checkFriends(map);
 	}
+	public Friend isOkFriends(String myId, String friendId) {
+		FriendMapper mapper = session.getMapper(FriendMapper.class);
+		Map<String, String> map = new HashMap<>();
+		map.put("myId", myId);
+		map.put("friendId", friendId);
+		return mapper.isOkFriends(map);
+	}
 	public Friend selectFriends(int friendNo) {
 		FriendMapper mapper = session.getMapper(FriendMapper.class);
 		return mapper.selectFriends(friendNo);

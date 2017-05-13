@@ -263,12 +263,12 @@ textarea {
 
 		<c:forEach begin="${diaryPage.startPage}" end="${diaryPage.endPage}"
 			var="i">
-			<a href="diaryList.do?page=${i}&id=${sessionScope.loginId}">[${i}]</a>
+			<a href="diaryList.do?page=${i}&id=${minihomepageId}">[${i}]</a>
 		</c:forEach>
-
-		<a href="writeDiaryForm.do?id=${sessionScope.loginId}"><button>다이어리쓰기</button></a>
+		<c:if test="${minihomepageId == sessionScope.loginId}">
+			<a href="writeDiaryForm.do?id=${sessionScope.loginId}"><button>다이어리쓰기</button></a>
+		</c:if>
 	</div>
-
 	<input type="hidden" id="myId" value="${sessionScope.loginId}">
 </body>
 </html>
