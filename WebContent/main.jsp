@@ -19,56 +19,6 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 <script type="text/javascript">
 $(function(){
-	$('#goMini').click(function(){
-		 var id = $('#id').val();
-		 var frm = document.frmPopup; 
-		 var url    ="miniHomepage.do";
-		 var name  = id;
-  	     var status = "toolbar=no,directories=no,scrollbars=no,resizable=no,status=no,menubar=no,width=950, height=600, top=130,left=180"; 
-		 window.open("", name,status); //window.open(url,title,status); window.open 함수에 url을 앞에와 같이
-		                                            //인수로  넣어도 동작에는 지장이 없으나 form.action에서 적용하므로 생략
-		                                            //가능합니다.
-		  frm.target = name;                    //form.target 이 부분이 빠지면 form값 전송이 되지 않습니다. 
-		  frm.action = url;                    //form.action 이 부분이 빠지면 action값을 찾지 못해서 제대로 된 팝업이 뜨질 않습니다.
-		  frm.method = "post";
-		  frm.id.value = id;
-		  frm.submit();     
-	})
-	init();
-	function init(){
-	    var current = 0;
-	    var audio = $('#audio');
-	    var playlist = $('#playlist');
-	    var tracks = playlist.find('li a');
-	    var len = tracks.length - 1;
-	    audio[0].volume = 0.5;
-	    audio[0].play();
-	    playlist.find('a').click(function(e){
-	        e.preventDefault();
-	        link = $(this);
-	        current = link.parent().index();
-	        run(link, audio[0]);
-	    });
-	    audio[0].addEventListener('ended',function(e){
-	        //len = 마지막 음악 리스트 인덱스
-	    	if(current == len){
-	            current = 0;
-	            link = playlist.find('a')[0];
-	        }else{
-	        	current++;
-	            link = playlist.find('a')[current];    
-	        }
-	        run($(link),audio[0]);
-	    });
-	}
-	function run(link, player){
-	        player.src = link.attr('href');
-	        par = link.parent();
-	        par.addClass('active').siblings().removeClass('active');
-	        player.load();
-	        player.play();
-	}
-})
 </script>
 <title>Insert title here</title>
 <style type="text/css">
@@ -78,13 +28,6 @@ $(function(){
   .jumbotron {
   		background-color : white;
   }
-#playlist,audio{background:#666;width:400px;padding:20px;}
-.active a{color:#5DB0E6;text-decoration:none;}
-li a{color:#eeeedd;background:#333;padding:5px;display:block;}
-li a:hover{text-decoration:none;}
-ul#playlist {
-	list-style-type: none;
-}
 </style>
 </head>
 <body>	
@@ -92,19 +35,7 @@ ul#playlist {
 		<input type="hidden" name="id" id="id" value="${member.id}">
 	</form>
 	
-	<div class="jumbotron">
-	<h4>어제 담은 당신의 일상, 오늘은 선물이 되어 돌아옵니다.<img src="/Cygram/img/newlogo.png"></h4>
-</div>
-
-<nav class="navbar navbar-fixed-top navbar-inverse">
-      <div class="container">
-        <div class="navbar-header">
-          
-          <a class="navbar-brand" href="index.jsp">Cygram</a>
-        </div>
-      </div><!-- /.container -->
-    </nav><!-- /.navbar -->
-
+	<jsp:include page="/common/top.jsp"/>
     <div class="container">
 
       <div class="row row-offcanvas row-offcanvas-right">
@@ -166,11 +97,7 @@ ul#playlist {
        </div>
 
       <hr>
-
-      <footer>
-        <p>&copy; Company 2017</p>
-      </footer>
-
+	  <jsp:include page="/common/footer.jsp"/>
     </div><!--/.container-->
 	
 	

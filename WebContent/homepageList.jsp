@@ -140,19 +140,7 @@ $(document).on('click','#goMini',function() {
   </style>
 </head>
 <body>
-<div class="jumbotron">
-	<h4>어제 담은 당신의 일상, 오늘은 선물이 되어 돌아옵니다.<img src="/Cygram/img/newlogo.png"></h4>
-</div>
-
-<nav class="navbar navbar-fixed-top navbar-inverse">
-      <div class="container">
-        <div class="navbar-header">
-          
-          <a class="navbar-brand" href="index.jsp">Cygram</a>
-        </div>
-      </div><!-- /.container -->
-    </nav><!-- /.navbar -->
-
+	<jsp:include page="/common/top.jsp"/>
     <div class="container">
 
       <div class="row row-offcanvas row-offcanvas-right">
@@ -204,11 +192,7 @@ $(document).on('click','#goMini',function() {
        </div>
 
       <hr>
-
-      <footer>
-        <p>&copy; Company 2017</p>
-      </footer>
-
+	  <jsp:include page="/common/footer.jsp"/>
     </div>
     
     <!--/.container-->
