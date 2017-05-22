@@ -126,7 +126,7 @@ textarea {
 		});	
 		
 		function loadCommentList(diaryNo){
-			var result = '<div id="commentList"'+diaryNo+' style="background-color :#f8f8f8;">';
+			var result = '<div id="commentList'+diaryNo+'" style="background-color :#f8f8f8;">';
 			var diaryNo=diaryNo;
 			var content = $('#save_content'+diaryNo).val();
 			var myId = $('#myId').val();
