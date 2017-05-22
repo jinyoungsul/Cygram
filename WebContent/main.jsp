@@ -18,7 +18,24 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 <script type="text/javascript">
-$(function(){
+	$(function(){
+		$('#goMini').click(function(){
+			 var id = $('#id').val();
+			 var frm = document.frmPopup; 
+			 var url    ="miniHomepage.do";
+			 var name  = id;
+	  	     var status = "toolbar=no,directories=no,scrollbars=no,resizable=no,status=no,menubar=no,width=950, height=600, top=130,left=180"; 
+			 window.open("", name,status); //window.open(url,title,status); window.open 함수에 url을 앞에와 같이
+			                                            //인수로  넣어도 동작에는 지장이 없으나 form.action에서 적용하므로 생략
+			                                            //가능합니다.
+			  frm.target = name;                    //form.target 이 부분이 빠지면 form값 전송이 되지 않습니다. 
+			  frm.action = url;                    //form.action 이 부분이 빠지면 action값을 찾지 못해서 제대로 된 팝업이 뜨질 않습니다.
+			  frm.method = "post";
+			  frm.id.value = id;
+			  frm.submit();     
+		})
+	})
+
 </script>
 <title>Insert title here</title>
 <style type="text/css">
