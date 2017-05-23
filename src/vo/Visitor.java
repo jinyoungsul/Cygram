@@ -4,17 +4,17 @@ import java.util.Date;
 
 public class Visitor {
 	private int visitorNo;
-	private String myId;
+	private String id;
 	private String friendId;
 	private String content;
 	private Date writeDate;
 	private int authorityCode;
 	
 	public Visitor(){}
-	public Visitor(int visitorNo, String myId, String friendId, String content, Date writeDate, int authorityCode) {
+	public Visitor(int visitorNo, String id, String friendId, String content, Date writeDate, int authorityCode) {
 		super();
 		this.visitorNo = visitorNo;
-		this.myId = myId;
+		this.id = id;
 		this.friendId = friendId;
 		this.content = content;
 		this.writeDate = writeDate;
@@ -23,14 +23,14 @@ public class Visitor {
 	public int getVisitorNo() {
 		return visitorNo;
 	}
-	public void setVisitorNo(int visitor) {
+	public void setVisitorNo(int visitorNo) {
 		this.visitorNo = visitorNo;
 	}
-	public String getMyId() {
-		return myId;
+	public String getId() {
+		return id;
 	}
-	public void setMyId(String myId) {
-		this.myId = myId;
+	public void setId(String id) {
+		this.id = id;
 	}
 	public String getFriendId() {
 		return friendId;

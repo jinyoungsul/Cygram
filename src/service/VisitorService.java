@@ -34,7 +34,7 @@ public class VisitorService {
 		visitor.setWriteDate(new Date());
 		
 		int result=0;
-		if(id.equals(visitor.getMyId())){
+		if(id.equals(visitor.getId())){
 			result=visitorDao.update(visitor); 
 		}
 		return result;

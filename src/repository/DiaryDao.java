@@ -43,10 +43,39 @@ public class DiaryDao {
 		DiaryMapper mapper = session.getMapper(DiaryMapper.class);
 		return mapper.selectDiaryList(map);
 	}
-	
-	public int selectDiaryCount(){
+
+	public List<Diary> selectDiaryFriendList(int startRow, int count, String id){
+		Map<String, Object> map = new HashMap<>();
+		map.put("startRow", startRow);
+		map.put("count", count);
+		map.put("id", id);
 		DiaryMapper mapper = session.getMapper(DiaryMapper.class);
-		return mapper.selectDiaryCount();
+		return mapper.selectDiaryFriendList(map);
+	}
+	
+	public List<Diary> selectDiaryPrivateList(int startRow, int count, String id){
+		Map<String, Object> map = new HashMap<>();
+		map.put("startRow", startRow);
+		map.put("count", count);
+		map.put("id", id);
+		DiaryMapper mapper = session.getMapper(DiaryMapper.class);
+		return mapper.selectDiaryPrivateList(map);
+	}
+	
+	
+	public int selectDiaryCount(String id){
+		DiaryMapper mapper = session.getMapper(DiaryMapper.class);
+		return mapper.selectDiaryCount(id);
+	}
+	
+	public int selectDiaryFriendCount(String id){
+		DiaryMapper mapper = session.getMapper(DiaryMapper.class);
+		return mapper.selectDiaryFriendCount(id);
+	}
+	
+	public int selectDiaryPrivateCount(String id){
+		DiaryMapper mapper = session.getMapper(DiaryMapper.class);
+		return mapper.selectDiaryPrivateCount(id);		
 	}
 	
 }

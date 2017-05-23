@@ -6,8 +6,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="mapper.VisitorMapper">
 	<insert id="insert" parameterType="Visitor">
-		INSERT INTO VISITOR(VISITOR_NO,MY_ID,FRIEND_ID,CONTENT,AUTHORITY_CODE,WRITE_DATE)
-		VALUES(VISITOR_SEQ.NEXTVAL,#{myId},#{friendId},#{content},#{authorityCode},#{writeDate})
+		INSERT INTO VISITOR(VISITOR_NO,ID,FRIEND_ID,CONTENT,AUTHORITY_CODE,WRITE_DATE)
+		VALUES(VISITOR_SEQ.NEXTVAL,#{id},#{friendId},#{content},#{authorityCode},#{writeDate})
 	</insert>
 	
 	<update id="update" parameterType="Visitor">
@@ -27,7 +27,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="selectVisitorList" parameterType="Map" resultMap="visitorMap" >
 	SELECT * FROM (
 		SELECT ROWNUM R, A.* FROM(
-			SELECT VISITOR_NO,MY_ID,FRIEND_ID,CONTENT,AUTHORITY_CODE,WRITE_DATE
+			SELECT VISITOR_NO,ID,FRIEND_ID,CONTENT,AUTHORITY_CODE,WRITE_DATE
 			FROM VISITOR
 			WHERE FRIEND_ID=#{id}
 		ORDER BY VISITOR_NO DESC
@@ -37,7 +37,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<resultMap type="Visitor" id="visitorMap">
 		<result property="visitorNo" column="VISITOR_NO"/>
-		<result property="myId" column="MY_ID"/>
+		<result property="id" column="ID"/>
 		<result property="friendId" column="FRIEND_ID"/>
 		<result property="content" column="CONTENT"/>
 		<result property="writeDate" column="WRITE_DATE"/>

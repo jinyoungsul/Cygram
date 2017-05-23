@@ -32,9 +32,11 @@ public class DiaryController {
 	}
 	
 	@RequestMapping("/diaryList.do")
-	public ModelAndView diaryList(@RequestParam(value="page",defaultValue="1") int page, String id){
+	public ModelAndView diaryList(@RequestParam(value="page",defaultValue="1") int page, String id, HttpSession session){
+		String loginId = (String) session.getAttribute("loginId");
 		ModelAndView mv = new ModelAndView("diary_list");
-		mv.addObject("diaryPage", diaryService.makePage(page, id));
+		mv.addObject("minihomepageId", id);
+		mv.addObject("diaryPage", diaryService.makePage(page, id, loginId));
 		return mv;
 	}
 	
@@ -44,7 +46,8 @@ public class DiaryController {
 		diary.setId(id);
 		diaryService.write(diary, id);
 		ModelAndView mv = new ModelAndView("diary_list");
-		mv.addObject("diaryPage", diaryService.makePage(1, id));
+		mv.addObject("minihomepageId", id);
+		mv.addObject("diaryPage", diaryService.makePage(1, id,id));
 		return mv;
 	}
 	

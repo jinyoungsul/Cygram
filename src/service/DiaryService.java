@@ -8,10 +8,10 @@ import org.springframework.stereotype.Component;
 
 import repository.CommentDiaryDao;
 import repository.DiaryDao;
+import repository.FriendsDao;
 import vo.CommentDiary;
 import vo.Diary;
 import vo.DiaryPage;
-import vo.GalleryImg;
 
 @Component
 public class DiaryService {
@@ -24,6 +24,11 @@ public class DiaryService {
 	private CommentDiaryDao commentDiary;
 	public void setCommentDiary(CommentDiaryDao commentDiary) {
 		this.commentDiary = commentDiary;
+	}
+	@Autowired
+	private FriendsDao friendsDao;
+	public void setFriendsDao(FriendsDao friendsDao) {
+		this.friendsDao = friendsDao;
 	}
 	
 	//-----------------------------------------------//
@@ -55,21 +60,29 @@ public class DiaryService {
 		return diary;
 	}
 	
-	public DiaryPage makePage(int currentPage, String id){
+	public DiaryPage makePage(int currentPage, String id, String loginId){
 		final int COUNT_PER_PAGE=3;
-		int totalDiaryCount = diaryDao.selectDiaryCount();
-		
-		System.out.println("total:"+totalDiaryCount);
-		
-		if(totalDiaryCount==0)
-			return new DiaryPage();
-		
 		int startRow = ((currentPage-1)*COUNT_PER_PAGE)+1;
 		int endRow = startRow +2;
+		int totalDiaryCount;
+		List<Diary> diaryList;
 		
-		List<Diary> diaryList = 
-				diaryDao.selectDiaryList(startRow, endRow, id);
-		
+		if(loginId.equals(id)){
+			totalDiaryCount = diaryDao.selectDiaryCount(id);
+			diaryList = diaryDao.selectDiaryList(startRow, endRow, id);
+		}else if (friendsDao.isOkFriends(loginId, id) != null) {
+			totalDiaryCount = diaryDao.selectDiaryFriendCount(id);
+			diaryList = diaryDao.selectDiaryFriendList(startRow, endRow, id);
+		}else{
+			totalDiaryCount = diaryDao.selectDiaryPrivateCount(id);
+			diaryList = diaryDao.selectDiaryPrivateList(startRow, endRow, id);
+		}
+	
+		if(totalDiaryCount==0)
+			return new DiaryPage();
+
+		System.out.println("total:"+totalDiaryCount);
+			
 		for(Diary diary : diaryList){
 			int diaryNo = diary.getDiaryNo();
 			List<CommentDiary> commentDiaryList = commentDiary.selectCommentDiary(diaryNo);
@@ -85,6 +98,7 @@ public class DiaryService {
 			endPage = totalPage;
 		
 		return new DiaryPage(diaryList, startPage, endPage, currentPage, totalPage);
+	
 	}		
 	
 }

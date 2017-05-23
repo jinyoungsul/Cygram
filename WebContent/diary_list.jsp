@@ -253,7 +253,7 @@ textarea {
 		<span id='reply_<?=$list_id?>' style='display:<?= $Display ?>; width:100%; padding:5;'></span><!-- 답변 -->
 		<span id='edit_<?=$list_id?>' style='display:<?= $Display ?>; width:100%; padding:5;'></span><!-- 수정 -->
 	</td>
-</tr>
+</tr> 
 </table>
 			
 					</c:forEach>
@@ -263,10 +263,13 @@ textarea {
 
 		<c:forEach begin="${diaryPage.startPage}" end="${diaryPage.endPage}"
 			var="i">
-			<a href="diaryList.do?page=${i}&id=${sessionScope.loginId}">[${i}]</a>
+			
+			<a href="diaryList.do?page=${i}&id=${minihomepageId}">[${i}]</a>
 		</c:forEach>
 
+		<c:if test="${minihomepageId == sessionScope.loginId}">
 		<a href="writeDiaryForm.do?id=${sessionScope.loginId}"><button>다이어리쓰기</button></a>
+		</c:if>
 	</div>
 
 	<input type="hidden" id="myId" value="${sessionScope.loginId}">

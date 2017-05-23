@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.GalleryCommentMapper">
+<!-- 다이어리 댓글 등록 -->
+	<insert id="insertGalleryComment" parameterType="GalleryComment">
+		INSERT INTO GALLERY_COMMENT(GALLERY_COMMENT_NO,GALLERY_NO,CONTENT,MY_ID,WRITE_DATE)
+		VALUES
+		(GALLERY_COMMENT_SEQ.NEXTVAL,#{galleryNo},#{content},#{myId},SYSDATE)
+	</insert>
+
+
+<!-- 다이어리 댓글 불러오기 -->
+	<select id="selectGalleryComment" resultMap="GalleryCommentResult">
+		SELECT * 
+		FROM MEMBER M, GALLERY_COMMENT C
+ 		WHERE C.GALLERY_NO = #{galleryNo} AND M.ID = C.MY_ID 
+  	</select>
+
+	<resultMap id="GalleryCommentResult" type="GalleryComment">
+		<result property="galleryCommentNo" column="GALLERY_COMMENT_NO" />
+		<result property="galleryNo" column="GALLERY_NO" />
+		<result property="content" column="CONTENT" />
+		<result property="myId" column="MY_ID" />
+		<result property="writeDate" column="WRITE_DATE" />
+		<association property="member" javaType="MEMBER">
+			<result property="id" column="ID" />
+			<result property="name" column="NAME" />
+		</association>
+	</resultMap>
+</mapper>

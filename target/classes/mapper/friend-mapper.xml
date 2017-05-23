@@ -22,11 +22,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		VALUES (FRIEND_SEQ.nextval,#{myId},#{myNickname},#{friendId},#{friendNickname},#{action},#{accept})
 	</insert>
 	<!-- 일촌신청 전 확인 -->
+	<!-- 일촌 상태이거나 신청 중인 상태 -->
 	<select id="checkFriends" parameterType="Map" resultMap="friendsMap">
 		SELECT * 
 		FROM FRIEND
 		WHERE (my_id = #{myId} and friend_id = #{friendId} and accept = 'T') or (my_id = #{myId} and friend_id = #{friendId} and accept = 'F')
 	</select>
+	<!-- 일촌상태  O-->
+	<select id="isOkFriends" parameterType="Map" resultMap="friendsMap">
+		SELECT * 
+		FROM FRIEND
+		WHERE (my_id = #{myId} and friend_id = #{friendId} and accept = 'T')
+	</select>
+	
 	<!-- 기본키로 일촌신청 확인 -->
 	<select id="selectFriends" resultMap="friendsMap">
 		SELECT * 

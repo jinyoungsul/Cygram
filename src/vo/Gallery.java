@@ -12,9 +12,12 @@ public class Gallery {
 	private Date writeDate;
 	private String content;
 	private int authorityCode;
+	private List<GalleryComment> galleryCommentList;
 	private List<GalleryImg> galleryImgList; 
 	
-	//----------------------------------------------//
+	//---------------------------------------------//
+	
+	
 	public Gallery(){}
 	public Gallery(int galleryNo, String title, String id, Date writeDate, String content, int authorityCode,
 			List<GalleryImg> galleryImgList, List<MultipartFile> photoList) {
@@ -74,13 +77,19 @@ public class Gallery {
 		this.galleryImgList = galleryImgList;
 	}
 
+	public List<GalleryComment> getGalleryCommentList() {
+		return galleryCommentList;
+	}
+	public void setGalleryCommentList(List<GalleryComment> galleryCommentList) {
+		this.galleryCommentList = galleryCommentList;
+	}
+	
 	@Override
 	public String toString() {
 		return "Gallery [galleryNo=" + galleryNo + ", title=" + title + ", id=" + id + ", writeDate=" + writeDate
-				+ ", content=" + content + ", authorityCode=" + authorityCode + ", galleryImgList=" + galleryImgList
-				+ ", photoList=" + photoList + "]";
+				+ ", content=" + content + ", authorityCode=" + authorityCode + ", galleryCommentList="
+				+ galleryCommentList + ", galleryImgList=" + galleryImgList + ", photoList=" + photoList + "]";
 	}
-
 	//--------------------------------------------------------------------------//
 
 	private List<MultipartFile> photoList;

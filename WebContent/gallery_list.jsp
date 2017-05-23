@@ -5,29 +5,166 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-	<script>
-	$('#refresh').click(function(){
-// 		location.reload(true);
-// 		location.href = location.href;
-		history.go(-1);
-	})
-	</script>
-<title>게시판</title>
-<style type="text/css">
-body{
-background-image: url("img/background2.png");
+<title>사진첩 게시판</title>
+<style>
+body {
+	background-image: url("img/background2.png");
 }
 div#list {
-	margin-left: 270px;
+	margin-left: 250px;
 	margin-top: 120px;
 }
+div#GalleryCommentList {
+	margin-left: 10px;
+	margin-top: 10px;
+}
+/*  ------------ 게시판 관련 스타일 적용 ------------ */
+.bbs_form {
+	margin: 0;
+}
+.bbs_linei {
+	background-color: #D6D2C7;
+	height: 1px;
+}
+//
+게시판 줄 색깔 바꾸기
+.bbs_lineo {
+	background-color: #FFFFFF;
+	height: 10px;
+}
+//
+게시판 줄 색깔 바꾸기
+.bbs_no {
+	background-color: blue;
+	height: 30px;
+}
+//
+게시판 내용 글씨
+.bbs_fs {
+	color: gray;
+	font-size: 11px;
+}
+//
+게시판 날짜
+.bbs_ft {
+	font-size: 9pt;
+	width: 100%;
+	font-family: "돋움", "굴림", "seoul", "verdana", "arial";
+	background-color: #FFFFFF;
+	color: #000000;
+	border: 1 solid cccccc;
+	color: #000000;
+	overflow: auto
+}
+.bbs_tt {
+	CURSOR: pointer;
+}
+.num {
+	color: 333333;
+	margin-right: 10;
+	font-family: tahoma;
+	font-size: 7pt;
+}
+.name {
+	color: #000000;
+	text-decoration: none font-size:7pt;
+}
+.date {
+	color: #aaaaaa;
+	font-family: tahoma;
+	font-size: 7pt;
+}
+.c_name {
+	color: #aaaaaa;
+	text-decoration: none font-size:8pt;
+}
+.c_date {
+	color: #aaaaaa;
+	font-family: tahoma;
+	font-size: 7pt;
+}
+a.bbs:link, a.bbs:visited, a.bbs:active {
+	text-decoration: none;
+}
+a.bbs:hover {
+	text-decoration: none;
+	color: #3366cc;
+}
+.comment {
+	font-family: tahoma;
+	font-size: 9pt;
+}
+.edit {
+	font-family: tahoma;
+	font-size: 8pt;
+}
+.delete {
+	font-family: tahoma;
+	font-size: 8pt;
+}
+textarea {
+	font-size: 9pt;
+	width: 100%;
+	font-family: "돋움", "굴림", "seoul", "verdana", "arial";
+	background-color: #FFFFFF;
+	color: #000000;
+	border: 1 solid cccccc;
+	color: #000000;
+	overflow: auto
+}
 </style>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<script src="js/date.format.js"></script>
+<script type="text/javascript">
+//댓글쓰기 버튼
+	$(document).ready(function(){
+		
+		$(document).on('click','#btnGalleryComment',function(){
+			var galleryNo=$(this).val();
+			loadCommentList(galleryNo);	
+		});	
+		
+		function loadCommentList(galleryNo){
+			var result = '<div id="commentList'+galleryNo+'" style="background-color :#f8f8f8;">';
+			var galleryNo=galleryNo;
+			var content = $('#save_content'+galleryNo).val();
+			var myId = $('#myId').val();
+			alert(content);
+			$.ajax({
+				url :"writeGalleryComment.do",
+				type : "post",
+				data : {
+					"galleryNo" : galleryNo,
+					"content" : content,
+					"myId" : myId
+				},
+				success : function(data){
+					$('#commentList'+galleryNo).remove();
+					$.each(data,function(index,value){
+						var galleryComment = value;
+						var JsonDate = "/Date("+galleryComment.writeDate+")/";
+						var date = new Date(parseInt(JsonDate.substr(6)));
+						var writeDate = date.format("yyyy/mm/dd h:MM:ss");		
+						
+						result += '<div id="commentParentText" style="padding-left:5px; white-space:nowarp;"><span class="c_name">'+galleryComment.myId +'('+ galleryComment.member.name+')</span>&nbsp;:&nbsp';
+						result += '<span class="comment">'+galleryComment.content+'</span>&nbsp;';
+						result += '<span class="c_date">+'+writeDate+'+</span>&nbsp;</div>';
+					})
+					result += '</div>';
+					$('#save_content'+galleryNo).val("");
+					$('#commentListStart'+galleryNo).append(result);
+				},
+				error : function(){
+					alert('ajax통신에러');
+				}
+				
+			});
+		}
+	})
+</script>
 </head>
 <body>
-
-<Button id="refresh">홈</Button>
 <div id="list">
 	<div id='galleryList'>
 		<c:choose>
@@ -35,26 +172,113 @@ div#list {
 					<p>게시글이 아직 존재하지 않습니다.<p>
 			</c:when>
 
-			<c:otherwise>
-				<c:forEach var="gallery" items="${galleryPage.galleryList}">
-				<div>
-						<p><b> 제목 </b>${gallery.title}                            ${gallery.writeDate}</p>
-						<p><b> 내용 </b>${gallery.content}/<p>
-							<c:forEach var="galleryImg" items="${gallery.galleryImgList}">
-								<img src="${galleryImg.galleryPath}" width="130sp" height="130sp">
-							</c:forEach>
-						<p>권한 ${gallery.authorityCode}</p>
-				</div>
-				</c:forEach>
-			</c:otherwise>
+		<c:otherwise>
+			<c:forEach var="gallery" items="${galleryPage.galleryList}">
+			<!-- 게시판 리스트 시작 -->
+			<table width="63%" border="0" cellspacing="0" cellpadding="0">
+	
+			<tr><td colspan="6" class="bbs_lineo">&nbsp;</td></tr>
+			<tr><td colspan="6" class="bbs_linei"></td></tr>
+					
+			<tr bgColor="#f1f1f1">    
+			<td height="25" colspan="5" style="padding-left : 5px;">
+
+	    	<span class=num>NO.<b>${gallery.galleryNo}</b></span>&nbsp;
+	    	<span class=name>${gallery.id}</span>
+	    	<span class=date>(${gallery.writeDate})</span>&nbsp;
+   			</td>
+    
+			<td align="right" style="padding-right:5px;">
+			<a href="javascript:list_box('<${gallery.id}>', 'r');" class="comment" title="댓글">댓글</a>
+			<? if (($member[mb_id] && ($member[mb_id] == $list[$i][mb_id])) || $is_admin) { ?>
+			         | 
+			<a href="javascript:list_box('<?=$list_id?>', 'u');" class="edit">수정</a> | 
+			<a href="javascript:if (confirm('삭제하시겠습니까?')) { location='./delete.php?w=d&bo_table=<?=$bo_table?>&wr_id=<?=$list[$i][wr_id]?>&page=<?=$page?>';}" class="delete">삭제</a>		
+			<? } ?>
+			</td>
+			</tr>
+
+			<!-- 다이어리 게시글이 보이는 부분 -->
+			<tr style="cursor:hand; " title="클릭하시면 댓글을 쓸 수 있습니다." >
+			    <td colspan="6" style="padding-left : 5px; height:100px; ">
+			    <div>${gallery.content}</div>
+			    	<c:forEach var="galleryImg" items="${gallery.galleryImgList}">
+						<img src="${galleryImg.galleryPath}" width="130sp" height="130sp">
+					</c:forEach>
+			    </td>	
+			</tr>	
+
+			<!-- 댓글이 달아졌을 때 보이는 부분 -->
+			<tr>
+			 	<td colspan="6">
+			 		<div id="commentListStart${gallery.galleryNo }"></div>
+			 		<div id="commentList${gallery.galleryNo }" style="background-color :#f8f8f8;"> 
+			 			<c:forEach var="galleryComment" items="${gallery.galleryCommentList }">
+			 				<div id="commentParentText" style="padding-left: 5px; white-space: nowrap;">
+			 					<span class="c_name">${galleryComment.myId} (${galleryComment.member.name})</span>&nbsp;:&nbsp; 
+			 					<span class="comment">${galleryComment.content}</span>&nbsp; 
+			 					<span class="c_date">+${galleryComment.writeDate}+</span>&nbsp;
+			 				</div>
+			 			</c:forEach>
+			 		</div>
+			 	</td>
+			</tr>
+
+                 
+			<!-- 댓글 수정 삭제 부분     -->
+			
+			<%--         <a href="javascript:list_box('<?=$list_id?>', 'r');" title="이 댓글에 댓글달기" class="bbs"> --%>
+			<!--             <img src="img/btn_reply.gif" title="이 댓글에 댓글달기" border="0" align="absmiddle"> -->
+			<!--         </a> -->
+			        <? if (($member[mb_id] && ($member[mb_id] == $list[$i][mb_id])) || $is_admin) { ?>
+			<%-- 	    <a href="javascript:list_box('<?=$list_id?>', 'u');" style="padding-right:2px; "> --%>
+			<!-- 	        <img src="img/btn_edit.gif" title="수정" border="0" align="absmiddle"> -->
+			<!-- 	    </a> -->
+			<%-- 		<a href="javascript:if (confirm('삭제하시겠습니까?')) { location='./delete.php?w=d&bo_table=<?=$bo_table?>&wr_id=<?=$list[$i][wr_id]?>&page=<?=$page?>';}"> --%>
+			<!-- 		    <img src="img/btn_del.gif" title="삭제" border="0" align="absmiddle"> -->
+			<!-- 		</a> -->
+ 
+			<?
+			    $Display = "none";
+			?>
+			
+			<tr bgColor="#f8f8f8"> 
+				<td colspan="6" class="bbs_pp">
+					<img id='save_comment' style='display:<?= $Display ?>;' border="0" >
+					<textarea class="bbs_ft" id="save_content${gallery.galleryNo}" style="width:63%; height:40; padding:4;" placeholder="댓글을 작성하세요"></textarea>
+						<c:if test="${sessionScope.loginId != '' }">
+						<button type="button" id="btnGalleryComment" value="${gallery.galleryNo}" style="border:none; background-color:#f8f8f8"><img src="img/btn_write_comment.gif"></button>
+						</c:if>			
+					<span id='reply_<?=$list_id?>' style='display:<?= $Display ?>; width:100%; padding:5;'></span><!-- 답변 -->
+					<span id='edit_<?=$list_id?>' style='display:<?= $Display ?>; width:100%; padding:5;'></span><!-- 수정 -->
+				</td>
+			</tr>
+			</table>
+			</c:forEach>
+		</c:otherwise>
 		</c:choose>	
 	</div>
+
+
+<%-- 			<c:otherwise> --%>
+<%-- 				<c:forEach var="gallery" items="${galleryPage.galleryList}"> --%>
+<!-- 				<div> -->
+<%-- 						<p><b> 제목 </b>${gallery.title}                            ${gallery.writeDate}</p> --%>
+<%-- 						<p><b> 내용 </b>${gallery.content}/<p> --%>
+<%-- 							<c:forEach var="galleryImg" items="${gallery.galleryImgList}"> --%>
+<%-- 								<img src="${galleryImg.galleryPath}" width="130sp" height="130sp"> --%>
+<%-- 							</c:forEach> --%>
+<%-- 						<p>권한 ${gallery.authorityCode}</p> --%>
+<!-- 				</div> -->
+<%-- 				</c:forEach> --%>
+<%-- 			</c:otherwise> --%>
 
 		<c:forEach begin="${galleryPage.startPage}" end="${galleryPage.endPage}" var="i">
 			<a href="galleryList.do?page=${i}">[${i}]</a>
 		</c:forEach>
 
-<a href="writeForm.do"><button>글쓰기</button></a>
-</div>
+		<a href="writeForm.do"><button>글쓰기</button></a>
+		</div>
+		<input type="hidden" id="myId" value="${sessionScope.loginId}">
 </body>
 </html>

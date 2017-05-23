@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
-<title>글쓰기 화면</title>
+<title>사진첩 글쓰기 화면</title>
 
 <style type="text/css">
 body{
@@ -47,6 +47,7 @@ $(function(){
 	<form action="write.do" method="post" enctype="multipart/form-data">
 		<input type="hidden" name="id" value="${sessionScope.loginId }">
 		<table border="1">
+			
 			<tr>
 				<td>제목:</td>
 				<td><input type="text" name="title"></td>
@@ -68,6 +69,9 @@ $(function(){
 				사진 : <input type="file" id="file" name="photoList"> <a
 					href="#this" class="btn" id="delete" name="delete">삭제</a>
 			</p>
+		</div>
+		<div>
+			<input type="hidden" value="${gallery.galleryNo}">
 		</div>
 	</form>
 	<a href="#" class="btn" id="addFile">파일추가</a><br>
