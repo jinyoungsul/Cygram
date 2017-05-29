@@ -22,11 +22,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		
 	</insert>
 
-	<select id="selectGalleryCount" resultType="integer">
-		SELECT COUNT(*) FROM
-		GALLERY
-	</select>
-	
 	<select id="select" parameterType="Integer" resultMap="galleryMap">
 		SELECT * FROM GALLERY WHERE GALLERY_NO=#{galleryNo}
 	</select>
@@ -35,6 +30,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT * FROM GALLERY_IMG WHERE GALLERY_NO = #{galleryNo}
 	</select>
 
+	<!-- 전체 리스트 -->
 	<select id="selectGalleryList" parameterType="Map" resultMap="galleryMap" >
 		SELECT * FROM (
 			SELECT ROWNUM R, A.* FROM(	
@@ -44,6 +40,52 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		      	 ORDER BY G.GALLERY_NO DESC
 			) A	)
 		WHERE R BETWEEN #{startRow} AND #{count}
+	</select>
+	
+	<!-- 일촌 리스트 -->
+	<select id="selectGalleryFriendList" parameterType="Map" resultMap="galleryMap" >
+		SELECT * FROM (
+			SELECT ROWNUM R, A.* FROM(	
+				SELECT *
+		      	 FROM GALLERY G
+		      	 WHERE G.ID = #{id} and (AUTHORITY_CODE = 1 OR AUTHORITY_CODE = 2)
+		      	 ORDER BY G.GALLERY_NO DESC
+			) A	)
+		WHERE R BETWEEN #{startRow} AND #{count}
+	</select>
+	
+	<!-- 비공개 리스트 -->
+	<select id="selectGalleryPrivateList" parameterType="Map" resultMap="galleryMap" >
+		SELECT * FROM (
+			SELECT ROWNUM R, A.* FROM(	
+				SELECT *
+		      	 FROM GALLERY G
+		      	 WHERE G.ID = #{id} and AUTHORITY_CODE = 1
+		      	 ORDER BY G.GALLERY_NO DESC
+			) A	)
+		WHERE R BETWEEN #{startRow} AND #{count}
+	</select>
+	
+	
+	<!-- 사진첩 전체공개 -->
+	<select id="selectGalleryCount" resultType="integer">
+		SELECT COUNT(*) FROM
+		GALLERY
+		WHERE ID =#{id}
+	</select>
+	
+	<!-- 사진첩 일촌공개 -->
+	<select id="selectGalleryFriendCount" resultType="integer">
+		SELECT COUNT(*) FROM
+		GALLERY
+		WHERE ID =#{id} and (AUTHORITY_CODE = 1 OR AUTHORITY_CODE = 2)
+	</select>
+	
+	<!-- 사진첩 비공개 -->
+	<select id="selectGalleryPrivateCount" resultType="integer">
+		SELECT COUNT(*) FROM
+		GALLERY
+		WHERE ID =#{id} and (AUTHORITY_CODE = 1)
 	</select>
 	
 	<resultMap id="galleryImgMap" type="GalleryImg">
@@ -61,18 +103,4 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="authorityCode" column="authority_code" />
 	</resultMap>
 
-<!-- 	<resultMap id="galleryResultMap" type="Gallery"> -->
-<!-- 		<id property="galleryNo" column="g.gallery_no" /> -->
-<!-- 		<result property="galleryNo" column="gallery_no" /> -->
-<!-- 		<result property="title" column="title" /> -->
-<!-- 		<result property="id" column="id" /> -->
-<!-- 		<result property="writeDate" column="write_date" /> -->
-<!-- 		<result property="content" column="content" /> -->
-<!-- 		<result property="authorityCode" column="authority_code" /> -->
-<!-- 		<result property="galleryImgNo" column="gallery_img_no" /> -->
-<!-- 		<result property="galleryPath" column="gallery_path" /> -->
-<!-- 		<collection property="galleryImgList" column="GALLERY_NO" -->
-<!-- 			select="selectGalleryImg" ofType="galleryImgMap" javaType="ArrayList" /> -->
-<!-- 	</resultMap> -->
-	
 </mapper>

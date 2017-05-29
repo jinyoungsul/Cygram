@@ -46,6 +46,7 @@ $(function(){
 <div id="write">
 	<form action="write.do" method="post" enctype="multipart/form-data">
 		<input type="hidden" name="id" value="${sessionScope.loginId }">
+		<input type="hidden" name="galleryNo" value="${gallery.galleryNo}">
 		<table border="1">
 			
 			<tr>

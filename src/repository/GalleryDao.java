@@ -35,8 +35,8 @@ public class GalleryDao {
 		GalleryMapper mapper = session.getMapper(GalleryMapper.class);
 		return mapper.select(galleryNo);
 	}
-	
-	public List<Gallery> selectList(int startRow, int count,String id){
+	//-----------사진첩 권한 설정 리스트 -----------------------------------//
+	public List<Gallery> selectGalleryList(int startRow, int count,String id){
 		System.out.println("selectList error");
 		Map<String, Integer> map = new HashMap<>();
 		Map<String, Object> map2 = new HashMap<>();
@@ -47,11 +47,45 @@ public class GalleryDao {
 		return mapper.selectGalleryList(map2);
 	}
 	
-	public int selectCount(){
+	public List<Gallery> selectGalleryFriendList(int startRow, int count,String id){
+		System.out.println("selectList error");
+		Map<String, Integer> map = new HashMap<>();
+		Map<String, Object> map2 = new HashMap<>();
+		map2.put("startRow", startRow);
+		map2.put("count", count);
+		map2.put("id",id);
 		GalleryMapper mapper = session.getMapper(GalleryMapper.class);
-		return mapper.selectGalleryCount();
+		return mapper.selectGalleryFriendList(map2);
 	}
-
+	
+	public List<Gallery> selectGalleryPrivateList(int startRow, int count,String id){
+		System.out.println("selectList error");
+		Map<String, Integer> map = new HashMap<>();
+		Map<String, Object> map2 = new HashMap<>();
+		map2.put("startRow", startRow);
+		map2.put("count", count);
+		map2.put("id",id);
+		GalleryMapper mapper = session.getMapper(GalleryMapper.class);
+		return mapper.selectGalleryPrivateList(map2);
+	}
+	
+	//--------------사진첩 카운트---------------------------------------//
+	
+	public int selectGalleryCount(String id){
+		GalleryMapper mapper = session.getMapper(GalleryMapper.class);
+		return mapper.selectGalleryCount(id);
+	}
+	
+	public int selectFriendCount(String id){
+		GalleryMapper mapper = session.getMapper(GalleryMapper.class);
+		return mapper.selectGalleryFriendCount(id);
+	}
+	
+	public int selectPrivateCount(String id){
+		GalleryMapper mapper = session.getMapper(GalleryMapper.class);
+		return mapper.selectGalleryPrivateCount(id);
+	}
+	
 	public List<GalleryImg> selectImgList(int galleryNo) {
 		GalleryMapper mapper = session.getMapper(GalleryMapper.class);
 		return mapper.selectImgList(galleryNo);

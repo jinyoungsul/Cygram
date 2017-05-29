@@ -31,9 +31,11 @@ public class GalleryController {
 	//----------------------------------------------------------//
 	
 	@RequestMapping("/galleryList.do")
-	public ModelAndView galleryList(@RequestParam(value="page",defaultValue="1") int page,HttpSession session){
+	public ModelAndView galleryList(@RequestParam(value="page",defaultValue="1") int page,HttpSession session,String id){
+		String loginId = (String) session.getAttribute("loginId");
 		ModelAndView mv = new ModelAndView("gallery_list");
-		mv.addObject("galleryPage", galleryService.makePage(page,(String)session.getAttribute("loginId")));
+		mv.addObject("minihomepageId",id);
+		mv.addObject("galleryPage", galleryService.makePage(page,id,loginId));
 		return mv;
 	}
 	
@@ -49,6 +51,9 @@ public class GalleryController {
 		
 		System.out.println("gallery:"+gallery);
 		
+		String id = (String) session.getAttribute("loginId");
+		gallery.setId(id);
+		
 		String galleryPath = request.getServletContext().getRealPath("img");
 		List<GalleryImg> galleryImgList = new ArrayList<>();
 		
@@ -56,17 +61,14 @@ public class GalleryController {
 		if(dir.exists()==false){
 			dir.mkdirs();
 		}
-		// ���� ���ε�
-		//������ ���̽� ���
 		for(MultipartFile f : gallery.getPhotoList()){
 			String savedName = 
 					galleryPath +"/"+new Random().nextInt(1000000)+f.getOriginalFilename();
-			System.out.println("Cygram 위치:"+savedName.indexOf("Cygram"));
+			System.out.println("Cygram �쐞移�:"+savedName.indexOf("Cygram"));
 			String realPath = "/"+savedName.substring((savedName.indexOf("Cygram")));
-			System.out.println("이미지경로:"+savedName.substring((savedName.indexOf("Cygram"))));
+			System.out.println("�씠誘몄�寃쎈줈:"+savedName.substring((savedName.indexOf("Cygram"))));
 			File saveFile = new File(savedName);
 			
-			// ���ε�
 			try {
 				f.transferTo(saveFile);
 				
@@ -79,9 +81,12 @@ public class GalleryController {
 			}	
 		}
 		
-		ModelAndView mv = new ModelAndView("write_result");
-		mv.addObject("galleryNo", galleryService.write(gallery, galleryImgList));
+		galleryService.write(gallery, galleryImgList);
+		ModelAndView mv = new ModelAndView("gallery_list");
+		mv.addObject("minihomepageId", id);
+//		mv.addObject("galleryNo", galleryService.write(gallery, galleryImgList));
 		mv.addObject("fileCount", gallery.getPhotoList().size());
+		mv.addObject("galleryPage", galleryService.makePage(1, id, id));
 		return mv;
 	}
 	

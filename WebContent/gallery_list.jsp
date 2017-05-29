@@ -259,25 +259,14 @@ textarea {
 		</c:choose>	
 	</div>
 
-
-<%-- 			<c:otherwise> --%>
-<%-- 				<c:forEach var="gallery" items="${galleryPage.galleryList}"> --%>
-<!-- 				<div> -->
-<%-- 						<p><b> 제목 </b>${gallery.title}                            ${gallery.writeDate}</p> --%>
-<%-- 						<p><b> 내용 </b>${gallery.content}/<p> --%>
-<%-- 							<c:forEach var="galleryImg" items="${gallery.galleryImgList}"> --%>
-<%-- 								<img src="${galleryImg.galleryPath}" width="130sp" height="130sp"> --%>
-<%-- 							</c:forEach> --%>
-<%-- 						<p>권한 ${gallery.authorityCode}</p> --%>
-<!-- 				</div> -->
-<%-- 				</c:forEach> --%>
-<%-- 			</c:otherwise> --%>
-
 		<c:forEach begin="${galleryPage.startPage}" end="${galleryPage.endPage}" var="i">
-			<a href="galleryList.do?page=${i}">[${i}]</a>
+			<a href="galleryList.do?page=${i}&id=${minihomepageId}">[${i}]</a>
 		</c:forEach>
-
-		<a href="writeForm.do"><button>글쓰기</button></a>
+		
+		<c:if test="${minihomepageId == sessionScope.loginId}">
+  		<a href="writeForm.do?id=${sessionScope.loginId}"><button>사진첩 글쓰기</button></a>
+ 		</c:if>
+		
 		</div>
 		<input type="hidden" id="myId" value="${sessionScope.loginId}">
 </body>

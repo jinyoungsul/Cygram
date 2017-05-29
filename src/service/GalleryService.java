@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import repository.FriendsDao;
 import repository.GalleryDao;
 import vo.Gallery;
 import vo.GalleryImg;
@@ -17,6 +18,11 @@ public class GalleryService {
 	private GalleryDao galleryDao;
 	public void setGalleryDao(GalleryDao galleryDao){
 		this.galleryDao=galleryDao;
+	}
+	@Autowired
+	private FriendsDao friendsDao;
+	public void setFriendsDao(FriendsDao friendsDao) {
+		this.friendsDao = friendsDao;
 	}
 	//-----------------------------------------------//
 	
@@ -39,24 +45,27 @@ public class GalleryService {
 		return gallery;
 	}
 	
-	public GalleryPage makePage(int currentPage,String id){
+	public GalleryPage makePage(int currentPage,String id,String loginId){
 		final int COUNT_PER_PAGE=3;
-		int totalGalleryCount = galleryDao.selectCount();
+		int startRow = ((currentPage-1)*COUNT_PER_PAGE)+1;
+		int endRow = startRow +2;
+		int totalGalleryCount;		
+		List<Gallery> galleryList;  
 		
-		System.out.println("total:"+totalGalleryCount);
+		if(loginId.equals(id)){
+			totalGalleryCount = galleryDao.selectGalleryCount(id);
+			galleryList = galleryDao.selectGalleryList(startRow, endRow, id);	
+		}else if (friendsDao.isOkFriends(id, loginId) != null) {
+			totalGalleryCount = galleryDao.selectFriendCount(id);
+			galleryList = galleryDao.selectGalleryFriendList(startRow, endRow, id);
+		}else{
+			totalGalleryCount = galleryDao.selectPrivateCount(id);
+			galleryList = galleryDao.selectGalleryPrivateList(startRow, endRow, id);
+		}
 		
 		if(totalGalleryCount==0)
 			return new GalleryPage();
-		
-		int startRow = ((currentPage-1)*COUNT_PER_PAGE)+1;
-		int endRow = startRow +2;
-		List<Gallery> galleryList = 
-				galleryDao.selectList(startRow, endRow,id);
-		
-		System.out.println("start:"+startRow+"/end:"+endRow);
-		System.out.println("list size:"+galleryList.size());
-		
-		System.out.println("사진첩리스트 확인");
+				
 		for(Gallery g: galleryList){
 			int galleryNo = g.getGalleryNo();
 			List<GalleryImg> galleryImgList = galleryDao.selectImgList(galleryNo);
