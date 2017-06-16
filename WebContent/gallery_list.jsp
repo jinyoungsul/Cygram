@@ -96,11 +96,11 @@ a.bbs:hover {
 }
 .edit {
 	font-family: tahoma;
-	font-size: 8pt;
+	font-size: 9pt;
 }
 .delete {
 	font-family: tahoma;
-	font-size: 8pt;
+	font-size: 9pt;
 }
 textarea {
 	font-size: 9pt;
@@ -188,13 +188,15 @@ textarea {
 	    	<span class=date>(${gallery.writeDate})</span>&nbsp;
    			</td>
     
+    		<!--	게시글 수정 및 삭제	 -->
+    
 			<td align="right" style="padding-right:5px;">
-			<a href="javascript:list_box('<${gallery.id}>', 'r');" class="comment" title="댓글">댓글</a>
-			<? if (($member[mb_id] && ($member[mb_id] == $list[$i][mb_id])) || $is_admin) { ?>
-			         | 
-			<a href="javascript:list_box('<?=$list_id?>', 'u');" class="edit">수정</a> | 
+			<c:if test="${minihomepageId == sessionScope.loginId}">
+					         
+			<a href="modifyGalleryForm.do?galleryNo=${gallery.galleryNo}" class="edit">수정</a> | 
 			<a href="javascript:if (confirm('삭제하시겠습니까?')) { location='./delete.php?w=d&bo_table=<?=$bo_table?>&wr_id=<?=$list[$i][wr_id]?>&page=<?=$page?>';}" class="delete">삭제</a>		
-			<? } ?>
+			
+			</c:if>
 			</td>
 			</tr>
 

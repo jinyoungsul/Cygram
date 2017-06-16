@@ -33,8 +33,6 @@ $(function(){
 		$(this).parent().remove();
 	})
 		$('#refresh').click(function(){
-// 		location.reload(true);
-// 		location.href = location.href;
 		history.go(-1);
 	})
 })
@@ -46,7 +44,6 @@ $(function(){
 <div id="write">
 	<form action="write.do" method="post" enctype="multipart/form-data">
 		<input type="hidden" name="id" value="${sessionScope.loginId }">
-		<input type="hidden" name="galleryNo" value="${gallery.galleryNo}">
 		<table border="1">
 			
 			<tr>
@@ -71,13 +68,10 @@ $(function(){
 					href="#this" class="btn" id="delete" name="delete">삭제</a>
 			</p>
 		</div>
-		<div>
-			<input type="hidden" value="${gallery.galleryNo}">
-		</div>
 	</form>
 	<a href="#" class="btn" id="addFile">파일추가</a><br>
 	
-	<a href="readProfile.do">[프로필 화면으로]</a>
+	<a href="read.do">[사진첩 화면으로]</a>
 </div>
 </body>
 </html>

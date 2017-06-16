@@ -35,6 +35,17 @@ public class GalleryDao {
 		GalleryMapper mapper = session.getMapper(GalleryMapper.class);
 		return mapper.select(galleryNo);
 	}
+	
+	public int update(Gallery gallery){
+		GalleryMapper mapper = session.getMapper(GalleryMapper.class);
+		return mapper.update(gallery);		
+	}
+	
+	public int updateImg(GalleryImg galleryImg){
+		GalleryMapper mapper = session.getMapper(GalleryMapper.class);
+		return mapper.updateImg(galleryImg);		
+	}
+	
 	//-----------사진첩 권한 설정 리스트 -----------------------------------//
 	public List<Gallery> selectGalleryList(int startRow, int count,String id){
 		System.out.println("selectList error");

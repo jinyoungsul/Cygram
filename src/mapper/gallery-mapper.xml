@@ -13,6 +13,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		VALUES
 		(#{galleryNo},#{title},#{id},#{writeDate},#{content},#{authorityCode})
 	</insert>
+	
+	<update id="update" parameterType="Gallery">
+		UPDATE GALLERY SET TITLE=#{title}, CONTENT=#{content}, AUTHORITY_CODE=#{authorityCode}
+		WHERE GALLERY_NO=#{galleryNo}
+	</update>
+
+	<update id="updateImg" parameterType="GalleryImg">
+		UPDATE GALLERY_IMG SET GALLERY_PATH=#{galleryPath}
+		WHERE GALLERY_IMG_NO=#{galleryImgNo}
+	</update>
 
 	<insert id="insertImg" parameterType="GalleryImg">
 		INSERT INTO

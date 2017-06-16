@@ -96,11 +96,11 @@ a.bbs:hover {
 }
 .edit {
 	font-family: tahoma;
-	font-size: 8pt;
+	font-size: 9pt;
 }
 .delete {
 	font-family: tahoma;
-	font-size: 8pt;
+	font-size: 9pt;
 }
 textarea {
 	font-size: 9pt;
@@ -182,22 +182,21 @@ textarea {
 					<tr><td colspan="6" class="bbs_linei"></td></tr>
 					
 					<tr bgColor="#f1f1f1">    
-					<td height="25" colspan="5" style="padding-left : 5px;">
-
-	    			<span class=num>NO.<b>${diary.diaryNo}</b></span>&nbsp;
-	    			<span class=name>${diary.id}</span>
-	    			<span class=date>(${diary.writeDate})</span>&nbsp;
-   				    </td>
+						<td height="25" colspan="5" style="padding-left : 5px;">
+		    			<span class=num>NO.<b>${diary.diaryNo}</b></span>&nbsp;
+						<span class=name>${diary.title}</span>
+		    			<span class=date>(${diary.writeDate})</span>&nbsp;
+	   				    </td>
     
-<td align="right" style="padding-right:5px;">
-<a href="javascript:list_box('<${diary.id}>', 'r');" class="comment" title="댓글">댓글</a>
-<? if (($member[mb_id] && ($member[mb_id] == $list[$i][mb_id])) || $is_admin) { ?>
-         | 
-<a href="javascript:list_box('<?=$list_id?>', 'u');" class="edit">수정</a> | 
-<a href="javascript:if (confirm('삭제하시겠습니까?')) { location='./delete.php?w=d&bo_table=<?=$bo_table?>&wr_id=<?=$list[$i][wr_id]?>&page=<?=$page?>';}" class="delete">삭제</a>		
-<? } ?>
-</td>
-</tr>
+						<td align="right" style="padding-right:5px;">
+						<c:if test="${minihomepageId == sessionScope.loginId}">
+						<a href="modifyDiaryForm.do?diaryNo=${diary.diaryNo}" class="edit">수정</a> | 
+						</c:if>
+						
+						<a href="javascript:if (confirm('삭제하시겠습니까?')) { location='./delete.php?w=d&bo_table=<?=$bo_table?>&wr_id=<?=$list[$i][wr_id]?>&page=<?=$page?>';}" class="delete">삭제</a>		
+						<? } ?>
+						</td>
+					</tr>
 
 <!-- 다이어리 게시글이 보이는 부분 -->
 <tr style="cursor:hand; " title="클릭하시면 댓글을 쓸 수 있습니다." >

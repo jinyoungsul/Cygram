@@ -83,5 +83,17 @@ public class GalleryService {
 			endPage = totalPage;
 		
 		return new GalleryPage(galleryList, startPage, endPage, currentPage, totalPage);	
-	}		
+	}
+	
+	public int modify(Gallery gallery, List<GalleryImg> galleryImgList){
+		int result=0;
+		gallery.setWriteDate(new Date());
+		result = galleryDao.update(gallery);
+		if(result>0){
+			for(GalleryImg galleryImg : galleryImgList){
+			galleryDao.updateImg(galleryImg);
+			}
+		}
+		return result;
+	}
 }

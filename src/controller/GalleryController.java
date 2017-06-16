@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Required;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -95,6 +96,28 @@ public class GalleryController {
 		Gallery gallery = galleryService.read(galleryNo);
 		ModelAndView mv = new ModelAndView("read");
 		mv.addObject("gallery", gallery);
+		return mv;
+	}
+	
+	@RequestMapping("/modifyGalleryForm.do")
+	public ModelAndView modifyGalleryForm(HttpSession session, int galleryNo){
+		ModelAndView mv = new ModelAndView("modify_gallery_form");
+		mv.addObject("gallery", galleryService.read(galleryNo));
+		return mv;
+	}
+	
+	@RequestMapping("modifyGallery.do")
+	public ModelAndView modifyGallery
+	(HttpServletRequest request, HttpSession session,
+			Gallery gallery, List<GalleryImg> galleryImg){
+		
+		List<GalleryImg> galleryImgList = new ArrayList<>();
+		galleryService.modify(gallery, galleryImgList);
+	
+		String id = (String) session.getAttribute("loginId");		
+		ModelAndView mv = new ModelAndView("gallery_list");
+		mv.addObject("minihomepageId", id);
+		mv.addObject("galleryPage", galleryService.makePage(1, id, id));
 		return mv;
 	}
 	

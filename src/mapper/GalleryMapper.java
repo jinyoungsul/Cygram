@@ -10,6 +10,8 @@ public interface GalleryMapper {
 	public int insert(Gallery gallery);
 	public int insertImg(GalleryImg galleryImg);
 	public Gallery select(int galleryNo);
+	public int update(Gallery gallery);
+	public int updateImg(GalleryImg galleryImg);
 	
 	public List<Gallery> selectGalleryList(Map<String, Integer> map,String id);
 	public List<Gallery> selectGalleryList(Map<String, Object> map2);
