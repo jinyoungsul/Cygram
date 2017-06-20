@@ -130,188 +130,215 @@ $(function(){
 	        player.play();
 	}
 	//bgm 끝
+	$('#menu').find('a').click(function(){
+		$(this).parent().addClass('menu_active').siblings().removeClass('menu_active');
+	})
 })
 	
 </script>
 <title>Insert title here</title>
 <style type="text/css">
-body{
-background-image: url("img/background.PNG");
-}
-
-div#title1{
-margin-left:30px;
-
-}
-
-div#title2{
-margin-left:60px;
-
-
-}
-
-div#profile{
-margin-left: 710px;
-margin-top: 20px;
-
-}
-
-div#diary{
-margin-left: 710px;
-margin-top: 10px;
-
-}
-
-div#gallery{
-margin-left: 710px;
-margin-top: -140px;
-
-}
-
-div#visitor{
-margin-left: 710px;
-margin-top: 158px;
-
-}
-
-div#friendsSayList{ 
- margin-left: 280px; 
-margin-top: 120px; 
-
- } 
-
-#playlist,audio{background:#666;width:400px;padding:20px;}
-.active a{color:#5DB0E6;text-decoration:none;}
-li a{color:#eeeedd;background:#333;padding:5px;display:block;}
+ #playlist li a{color:#eeeedd;background:#333;display:block;overflow: hidden;text-overflow: ellipsis;white-space:nowrap;}  
+#playlist .active a{color:#5DB0E6;text-decoration:none;}
 li a:hover{text-decoration:none;}
 ul#playlist {
 	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+header {
+	background-color: lightgreen;
 }
 
+section {
+	background-color: lightyellow;
+	width: 100%;
+	
+}
+#homepageLeft {
+	border: 1px solid black;
+	display: inline;
+	float: left;
+	width: 200px;
+	height: 500px;
+	padding: 10px;
+}
+div#introduce {
+	width: 200px;
+	height: 150px;
+	margin:10px 0 10px 0;
+}
+div#update {
+	border-bottom: 1px black solid;
+	margin-bottom: 20px;
+}
+div#update > a {
+	text-decoration: none;
+}
+div#update > a:visited {
+	color: black;
+}
+article {
+	display: inline;
+	float: left;
+	width: 500px;
+	height: 500px;
+}
+#homepageMenu {
+	display: inline;
+	float: left;
+	width: 110px;
+	height: 500px;
+}
+#homepageBgm {
+	display: inline;
+	float: left;
+	width: 300px;
+	height: 500px;
+	padding: 5px 5px;
+}
+
+  #homepageMenu > nav a { 
+  	color: white;  
+  	text-decoration: none;  
+  	width: 80px;  
+  	text-align: center;  
+  	padding: 10px 15px;  
+  	display: inline-block;  
+  }  
+#homepageMenu > nav ul {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+#homepageMenu > nav ul li{
+	border: 1px black solid;
+	border-top-right-radius: 10px;
+	border-bottom-right-radius: 10px;
+	border-left: none;
+	background-color: #01DFD7;
+	margin:2px 0;
+}
+#homepageMenu > nav ul li:not(last-child){
+	border-bottom: none;
+}
+#homepageMenu > nav ul li:last-child{
+	border-bottom: 1px black solid;
+}
+#homepageMenu .menu_active{
+	border: 1px black solid;
+	border-top-right-radius: 10px;
+	border-bottom-right-radius: 10px;
+	border-left: none;
+	background-color: white;
+}
+#homepageMenu .menu_active a{
+	color: black;
+}
 </style>
 </head>
 <body>
-<Button id="refresh">홈</Button>
-
-<img src="${miniHomepage.minihomepage_img_path }" width="50" height="50">
-
-<div id="title1">
-${miniHomepage.id }<br>
-TODAY ${miniHomepage.today } / TOTAL ${miniHomepage.total }<br> 
-
-타이틀 : <input type="text" name="title" id="title" style="border:none;" value="${miniHomepage.title }" readonly>
-<c:if test="${sessionScope.loginId==miniHomepage.id}">
-	<a href="#" id="editTitle">수정</a>
-	<a href="#" id="editTitleOk" style="display:none;">수정완료</a>
-</c:if>
-<br>
-
-</div>
-
-<div id="profile">
-	<a href="readProfile.do?id=${miniHomepage.id}">____</a>
-	</div>
-	
-	<div id="diary">
-	<a href="diaryList.do?id=${miniHomepage.id}">____</a>
-	</div>
-	
-	<div id="visitor">
-	<a href="visitorList.do?id=${miniHomepage.id}">____</a>
-	</div>
-	
-	<div id="gallery">
-	<a href="galleryList.do?id=${miniHomepage.id}">____</a>
-	</div>
-	<!-- 배경음악  플레이어 시작 -->
-	<audio id="audio" controls >
-		Your browser does not support the audio element.
-	</audio>
-	<!-- 배경음악 플레이어 끝 -->
-	
-	<!-- 배경음악 플레이 리스트-->
-	<ul id="playlist">
-<!--         <li class="active"> -->
-<!--             <a href="music/Beethoven-MoonlightSonata.mp3"> -->
-<!--                 Beethoven-MoonlightSonata.mp3 -->
-<!--             </a> -->
-<!--         </li> -->
-<!--         <li> -->
-<!--             <a href="music/Bolero.mp3"> -->
-<!--                 Bolero.mp3 -->
-<!--             </a> -->
-<!--         </li> -->
-<!--         <li> -->
-<!--             <a href="music/CanoninD.mp3"> -->
-<!--                 CanoninD.mp3 -->
-<!--             </a> -->
-<!--         </li> -->
-		<c:forEach var="music" items="${bgmList }" varStatus="status" begin="0">
-				<c:choose>
-					<c:when test="${status.index==0 }">
-						<li class="active"> 
-							<a href="${music.musicFilePath}">
-								${music.musicName}  ${music.artist }
-							</a>
-						</li>
-					</c:when>
-					<c:otherwise>
-						<li>
-						<a href="${music.musicFilePath}">
-								${music.musicName}  ${music.artist }
-						</a>
-					</li>	
-					</c:otherwise>
-				</c:choose>
-		</c:forEach>
-    </ul>
-	<!-- 배경음악 플레이 리스트 끝 -->
-<br>
-
-<div id="title2">
-
-소개글 : ${miniHomepage.introduce }<br>
-<c:if test="${sessionScope.loginId==miniHomepage.id}">
-	<a href="#" id="editIntoduceAndImg">수정</a>
-</c:if>
-</div>
-
-<c:if test="${sessionScope.loginId!=miniHomepage.id}">
-	<c:if test="${empty friend}">
-		<a href="#" id="goFriend">일촌신청</a>
+<header>
+	TODAY ${miniHomepage.today } / TOTAL ${miniHomepage.total }
+	<input type="text" name="title" id="title" style="border:none;" value="${miniHomepage.title }" size="40" readonly>
+	<c:if test="${sessionScope.loginId==miniHomepage.id}">
+		<a href="#" id="editTitle">수정</a>
+		<a href="#" id="editTitleOk" style="display:none;">수정완료</a>
 	</c:if>
-</c:if>
-<c:if test="${sessionScope.loginId!=miniHomepage.id}">
-	<p>Friends Say : <input type="text" id="friendsCotent" placeholder="일촌과 나누고 싶은 이야기를 남겨보세요~!"><a href="#" id="friendsCommentBtn">확인</a></p>
-</c:if>
+	<Button id="refresh">홈</Button>
+</header>
 
-<!-- 일촌 파도타기 시작 -->
-<div>
-	<select name="friendsList">
-		<option value="파도타기" selected>파도타기</option>
-		<c:choose>
-				<c:when test="${empty friendsList }">
-				</c:when>
-				
-				<c:otherwise>
-						<c:forEach var="friend" items="${friendsList }">
-							<option value="${friend.friendId }">${friend.miniHomepage. member.name} (${friend.friendNickname})</option>
-						</c:forEach>
-				</c:otherwise>
-		</c:choose>
-	</select>	
-</div>
-<!-- 일촌 파도타기 끝 -->
+<section>
+	<aside id="homepageLeft">
+		<img src="${miniHomepage.minihomepage_img_path }" width="200" height="200">
+		<div id="introduce">${miniHomepage.introduce }</div>
+		<div id="update">
+			<c:if test="${sessionScope.loginId==miniHomepage.id}">
+				<a href="#" id="editIntoduceAndImg">수정</a>
+			</c:if>
+			<c:if test="${sessionScope.loginId!=miniHomepage.id}">
+				<c:if test="${empty friend}">
+					<a href="#" id="goFriend">일촌신청</a>
+				</c:if>
+			</c:if>
+			<!-- 일촌 파도타기 시작 -->
+			<select name="friendsList">
+				<option value="파도타기" selected>파도타기</option>
+				<c:choose>
+						<c:when test="${empty friendsList }">
+						</c:when>
+						
+						<c:otherwise>
+								<c:forEach var="friend" items="${friendsList }">
+									<option value="${friend.friendId }">${friend.miniHomepage. member.name} (${friend.friendNickname})</option>
+								</c:forEach>
+						</c:otherwise>
+				</c:choose>
+			</select>	
+			<!-- 일촌 파도타기 끝 -->
+		</div>
+		${miniHomepage.id } ${miniHomepage.member.name}
+	</aside>
+	
+	<article>
+		<iframe id=""src="diaryList.do?id=${miniHomepage.id}" width="500px" height="500px">
+		
+		</iframe>
+<!-- 		<div id="friendsSayList"></div> -->
+<%-- 		<c:if test="${sessionScope.loginId!=miniHomepage.id}"> --%>
+<!-- 			<p>Friends Say : <input type="text" id="friendsCotent" placeholder="일촌과 나누고 싶은 이야기를 남겨보세요~!"><a href="#" id="friendsCommentBtn">확인</a></p> -->
+<%-- 		</c:if> --%>
+	</article>
+	
+	<aside id="homepageMenu">
+		<nav>
+			<ul id="menu">
+				<li class='menu_active'><a href="#">홈</a></li>
+				<li><a href="#">홈2</a></li>
+				<li><a href="readProfile.do?id=${miniHomepage.id}">프로필</a></li>
+				<li><a href="diaryList.do?id=${miniHomepage.id}">다이어리</a></li>
+				<li><a href="visitorList.do?id=${miniHomepage.id}">방명록</a></li>
+				<li><a href="galleryList.do?id=${miniHomepage.id}">갤러리</a></li>
+			</ul>
+		</nav>
+	</aside>
+	<aside id="homepageBgm">
+		<!-- 배경음악  플레이어 시작 -->
+		<audio id="audio" controls >
+			Your browser does not support the audio element.
+		</audio>
+		<!-- 배경음악 플레이어 끝 -->
+		
+		<!-- 배경음악 플레이 리스트-->
+		<ul id="playlist">
+			<c:forEach var="music" items="${bgmList }" varStatus="status" begin="0">
+					<c:choose>
+						<c:when test="${status.index==0 }">
+							<li class="active">
+								<a href="${music.musicFilePath}">
+										${music.musicName}  ${music.artist }
+								</a>
+							</li>
+						</c:when>
+						<c:otherwise>
+							<li>
+								<a href="${music.musicFilePath}">
+										${music.musicName}  ${music.artist }
+								</a>
+							</li>	
+						</c:otherwise>
+					</c:choose>
+			</c:forEach>
+	    </ul>
+		<!-- 배경음악 플레이 리스트 끝 -->
+	</aside>
+</section>
 
 <!-- 미니홈페이지 이동 시작 -->
 <form name="frmPopup">
 	<input type="hidden" name="id">
 </form>
 <!-- 미니홈페이지 이동 끝 -->
-
-<div id='friendsSayList'>
-
-</div>
 
 <input type="hidden" id="myId" value="${sessionScope.loginId}">
 <input type="hidden" id="friendId" value="${miniHomepage.id}">

@@ -102,6 +102,11 @@ public class MiniHomepageController {
 		System.out.println(bgmList);
 		return mv;
 	}
+	@RequestMapping(value="/minihomepageHome.do")
+	public ModelAndView minihomepageSearch(HttpSession session){
+		ModelAndView mv = new ModelAndView("homepageHome");
+		return mv;
+	}
 	@RequestMapping(value="/minihomepageSearch.do")
 	public ModelAndView miniHomepageSearch(HttpSession session ){
 		ModelAndView mv = new ModelAndView();

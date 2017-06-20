@@ -2,6 +2,7 @@ package service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import repository.GalleryCommentDao;
@@ -9,7 +10,9 @@ import vo.GalleryComment;
 
 @Component
 public class GalleryCommentService {
+	@Autowired
 	private GalleryCommentDao galleryCommentDao;
+	
 	public void setGalleryCommentDao(GalleryCommentDao galleryCommentDao) {
 		this.galleryCommentDao = galleryCommentDao;
 	}

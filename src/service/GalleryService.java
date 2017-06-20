@@ -44,7 +44,14 @@ public class GalleryService {
 		Gallery gallery = galleryDao.select(galleryNo);
 		return gallery;
 	}
-	
+	public int galleryCount(String id){
+		int galleryCount = galleryDao.selectGalleryCount(id);
+		return galleryCount;
+	}
+	public int newGalleryCount(String id){
+		int newGalleryCount = galleryDao.selectNewGalleryCount(id);
+		return newGalleryCount;
+	}
 	public GalleryPage makePage(int currentPage,String id,String loginId){
 		final int COUNT_PER_PAGE=3;
 		int startRow = ((currentPage-1)*COUNT_PER_PAGE)+1;

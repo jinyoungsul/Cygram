@@ -35,7 +35,7 @@ public class GalleryDao {
 		GalleryMapper mapper = session.getMapper(GalleryMapper.class);
 		return mapper.select(galleryNo);
 	}
-	//-----------»çÁøÃ¸ ±ÇÇÑ ¼³Á¤ ¸®½ºÆ® -----------------------------------//
+	//-----------ï¿½ï¿½ï¿½ï¿½Ã¸ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ® -----------------------------------//
 	public List<Gallery> selectGalleryList(int startRow, int count,String id){
 		System.out.println("selectList error");
 		Map<String, Integer> map = new HashMap<>();
@@ -69,7 +69,7 @@ public class GalleryDao {
 		return mapper.selectGalleryPrivateList(map2);
 	}
 	
-	//--------------»çÁøÃ¸ Ä«¿îÆ®---------------------------------------//
+	//--------------ï¿½ï¿½ï¿½ï¿½Ã¸ Ä«ï¿½ï¿½Æ®---------------------------------------//
 	
 	public int selectGalleryCount(String id){
 		GalleryMapper mapper = session.getMapper(GalleryMapper.class);
@@ -89,5 +89,10 @@ public class GalleryDao {
 	public List<GalleryImg> selectImgList(int galleryNo) {
 		GalleryMapper mapper = session.getMapper(GalleryMapper.class);
 		return mapper.selectImgList(galleryNo);
+	}
+
+	public int selectNewGalleryCount(String id) {
+		GalleryMapper mapper = session.getMapper(GalleryMapper.class);
+		return mapper.selectNewGalleryCount(id);
 	}
 }

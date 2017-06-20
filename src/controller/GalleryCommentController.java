@@ -29,7 +29,7 @@ public class GalleryCommentController {
 		galleryComment.setGalleryNo(galleryNo);
 		galleryComment.setMyId(myId);
 		galleryComment.setContent(content);
-		
+		System.out.println(galleryComment);
 		if(content.length()>0)
 			galleryCommentService.insertGalleryComment(galleryComment);			
 		

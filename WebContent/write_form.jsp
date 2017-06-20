@@ -46,9 +46,7 @@ $(function(){
 <div id="write">
 	<form action="write.do" method="post" enctype="multipart/form-data">
 		<input type="hidden" name="id" value="${sessionScope.loginId }">
-		<input type="hidden" name="galleryNo" value="${gallery.galleryNo}">
 		<table border="1">
-			
 			<tr>
 				<td>제목:</td>
 				<td><input type="text" name="title"></td>
@@ -70,9 +68,6 @@ $(function(){
 				사진 : <input type="file" id="file" name="photoList"> <a
 					href="#this" class="btn" id="delete" name="delete">삭제</a>
 			</p>
-		</div>
-		<div>
-			<input type="hidden" value="${gallery.galleryNo}">
 		</div>
 	</form>
 	<a href="#" class="btn" id="addFile">파일추가</a><br>

@@ -7,17 +7,14 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>다이어리 리스트</title>
 <style type="text/css">
-body {
-	background-image: url("img/background2.png");
-}
-div#list {
-	margin-left: 250px;
-	margin-top: 120px;
-}
-div#commentDiaryList {
-	margin-left: 10px;
-	margin-top: 10px;
-}
+/* div#list { */
+/* 	margin-left: 250px; */
+/* 	margin-top: 120px; */
+/* } */
+/* div#commentDiaryList { */
+/* 	margin-left: 10px; */
+/* 	margin-top: 10px; */
+/* } */
 /*  ------------ 게시판 관련 스타일 적용 ------------ */
 .bbs_form {
 	margin: 0;
@@ -176,7 +173,7 @@ textarea {
 				<c:otherwise>
 					<c:forEach var="diary" items="${diaryPage.diaryList}">
 					<!-- 게시판 리스트 시작 -->
-					<table width="63%" border="0" cellspacing="0" cellpadding="0">
+					<table width="100%" border="0" cellspacing="0" cellpadding="0">
 	
 					<tr><td colspan="6" class="bbs_lineo">&nbsp;</td></tr>
 					<tr><td colspan="6" class="bbs_linei"></td></tr>
