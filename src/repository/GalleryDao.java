@@ -35,7 +35,12 @@ public class GalleryDao {
 		GalleryMapper mapper = session.getMapper(GalleryMapper.class);
 		return mapper.select(galleryNo);
 	}
-	//-----------����ø ���� ���� ����Ʈ -----------------------------------//
+
+	public int update(Gallery gallery){
+		GalleryMapper mapper = session.getMapper(GalleryMapper.class);
+		return mapper.update(gallery);		
+	}
+
 	public List<Gallery> selectGalleryList(int startRow, int count,String id){
 		System.out.println("selectList error");
 		Map<String, Integer> map = new HashMap<>();
@@ -88,11 +93,23 @@ public class GalleryDao {
 	
 	public List<GalleryImg> selectImgList(int galleryNo) {
 		GalleryMapper mapper = session.getMapper(GalleryMapper.class);
+		System.out.println("갤러리번호:"+galleryNo);
 		return mapper.selectImgList(galleryNo);
 	}
 
 	public int selectNewGalleryCount(String id) {
 		GalleryMapper mapper = session.getMapper(GalleryMapper.class);
 		return mapper.selectNewGalleryCount(id);
+	}
+
+	public int deleteImg(int galleryNo) {
+		GalleryMapper mapper = session.getMapper(GalleryMapper.class);
+		return mapper.deleteImg(galleryNo);
+	}
+
+	public int updateImg(Integer galleryImgNo) {
+		GalleryMapper mapper = session.getMapper(GalleryMapper.class);
+		return mapper.updateImg(galleryImgNo);
+		
 	}
 }

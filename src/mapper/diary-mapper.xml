@@ -35,7 +35,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE ID =#{id} and AUTHORITY_CODE = 1 
 	</select>
 	
-	<select id="select" parameterType="String" resultMap="diaryMap">
+	<select id="select" parameterType="Integer" resultMap="diaryMap">
 		SELECT * FROM DIARY WHERE DIARY_NO = #{diaryNo}
 	</select>
 	

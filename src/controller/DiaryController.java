@@ -52,20 +52,19 @@ public class DiaryController {
 	}
 	
 	@RequestMapping("modifyDiaryForm.do")
-	public String modifyDiaryForm(HttpSession session, String id) {
-		if (id.equals(session.getAttribute("loginId"))) {
-			return "modify_diary_form";
-		} else {
-			return null;
-		}
+	public ModelAndView modifyDiaryForm(HttpSession session, int diaryNo) {
+		ModelAndView mv = new ModelAndView("modify_diary_form");
+		mv.addObject("diary", diaryService.read(diaryNo));
+		return mv;
 	}
 	
 	@RequestMapping(value = "/modifyDiary.do", method = RequestMethod.POST)
-	public ModelAndView modifyProfile(HttpSession session, Diary diary) {
-		String id = (String) session.getAttribute("loginId");
-		diary.setId(id);
-		diaryService.modify(diary, id);
+	public ModelAndView modifyDiary(HttpSession session, Diary diary) {
+		diaryService.modify(diary);
+		String id =(String) session.getAttribute("loginId");
 		ModelAndView mv = new ModelAndView("diary_list");
+		mv.addObject("minihomepageId", id);
+		mv.addObject("diaryPage", diaryService.makePage(1, id, id));
 		return mv;
 	}
 }

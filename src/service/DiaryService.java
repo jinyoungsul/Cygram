@@ -45,13 +45,10 @@ public class DiaryService {
 		return result;
 	}
 	
-	public int modify(Diary diary, String id){
+	public int modify(Diary diary){
 		diary.setWriteDate(new Date());
-		
 		int result=0;
-		if(id.equals(diary.getId())){
-			result=diaryDao.update(diary); 
-		}
+		result=diaryDao.update(diary); 
 		return result;
 	}
 	

@@ -12,6 +12,7 @@ public class Gallery {
 	private Date writeDate;
 	private String content;
 	private int authorityCode;
+	private List<Integer> galleryImgNo;
 	private List<GalleryComment> galleryCommentList;
 	private List<GalleryImg> galleryImgList; 
 	
@@ -84,6 +85,13 @@ public class Gallery {
 		this.galleryCommentList = galleryCommentList;
 	}
 	
+	
+	public List<Integer> getGalleryImgNo() {
+		return galleryImgNo;
+	}
+	public void setGalleryImgNo(List<Integer> galleryImgNo) {
+		this.galleryImgNo = galleryImgNo;
+	}
 	@Override
 	public String toString() {
 		return "Gallery [galleryNo=" + galleryNo + ", title=" + title + ", id=" + id + ", writeDate=" + writeDate

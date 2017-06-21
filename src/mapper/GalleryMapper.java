@@ -10,6 +10,8 @@ public interface GalleryMapper {
 	public int insert(Gallery gallery);
 	public int insertImg(GalleryImg galleryImg);
 	public Gallery select(int galleryNo);
+	public int update(Gallery gallery);
+	public int updateImg(int galleryImgNo);
 	
 	public List<Gallery> selectGalleryList(Map<String, Integer> map,String id);
 	public List<Gallery> selectGalleryList(Map<String, Object> map2);
@@ -23,5 +25,6 @@ public interface GalleryMapper {
 	public int selectGalleryFriendCount(String id);
 	public int selectGalleryPrivateCount(String id);
 	public int selectNewGalleryCount(String id);
+	public int deleteImg(int galleryNo);
 	
 }

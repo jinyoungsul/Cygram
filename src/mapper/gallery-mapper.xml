@@ -13,12 +13,25 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		VALUES
 		(#{galleryNo},#{title},#{id},#{writeDate},#{content},#{authorityCode})
 	</insert>
+	
+	<update id="update" parameterType="Gallery">
+		UPDATE GALLERY SET TITLE=#{title}, WRITE_DATE=#{writeDate},CONTENT=#{content}, AUTHORITY_CODE=#{authorityCode}
+		WHERE GALLERY_NO=#{galleryNo}
+	</update>
 
+	<update id="deleteImg" parameterType="Integer">
+		UPDATE GALLERY_IMG SET DEL = 'Y'
+		WHERE GALLERY_NO = #{galleryNo}
+	</update>
+	<update id="updateImg" parameterType="Integer">
+		UPDATE GALLERY_IMG SET DEL = 'N'
+		WHERE GALLERY_IMG_NO = #{galleryImgNo}
+	</update>
 	<insert id="insertImg" parameterType="GalleryImg">
 		INSERT INTO
-		GALLERY_IMG(GALLERY_NO, GALLERY_IMG_NO, GALLERY_PATH)
+		GALLERY_IMG(GALLERY_NO, GALLERY_IMG_NO, GALLERY_PATH,ORIGINAL_FILE_NAME,STORED_FILE_NAME)
 		VALUES
-		(#{galleryNo},GALLERY_IMG_SEQ.NEXTVAL,#{galleryPath})
+		(#{galleryNo},GALLERY_IMG_SEQ.NEXTVAL,#{galleryPath},#{originalFileName},#{storedFileName})
 		
 	</insert>
 
@@ -27,7 +40,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<select id="selectImgList" parameterType="integer" resultMap="galleryImgMap">
-		SELECT * FROM GALLERY_IMG WHERE GALLERY_NO = #{galleryNo}
+		SELECT * FROM GALLERY_IMG 
+		WHERE GALLERY_NO = #{galleryNo} AND DEL = 'N'
 	</select>
 
 	<!-- 전체 리스트 -->
@@ -91,7 +105,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<resultMap id="galleryImgMap" type="GalleryImg">
 		<result property="galleryNo" column="gallery_no" />
 		<result property="galleryImgNo" column="gallery_img_no" />
+		<result property="originalFileName" column="original_File_Name" />
+		<result property="storedFileName" column="stored_File_Name" />
 		<result property="galleryPath" column="gallery_path" />
+		<result property="del" column="del" />
 	</resultMap>
 
 	<resultMap id="galleryMap" type="Gallery">

@@ -26,6 +26,8 @@ public class DiaryDao {
 	}
 	
 	public int update(Diary diary){
+		System.out.println("다이어리 수정ㄴ");
+		System.out.println(diary);
 		DiaryMapper mapper = session.getMapper(DiaryMapper.class);
 		return mapper.update(diary);
 	}

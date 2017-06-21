@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Required;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -47,44 +48,12 @@ public class GalleryController {
 	@RequestMapping(value="/write.do", method=RequestMethod.POST)
 	public ModelAndView write
 	(HttpServletRequest request, HttpSession session, 
-			Gallery gallery, GalleryImg galleryImg){
-		
-		System.out.println("gallery:"+gallery);
+			Gallery gallery){
 		
 		String id = (String) session.getAttribute("loginId");
-		gallery.setId(id);
-		
-		String galleryPath = request.getServletContext().getRealPath("img");
-		List<GalleryImg> galleryImgList = new ArrayList<>();
-		
-		File dir = new File(galleryPath);
-		if(dir.exists()==false){
-			dir.mkdirs();
-		}
-		for(MultipartFile f : gallery.getPhotoList()){
-			String savedName = 
-					galleryPath +"/"+new Random().nextInt(1000000)+f.getOriginalFilename();
-			System.out.println("Cygram �쐞移�:"+savedName.indexOf("Cygram"));
-			String realPath = "/"+savedName.substring((savedName.indexOf("Cygram")));
-			System.out.println("�씠誘몄�寃쎈줈:"+savedName.substring((savedName.indexOf("Cygram"))));
-			File saveFile = new File(savedName);
-			
-			try {
-				f.transferTo(saveFile);
-				
-				galleryImg = new GalleryImg();
-				galleryImg.setGalleryPath(realPath);
-				galleryImgList.add(galleryImg);
-				
-			} catch (IllegalStateException |IOException e) {
-				e.printStackTrace();
-			}	
-		}
-		
-		galleryService.write(gallery, galleryImgList);
+		galleryService.write(request,session,gallery);
 		ModelAndView mv = new ModelAndView("gallery_list");
 		mv.addObject("minihomepageId", id);
-//		mv.addObject("galleryNo", galleryService.write(gallery, galleryImgList));
 		mv.addObject("fileCount", gallery.getPhotoList().size());
 		mv.addObject("galleryPage", galleryService.makePage(1, id, id));
 		return mv;
@@ -96,6 +65,21 @@ public class GalleryController {
 		ModelAndView mv = new ModelAndView("read");
 		mv.addObject("gallery", gallery);
 		return mv;
+	}
+	
+	@RequestMapping("/modifyGalleryForm.do")
+	public ModelAndView modifyGalleryForm(HttpSession session, int galleryNo){
+		ModelAndView mv = new ModelAndView("modify_gallery_form");
+		mv.addObject("gallery", galleryService.read(galleryNo));
+		return mv;
+	}
+	
+	@RequestMapping("modifyGallery.do")
+	public ModelAndView modifyGallery
+	(HttpServletRequest request, HttpSession session,
+			Gallery gallery){
+		galleryService.modify(request, gallery, session);
+		return null;
 	}
 	
 	

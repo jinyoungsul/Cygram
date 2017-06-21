@@ -33,8 +33,6 @@ $(function(){
 		$(this).parent().remove();
 	})
 		$('#refresh').click(function(){
-// 		location.reload(true);
-// 		location.href = location.href;
 		history.go(-1);
 	})
 })
@@ -72,7 +70,7 @@ $(function(){
 	</form>
 	<a href="#" class="btn" id="addFile">파일추가</a><br>
 	
-	<a href="readProfile.do">[프로필 화면으로]</a>
+	<a href="read.do">[사진첩 화면으로]</a>
 </div>
 </body>
 </html>
