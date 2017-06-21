@@ -43,7 +43,9 @@ public class GalleryService {
 
 		String id = (String) session.getAttribute("loginId");
 		gallery.setId(id);
-
+		gallery.setWriteDate(new Date());
+		int result = galleryDao.insert(gallery);
+		System.out.println(result);
 		String galleryPath = request.getServletContext().getRealPath("img");
 		List<GalleryImg> galleryImgList = new ArrayList<>();
 
@@ -52,25 +54,26 @@ public class GalleryService {
 			dir.mkdirs();
 		}
 		for (MultipartFile f : gallery.getPhotoList()) {
-			String storedName = new Random().nextInt(1000000) + f.getOriginalFilename();
-			String savedName = galleryPath + "/" + storedName;
-			String realPath = "/" + savedName.substring((savedName.indexOf("Cygram")));
-			File saveFile = new File(savedName);
+			if (f.isEmpty() == true) {
 
-			try {
-				f.transferTo(saveFile);
-				GalleryImg galleryImg = new GalleryImg();
-				galleryImg.setOriginalFileName(f.getOriginalFilename());
-				galleryImg.setStoredFileName(storedName);
-				galleryImg.setGalleryPath(realPath);
-				galleryImgList.add(galleryImg);
-			} catch (IllegalStateException | IOException e) {
-				e.printStackTrace();
+			} else {
+				String storedName = new Random().nextInt(1000000) + f.getOriginalFilename();
+				String savedName = galleryPath + "/" + storedName;
+				String realPath = "/" + savedName.substring((savedName.indexOf("Cygram")));
+				File saveFile = new File(savedName);
+
+				try {
+					f.transferTo(saveFile);
+					GalleryImg galleryImg = new GalleryImg();
+					galleryImg.setOriginalFileName(f.getOriginalFilename());
+					galleryImg.setStoredFileName(storedName);
+					galleryImg.setGalleryPath(realPath);
+					galleryImgList.add(galleryImg);
+				} catch (IllegalStateException | IOException e) {
+					e.printStackTrace();
+				}
 			}
 		}
-
-		gallery.setWriteDate(new Date());
-		int result = galleryDao.insert(gallery);
 
 		if (result > 0) {
 			for (GalleryImg galleryImg : galleryImgList) {
@@ -78,7 +81,6 @@ public class GalleryService {
 				galleryDao.insertImg(galleryImg);
 			}
 		}
-		System.out.println("service write file:");
 		return gallery.getGalleryNo();
 	}
 
@@ -86,7 +88,6 @@ public class GalleryService {
 		Gallery gallery = galleryDao.select(galleryNo);
 		List<GalleryImg> galleryImgList = galleryDao.selectImgList(galleryNo);
 		gallery.setGalleryImgList(galleryImgList);
-		System.out.println(gallery);
 		return gallery;
 	}
 
@@ -125,7 +126,6 @@ public class GalleryService {
 			int galleryNo = g.getGalleryNo();
 			List<GalleryImg> galleryImgList = galleryDao.selectImgList(galleryNo);
 			g.setGalleryImgList(galleryImgList);
-			System.out.println("갤러리:"+g);
 		}
 
 		int totalPage = totalGalleryCount / COUNT_PER_PAGE;
@@ -156,8 +156,6 @@ public class GalleryService {
 		}
 		if (gallery.getGalleryImgNo() != null) {
 			for (int galleryImgNo : gallery.getGalleryImgNo()) {
-				
-				System.out.println("이미지 업데이트"+galleryImgNo);
 				galleryDao.updateImg(galleryImgNo);
 			}
 		}
@@ -182,7 +180,6 @@ public class GalleryService {
 						e.printStackTrace();
 					}
 				}
-				System.out.println("service write file:");
 			}
 		}
 		if (result > 0) {
