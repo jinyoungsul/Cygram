@@ -67,4 +67,15 @@ public class DiaryController {
 		mv.addObject("diaryPage", diaryService.makePage(1, id, id));
 		return mv;
 	}
+	
+	@RequestMapping(value = "/deleteDiary.do", method = RequestMethod.POST)
+	public ModelAndView deleteDiary(HttpSession session, int diaryNo) {
+		System.out.println("컨트롤러로 들어옴?");
+		diaryService.delete(diaryNo);
+		String id =(String) session.getAttribute("loginId");
+		ModelAndView mv = new ModelAndView("diary_list");
+		mv.addObject("minihomepageId", id);
+		mv.addObject("diaryPage", diaryService.makePage(1, id, id));
+		return mv;
+	}
 }

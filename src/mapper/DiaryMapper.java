@@ -9,6 +9,7 @@ public interface DiaryMapper {
 	public int insert(Diary diary);
 	public int update(Diary diary);
 	public Diary select(int diaryNo);
+	public int delete(int diaryNo);
 	
 	public List<Diary> selectDiaryList(Map<String, Object> map);
 	public List<Diary> selectDiaryFriendList(Map<String, Object> map);
