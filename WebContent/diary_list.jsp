@@ -126,7 +126,6 @@ textarea {
 			deleteCheck(diaryNo);	
 		});	
 		
-			
 		function loadCommentList(diaryNo){
 			var result = '<div id="commentList'+diaryNo+'" style="background-color :#f8f8f8;">';
 			var diaryNo=diaryNo;
@@ -168,20 +167,21 @@ textarea {
 			var diaryNo=diaryNo;
 			if (confirm("삭제 하시겠습니까?")){ 
 			alert("삭제 버튼"); 
-			$.ajax({
-				url :"deleteDiary.do",
-				type : "post",
-				data : {
-					"diaryNo" : diaryNo,
-				},
-				success : function(data){
-					alert('ajax통신');
-				},
-				error : function(){
-					alert('ajax통신에러');
-				}
+// 			$.ajax({
+// 				url :"deleteDiary.do",
+// 				type : "post",
+// 				data : {
+// 					"diaryNo" : diaryNo,
+// 				},
+// 				success : function(data){
+// 					alert('ajax통신');
+// 				},
+// 				error : function(){
+// 					alert('ajax통신에러');
+// 				}
 				
-			});
+// 			});
+			location.href = "deleteDiary.do?diaryNo="+diaryNo;
 			}else{ 
 			alert("삭제 취소 되었습니다."); 
 			return false; 
@@ -217,7 +217,8 @@ textarea {
 						<td align="right" style="padding-right:5px;">
 						<c:if test="${minihomepageId == sessionScope.loginId}">
 						<a href="modifyDiaryForm.do?diaryNo=${diary.diaryNo}" class="edit">수정</a> |
-						<a href="javascript:deleteCheck();" id="deleteDiary" value="${diary.diaryNo}" class="delete">삭제</a>
+<%-- 						<a href="javascript:deleteCheck();" id="deleteDiary" value="${diary.diaryNo}" class="delete">삭제</a> --%>
+						<button id="deleteDiary" value="${diary.diaryNo }" class="delete">삭제</button>
 						</c:if>
 						
 						</td>
