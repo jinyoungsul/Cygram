@@ -52,6 +52,12 @@ public class DiaryService {
 		return result;
 	}
 	
+	public int delete(int diaryNo){
+		int result=0;
+		result=diaryDao.delete(diaryNo);
+		return result;
+	}
+	
 	public Diary read(int diaryNo){
 		Diary diary = diaryDao.select(diaryNo);
 		return diary;

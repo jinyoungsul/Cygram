@@ -32,6 +32,11 @@ public class DiaryDao {
 		return mapper.update(diary);
 	}
 	
+	public int delete(int diaryNo){
+		DiaryMapper mapper = session.getMapper(DiaryMapper.class);
+		return mapper.delete(diaryNo);
+	}
+	
 	public Diary select(int diaryNo){
 		DiaryMapper mapper = session.getMapper(DiaryMapper.class);
 		return mapper.select(diaryNo);

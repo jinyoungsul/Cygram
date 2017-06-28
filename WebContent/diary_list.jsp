@@ -116,12 +116,17 @@ textarea {
 <script type="text/javascript">
 //댓글쓰기 버튼
 	$(document).ready(function(){
-		
 		$(document).on('click','#btnCommentDiary',function(){
 			var diaryNo=$(this).val();
 			loadCommentList(diaryNo);	
 		});	
 		
+		$(document).on('click','#deleteDiary',function(){
+			var diaryNo=$(this).val();
+			deleteCheck(diaryNo);	
+		});	
+		
+			
 		function loadCommentList(diaryNo){
 			var result = '<div id="commentList'+diaryNo+'" style="background-color :#f8f8f8;">';
 			var diaryNo=diaryNo;
@@ -158,6 +163,30 @@ textarea {
 				
 			});
 		}
+		
+		function deleteCheck(diaryNo){ 
+			var diaryNo=diaryNo;
+			if (confirm("삭제 하시겠습니까?")){ 
+			alert("삭제 버튼"); 
+			$.ajax({
+				url :"deleteDiary.do",
+				type : "post",
+				data : {
+					"diaryNo" : diaryNo,
+				},
+				success : function(data){
+					alert('ajax통신');
+				},
+				error : function(){
+					alert('ajax통신에러');
+				}
+				
+			});
+			}else{ 
+			alert("삭제 취소 되었습니다."); 
+			return false; 
+			} 
+			} 
 	})
 </script>
 </head>
@@ -187,11 +216,10 @@ textarea {
     
 						<td align="right" style="padding-right:5px;">
 						<c:if test="${minihomepageId == sessionScope.loginId}">
-						<a href="modifyDiaryForm.do?diaryNo=${diary.diaryNo}" class="edit">수정</a> | 
+						<a href="modifyDiaryForm.do?diaryNo=${diary.diaryNo}" class="edit">수정</a> |
+						<a href="javascript:deleteCheck();" id="deleteDiary" value="${diary.diaryNo}" class="delete">삭제</a>
 						</c:if>
 						
-						<a href="javascript:if (confirm('삭제하시겠습니까?')) { location='./delete.php?w=d&bo_table=<?=$bo_table?>&wr_id=<?=$list[$i][wr_id]?>&page=<?=$page?>';}" class="delete">삭제</a>		
-						<? } ?>
 						</td>
 					</tr>
 
