@@ -102,6 +102,37 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE ID =#{id} and (AUTHORITY_CODE = 1)
 	</select>
 	
+	<!-- 사진첩 new 전체공개 -->
+	<select id="selectNewGalleryCount" resultType="integer">
+		SELECT COUNT(NEW_GALLERY)
+		FROM(
+			 SELECT CASE WHEN 2 > SYSDATE - WRITE_DATE THEN 'new' ELSE 'old' END AS NEW_GALLERY
+			 FROM GALLERY
+			 WHERE ID = #{id}
+		)
+		WHERE NEW_GALLERY = 'new'
+	</select>
+	<!-- 사진첩 new 일촌공개 -->
+	<select id="selectNewGalleryFriendCount" resultType="integer">
+		SELECT COUNT(NEW_GALLERY)
+		FROM(
+			 SELECT CASE WHEN 2 > SYSDATE - WRITE_DATE THEN 'new' ELSE 'old' END AS NEW_GALLERY
+			 FROM GALLERY
+			 WHERE ID = #{id} and (AUTHORITY_CODE = 1 OR AUTHORITY_CODE = 2)
+		)
+		WHERE NEW_GALLERY = 'new'
+	</select>
+	<!-- 사진첩 new 비공개 -->
+	<select id="selectNewGalleryPrivateCount" resultType="integer">
+		SELECT COUNT(NEW_GALLERY)
+		FROM(
+			 SELECT CASE WHEN 2 > SYSDATE - WRITE_DATE THEN 'new' ELSE 'old' END AS NEW_GALLERY
+			 FROM GALLERY
+			 WHERE ID = #{id} and (AUTHORITY_CODE = 1)
+		)
+		WHERE NEW_GALLERY = 'new'
+	</select>
+	
 	<resultMap id="galleryImgMap" type="GalleryImg">
 		<result property="galleryNo" column="gallery_no" />
 		<result property="galleryImgNo" column="gallery_img_no" />

@@ -23,28 +23,25 @@ public class VisitorController {
 	//-----------------------------------------------------//
 	
 	@RequestMapping("/writeVisitorForm.do")
-	public String writeVisitorForm(HttpSession session, String id){
-		if(id.equals(session.getAttribute("loginId"))){
-			return "write_visitor_form";
-		} else {
-			return null;
-		}
+	public ModelAndView writeVisitorForm(HttpSession session, String id){
+		ModelAndView mv = new ModelAndView("write_visitor_form");
+		mv.addObject("friendId", id);
+		return mv;
 	}
 	
 	@RequestMapping("/visitorList.do")
 	public ModelAndView visitorList(@RequestParam(value="page",defaultValue="1") int page, String id){
 		ModelAndView mv = new ModelAndView("visitor_list");
 		mv.addObject("visitorPage", visitorService.makePage(page, id));
+		mv.addObject("friendId", id);
 		return mv;
 	}
 	
 	@RequestMapping(value="/writeVisitor.do", method=RequestMethod.POST)
 	public ModelAndView writeVisitor(HttpSession session, Visitor visitor){
-		String id =(String) session.getAttribute("loginId");
-		visitor.setId(id);
-		visitorService.write(visitor, id);
+		visitorService.write(visitor);
 		ModelAndView mv = new ModelAndView("visitor_list");
-		mv.addObject("visitorPage", visitorService.makePage(1, id));
+		mv.addObject("visitorPage", visitorService.makePage(1, visitor.getFriendId()));
 		return mv;
 	}
 	

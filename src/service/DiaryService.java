@@ -21,9 +21,9 @@ public class DiaryService {
 		this.diaryDao=diaryDao;
 	}
 	@Autowired
-	private CommentDiaryDao commentDiary;
-	public void setCommentDiary(CommentDiaryDao commentDiary) {
-		this.commentDiary = commentDiary;
+	private CommentDiaryDao commentDiaryDao;
+	public void setCommentDiaryDao(CommentDiaryDao commentDiaryDao) {
+		this.commentDiaryDao = commentDiaryDao;
 	}
 	@Autowired
 	private FriendsDao friendsDao;
@@ -84,11 +84,9 @@ public class DiaryService {
 		if(totalDiaryCount==0)
 			return new DiaryPage();
 
-		System.out.println("total:"+totalDiaryCount);
-			
 		for(Diary diary : diaryList){
 			int diaryNo = diary.getDiaryNo();
-			List<CommentDiary> commentDiaryList = commentDiary.selectCommentDiary(diaryNo);
+			List<CommentDiary> commentDiaryList = commentDiaryDao.selectCommentDiary(diaryNo);
 			diary.setCommentDiaryList(commentDiaryList);
 		}
 		int totalPage = totalDiaryCount/COUNT_PER_PAGE;

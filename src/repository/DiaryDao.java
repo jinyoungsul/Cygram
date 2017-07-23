@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import mapper.DiaryMapper;
+import mapper.GalleryMapper;
 import vo.Diary;
 
 @Component
@@ -26,7 +27,7 @@ public class DiaryDao {
 	}
 	
 	public int update(Diary diary){
-		System.out.println("´ÙÀÌ¾î¸® ¼öÁ¤¤¤");
+		System.out.println("ï¿½ï¿½ï¿½Ì¾î¸® ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
 		System.out.println(diary);
 		DiaryMapper mapper = session.getMapper(DiaryMapper.class);
 		return mapper.update(diary);
@@ -84,5 +85,16 @@ public class DiaryDao {
 		DiaryMapper mapper = session.getMapper(DiaryMapper.class);
 		return mapper.selectDiaryPrivateCount(id);		
 	}
-	
+	public int selectNewDiaryCount(String id) {
+		DiaryMapper mapper = session.getMapper(DiaryMapper.class);
+		return mapper.selectNewDiaryCount(id);
+	}
+	public int selectNewDiaryFriendCount(String id) {
+		DiaryMapper mapper = session.getMapper(DiaryMapper.class);
+		return mapper.selectNewDiaryFriendCount(id);
+	}
+	public int selectNewDiaryPrivateCount(String id) {
+		DiaryMapper mapper = session.getMapper(DiaryMapper.class);
+		return mapper.selectNewDiaryPrivateCount(id);
+	}
 }

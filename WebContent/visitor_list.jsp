@@ -112,6 +112,13 @@ textarea {
 	color: #000000;
 	overflow: auto
 }
+
+.btn_del {
+	background-color : #f8f8f8;
+	border : none;
+	outline : none;
+	
+}
 </style>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
@@ -125,13 +132,18 @@ textarea {
 			var visitorNo=$(this).val();
 			loadVisitorList(visitorNo);	
 		});	
-		
+		$(document).on('click','#deleteCommentVisitor',function(){
+			var btn_val=$(this).val();
+			var arr = btn_val.split("+");
+			var visitorCommentNo = arr[0];
+			var visitorNo = arr[1];
+			deleteCommentVisitor(visitorNo,visitorCommentNo);
+		})
 		function loadVisitorList(visitorNo){
-			var result = '<div id="commentList"'+visitorNo+' style="background-color :#f8f8f8;">';
+			var result = '<div id="commentList'+visitorNo+'" style="background-color :#f8f8f8;">';
 			var visitorNo=visitorNo;
 			var content = $('#save_content'+visitorNo).val();
 			var myId = $('#myId').val();
-			alert(content);
 			$.ajax({
 				url :"writeCommentVisitor.do",
 				type : "post",
@@ -150,7 +162,12 @@ textarea {
 						
 						result += '<div id="commentParentText" style="padding-left:5px; white-space:nowarp;"><span class="c_name">'+commentVisitor.myId +'('+ commentVisitor.member.name+')</span>&nbsp;:&nbsp';
 						result += '<span class="comment">'+commentVisitor.content+'</span>&nbsp;';
-						result += '<span class="c_date">+'+writeDate+'+</span>&nbsp;</div>';
+						result += '<span class="c_date">+'+writeDate+'+</span>&nbsp;';
+						if(myId==commentVisitor.myId){
+							result += '<button id="deleteCommentVisitor" value="'+commentVisitor.visitorCommentNo+'+' +commentVisitor.visitorNo+'" class="btn_del"><img src="img/btn_del.gif"/></button></div>';
+						} else {
+							result += '</div>';
+						}
 					})
 					result += '</div>';
 					$('#save_content'+visitorNo).val("");
@@ -161,6 +178,50 @@ textarea {
 				}
 				
 			});
+		}
+		
+		function deleteCommentVisitor(visitorNo,visitorCommmentNo){
+			var result = '<div id="commentList'+visitorNo+'" style="background-color :#f8f8f8;">';
+			var visitorNo = visitorNo;
+			var visitorCommentNo = visitorCommentNo;
+			var myId = $('#myId').val();
+			if(confirm("삭제 하시겠습니까?")){
+				$.ajax({
+					url :"deleteCommentVisitor.do",
+					type : "post",
+					data : {
+						"visitorNo" : visitorNo,
+						"visitorCommentNo" : visitorCommmentNo
+					},
+					success : function(data){
+						$('#commentList'+visitorNo).remove();
+						$.each(data,function(index,value){
+							var commentVisitor = value;
+							var JsonDate = "/Date("+commentVisitor.writeDate+")/";
+							var date = new Date(parseInt(JsonDate.substr(6)));
+							var writeDate = date.format("yyyy/mm/dd h:MM:ss");		
+							
+							result += '<div id="commentParentText" style="padding-left:5px; white-space:nowarp;"><span class="c_name">'+commentVisitor.myId +'('+ commentVisitor.member.name+')</span>&nbsp;:&nbsp';
+							result += '<span class="comment">'+commentVisitor.content+'</span>&nbsp;';
+							result += '<span class="c_date">+'+writeDate+'+</span>&nbsp;';
+							if(myId==commentVisitor.myId){
+								result += '<button id="deleteCommentVisitor" value="'+commentVisitor.visitorCommentNo+'+' +commentVisitor.visitorNo+'" class="btn_del"><img src="img/btn_del.gif"/></button></div>';
+							} else {
+								result += '</div>';
+							}
+						})
+						result += '</div>';
+						$('#commentListStart'+visitorNo).append(result);
+					},
+					error : function(){
+						alert('ajax통신에러');
+					}
+					
+				});
+			} else {
+				alert("삭제 취소되었습니다.");
+				return false;
+			}
 		}
 	})
 </script>
@@ -216,13 +277,16 @@ textarea {
 									<div id="commentList${visitor.visitorNo }"
 										style="background-color: #f8f8f8;">
 										<c:forEach var="commentVisitor"
-											items="${visitorNo.commentVisitorList }">
+											items="${visitor.visitorCommentList }">
 											<div id="commentParentText"
 												style="padding-left: 5px; white-space: nowrap;">
 												<span class="c_name">${commentVisitor.myId}
-													(${commentDiary.member.name})</span>&nbsp;:&nbsp; <span
+													(${commentVisitor.member.name})</span>&nbsp;:&nbsp; <span
 													class="comment">${commentVisitor.content}</span>&nbsp; <span
 													class="c_date">+${commentVisitor.writeDate}+</span>&nbsp;
+												<c:if test="${sessionScope.loginId==commentVisitor.myId }">
+													<button id="deleteCommentVisitor" value="${commentVisitor.visitorCommentNo }+${commentVisitor.visitorNo}" class="btn_del"><img src="img/btn_del.gif"/></button>
+												</c:if>
 											</div>
 										</c:forEach>
 									</div>
@@ -232,23 +296,6 @@ textarea {
 
 							<!-- 댓글 수정 삭제 부분     -->
 
-							<%--         <a href="javascript:list_box('<?=$list_id?>', 'r');" title="이 댓글에 댓글달기" class="bbs"> --%>
-							<!--             <img src="img/btn_reply.gif" title="이 댓글에 댓글달기" border="0" align="absmiddle"> -->
-							<!--         </a> -->
-							<? if (($member[mb_id] && ($member[mb_id] == $list[$i][mb_id])) || $is_admin) { ?>
-							<%-- 	    <a href="javascript:list_box('<?=$list_id?>', 'u');" style="padding-right:2px; "> --%>
-							<!-- 	        <img src="img/btn_edit.gif" title="수정" border="0" align="absmiddle"> -->
-							<!-- 	    </a> -->
-							<%-- 		<a href="javascript:if (confirm('삭제하시겠습니까?')) { location='./delete.php?w=d&bo_table=<?=$bo_table?>&wr_id=<?=$list[$i][wr_id]?>&page=<?=$page?>';}"> --%>
-							<!-- 		    <img src="img/btn_del.gif" title="삭제" border="0" align="absmiddle"> -->
-							<!-- 		</a> -->
-
-
-
-							<?
-					    $Display = "none";
-					?>
-
 							<tr bgColor="#f8f8f8">
 								<td colspan="6" class="bbs_pp"><img id='save_comment'
 									style='display:<?= $Display ?>;' border="0"> <textarea
@@ -256,7 +303,7 @@ textarea {
 										style="width: 63%; height: 40; padding: 4;"
 										placeholder="댓글을 작성하세요"></textarea> <c:if
 										test="${sessionScope.loginId != '' }">
-										<button type="button" id="btnCommentDiary"
+										<button type="button" id="btnCommentVisitor"
 											value="${visitor.visitorNo}"
 											style="border: none; background-color: #f8f8f8">
 											<img src="img/btn_write_comment.gif">
@@ -275,10 +322,10 @@ textarea {
 		</div>
 
 		<c:forEach begin="${visitorPage.startPage}" end="${visitorPage.endPage}" var="i">
-			<a href="visitorList.do?page=${i}&id=${sessionScope.loginId}">[${i}]</a>
+			<a href="visitorList.do?page=${i}&id=${friendId}">[${i}]</a>
 		</c:forEach>
 
-		<a href="writeVisitorForm.do?id=${sessionScope.loginId}"><button>방명록 쓰기</button></a>
+		<a href="writeVisitorForm.do?id=${friendId}"><button>방명록 쓰기</button></a>
 		</div>
 		<input type="hidden" id="myId" value="${sessionScope.loginId}">
 </body>

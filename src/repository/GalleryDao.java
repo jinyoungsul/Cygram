@@ -101,7 +101,14 @@ public class GalleryDao {
 		GalleryMapper mapper = session.getMapper(GalleryMapper.class);
 		return mapper.selectNewGalleryCount(id);
 	}
-
+	public int selectNewGalleryFriendCount(String id) {
+		GalleryMapper mapper = session.getMapper(GalleryMapper.class);
+		return mapper.selectNewGalleryFriendCount(id);
+	}
+	public int selectNewGalleryPrivateCount(String id) {
+		GalleryMapper mapper = session.getMapper(GalleryMapper.class);
+		return mapper.selectNewGalleryPrivateCount(id);
+	}
 	public int deleteImg(int galleryNo) {
 		GalleryMapper mapper = session.getMapper(GalleryMapper.class);
 		return mapper.deleteImg(galleryNo);

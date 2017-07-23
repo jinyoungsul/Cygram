@@ -25,6 +25,9 @@ public interface GalleryMapper {
 	public int selectGalleryFriendCount(String id);
 	public int selectGalleryPrivateCount(String id);
 	public int selectNewGalleryCount(String id);
+	public int selectNewGalleryFriendCount(String id);
+	public int selectNewGalleryPrivateCount(String id);
+	
 	public int deleteImg(int galleryNo);
 	
 }

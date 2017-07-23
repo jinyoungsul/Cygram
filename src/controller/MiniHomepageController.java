@@ -99,12 +99,13 @@ public class MiniHomepageController {
 		mv.addObject("miniHomepage", miniHomepage);
 		mv.addObject("friendsList", friendsList);
 		mv.addObject("bgmList", bgmList);
-		System.out.println(bgmList);
 		return mv;
 	}
 	@RequestMapping(value="/minihomepageHome.do")
-	public ModelAndView minihomepageSearch(HttpSession session){
+	public ModelAndView minihomepageHome(HttpSession session,String id){
 		ModelAndView mv = new ModelAndView("homepageHome");
+		String loginId = (String)session.getAttribute("loginId");
+		mv.addObject("contentCountMap", homepageService.minihomepageHome(id, loginId));
 		return mv;
 	}
 	@RequestMapping(value="/minihomepageSearch.do")
@@ -119,13 +120,8 @@ public class MiniHomepageController {
 	public @ResponseBody List<MiniHomepage> miniHomepageSearchKeyword(
 			@RequestParam(value="keyword",defaultValue="")String keyword,int startRow,int count){
 		ModelAndView mv = new ModelAndView();
-		System.out.println("keyword : "+ keyword);
-		System.out.println("startRow : "+ startRow);
-		System.out.println("count : "+ count);
-		
 		List<MiniHomepage> homepageList = homepageService.selectMiniHomepageList(keyword,startRow,count);
 		mv.addObject("homepageList", homepageList);
-		System.out.println(homepageList);
 		return homepageList;
 	}
 	@RequestMapping(value="/homepageTitleUpdate.do",method=RequestMethod.POST)
@@ -141,7 +137,6 @@ public class MiniHomepageController {
 	@RequestMapping(value="/homepageIntroduceAndImgUpdate.do",method=RequestMethod.POST)
 	public ModelAndView homepageIntroduceAndImgUpdate(MiniHomepage miniHomepage,HttpServletRequest request){
 		String homepageImgPath = request.getServletContext().getRealPath("img");
-		System.out.println(homepageImgPath);
 		File dir = new File(homepageImgPath);
 		if(dir.exists()==false){
 			dir.mkdirs();
@@ -150,9 +145,7 @@ public class MiniHomepageController {
 			MultipartFile f = (MultipartFile) miniHomepage.getMinihomepage_img();
 			String savedName = 
 					homepageImgPath +"/"+new Random().nextInt(1000000)+f.getOriginalFilename();
-			System.out.println("Cygram 위치:"+savedName.indexOf("Cygram"));
 			String realPath = "/"+savedName.substring((savedName.indexOf("Cygram")));
-			System.out.println("이미지경로:"+savedName.substring((savedName.indexOf("Cygram"))));
 			File saveFile = new File(savedName);
 			
 			// 업로드

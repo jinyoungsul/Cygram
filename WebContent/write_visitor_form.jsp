@@ -28,8 +28,8 @@ div#write_visitor {
 	<Button id="refresh">홈</Button>
 	<div id="write_visitor">
 	<form action="writeVisitor.do" method="post" >
-		<input type="hidden" name="friendId" value=${friendId }>
-		<input type="hidden" name="myId" value="${sessionScope.loginId}">
+		<input type="hidden" name="friendId" value="${friendId }">
+		<input type="hidden" name="id" value="${sessionScope.loginId}">
 		<table border="1">
 			<tr>
 				<td>내용:</td>

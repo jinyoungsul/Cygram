@@ -6,8 +6,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import repository.VisitorCommentDao;
 import repository.VisitorDao;
+import vo.CommentDiary;
+import vo.Diary;
 import vo.Visitor;
+import vo.VisitorComment;
 import vo.VisitorPage;
 
 @Component
@@ -18,14 +22,17 @@ public class VisitorService {
 		this.visitorDao=visitorDao;
 	}
 	//-----------------------------------------------//
+	@Autowired
+	private VisitorCommentDao visitorCommentDao;
 	
-	public int write(Visitor visitor, String id){
+	public void setVisitorCommentDao(VisitorCommentDao visitorCommentDao) {
+		this.visitorCommentDao = visitorCommentDao;
+	}
+
+	public int write(Visitor visitor){
 		visitor.setWriteDate(new Date());
 		
 		int result=0;
-//		if(id.equals(visitor.getMyId())){
-//			result=visitorDao.insert(visitor); 
-//		}
 		result=visitorDao.insert(visitor);
 		return result;
 	}
@@ -49,7 +56,6 @@ public class VisitorService {
 		final int COUNT_PER_PAGE=3;
 		int totalvisitorCount = visitorDao.selectVisitorCount();
 		
-		System.out.println("total:"+totalvisitorCount);
 		
 		if(totalvisitorCount==0)
 			return new VisitorPage();
@@ -59,7 +65,11 @@ public class VisitorService {
 		
 		List<Visitor> visitorList = 
 				visitorDao.selectVisitorList(startRow, endRow, id);
-		
+		for(Visitor visitor : visitorList){
+			int visitorNo = visitor.getVisitorNo();
+			List<VisitorComment> commentVisitorList = visitorCommentDao.selectVisitorComment(visitorNo);
+			visitor.setVisitorCommentList(commentVisitorList);
+		}
 		int totalPage = totalvisitorCount/COUNT_PER_PAGE;
 		if(totalvisitorCount%COUNT_PER_PAGE !=0)
 			totalPage++;

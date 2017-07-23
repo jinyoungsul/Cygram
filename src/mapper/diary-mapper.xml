@@ -40,6 +40,37 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE ID =#{id} and AUTHORITY_CODE = 1 
 	</select>
 	
+	<!-- 다이어리 new 전체공개 -->
+	<select id="selectNewDiaryCount" resultType="integer">
+		SELECT COUNT(NEW_DIARY)
+		FROM(
+			 SELECT CASE WHEN 2 > SYSDATE - WRITE_DATE THEN 'new' ELSE 'old' END AS NEW_DIARY
+			 FROM DIARY
+			 WHERE ID = #{id}
+		)
+		WHERE NEW_DIARY = 'new'
+	</select>
+	<!-- 다이어리 new 일촌공개 -->
+	<select id="selectNewDiaryFriendCount" resultType="integer">
+		SELECT COUNT(NEW_DIARY)
+		FROM(
+			 SELECT CASE WHEN 2 > SYSDATE - WRITE_DATE THEN 'new' ELSE 'old' END AS NEW_DIARY
+			 FROM DIARY
+			 WHERE ID = #{id} and (AUTHORITY_CODE = 1 OR AUTHORITY_CODE = 2)
+		)
+		WHERE NEW_DIARY = 'new'
+	</select>
+	<!-- 다이어리 new 비공개 -->
+	<select id="selectNewDiaryPrivateCount" resultType="integer">
+		SELECT COUNT(NEW_DIARY)
+		FROM(
+			 SELECT CASE WHEN 2 > SYSDATE - WRITE_DATE THEN 'new' ELSE 'old' END AS NEW_DIARY
+			 FROM DIARY
+			 WHERE ID = #{id} and (AUTHORITY_CODE = 1)
+		)
+		WHERE NEW_DIARY = 'new'
+	</select>
+	
 	<select id="select" parameterType="Integer" resultMap="diaryMap">
 		SELECT * FROM DIARY WHERE DIARY_NO = #{diaryNo}
 	</select>

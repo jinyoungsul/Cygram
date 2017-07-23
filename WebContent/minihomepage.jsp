@@ -281,7 +281,7 @@ article {
 	</aside>
 	
 	<article>
-		<iframe id=""src="diaryList.do?id=${miniHomepage.id}" width="500px" height="500px">
+		<iframe id=""src="minihomepageHome.do?id=${miniHomepage.id}" width="500px" height="500px">
 		
 		</iframe>
 <!-- 		<div id="friendsSayList"></div> -->
@@ -293,8 +293,7 @@ article {
 	<aside id="homepageMenu">
 		<nav>
 			<ul id="menu">
-				<li class='menu_active'><a href="#">홈</a></li>
-				<li><a href="#">홈2</a></li>
+				<li class='menu_active'><a href="minihomepageHome.do?id=${miniHomepage.id}">홈</a></li>
 				<li><a href="readProfile.do?id=${miniHomepage.id}">프로필</a></li>
 				<li><a href="diaryList.do?id=${miniHomepage.id}">다이어리</a></li>
 				<li><a href="visitorList.do?id=${miniHomepage.id}">방명록</a></li>

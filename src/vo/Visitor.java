@@ -1,6 +1,7 @@
 package vo;
 
 import java.util.Date;
+import java.util.List;
 
 public class Visitor {
 	private int visitorNo;
@@ -9,17 +10,8 @@ public class Visitor {
 	private String content;
 	private Date writeDate;
 	private int authorityCode;
+	private List<VisitorComment> visitorCommentList;
 	
-	public Visitor(){}
-	public Visitor(int visitorNo, String id, String friendId, String content, Date writeDate, int authorityCode) {
-		super();
-		this.visitorNo = visitorNo;
-		this.id = id;
-		this.friendId = friendId;
-		this.content = content;
-		this.writeDate = writeDate;
-		this.authorityCode = authorityCode;
-	}
 	public int getVisitorNo() {
 		return visitorNo;
 	}
@@ -56,4 +48,12 @@ public class Visitor {
 	public void setAuthorityCode(int authorityCode) {
 		this.authorityCode = authorityCode;
 	}
+	public List<VisitorComment> getVisitorCommentList() {
+		return visitorCommentList;
+	}
+	public void setVisitorCommentList(List<VisitorComment> visitorCommentList) {
+		this.visitorCommentList = visitorCommentList;
+	}
+	
+	
 }

@@ -36,7 +36,6 @@ public class VisitorDao {
 	}
 	
 	public List<Visitor> selectVisitorList(int startRow, int count, String id ){
-		System.out.println("방명록 리스트 매퍼");
 		Map<String, Object> map = new HashMap<>();
 		map.put("startRow", startRow);
 		map.put("count", count);

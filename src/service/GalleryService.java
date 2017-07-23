@@ -11,13 +11,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import repository.FriendsDao;
+import repository.GalleryCommentDao;
 import repository.GalleryDao;
 import vo.Gallery;
+import vo.GalleryComment;
 import vo.GalleryImg;
 import vo.GalleryPage;
 
@@ -36,7 +37,12 @@ public class GalleryService {
 	public void setFriendsDao(FriendsDao friendsDao) {
 		this.friendsDao = friendsDao;
 	}
-	// -----------------------------------------------//
+	@Autowired
+	private GalleryCommentDao galleryCommentDao;
+	
+	public void setGalleryCommentDao(GalleryCommentDao galleryCommentDao) {
+		this.galleryCommentDao = galleryCommentDao;
+	}
 
 	public int write(HttpServletRequest request, HttpSession session, Gallery gallery) {
 		System.out.println("gallery:" + gallery);
@@ -125,6 +131,8 @@ public class GalleryService {
 		for (Gallery g : galleryList) {
 			int galleryNo = g.getGalleryNo();
 			List<GalleryImg> galleryImgList = galleryDao.selectImgList(galleryNo);
+			List<GalleryComment> galleryCommentList = galleryCommentDao.selectGalleryComment(galleryNo);
+			g.setGalleryCommentList(galleryCommentList);
 			g.setGalleryImgList(galleryImgList);
 		}
 

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.VisitorCommentMapper">
+<!-- 다이어리 댓글 등록 -->
+	<insert id="insertVisitorComment" parameterType="VisitorComment">
+		INSERT INTO VISITOR_COMMENT(VISITOR_COMMENT_NO,VISITOR_NO,CONTENT,MY_ID,WRITE_DATE)
+		VALUES
+		(VISITOR_COMMENT_SEQ.NEXTVAL,#{visitorNo},#{content},#{myId},SYSDATE)
+	</insert>
+
+	<delete id="deleteVisitorComment" parameterType="Integer">
+		DELETE 
+		FROM VISITOR_COMMENT
+		WHERE VISITOR_COMMENT_NO = #{visitorCommentNo}
+	</delete>
+
+<!-- 다이어리 댓글 불러오기 -->
+	<select id="selectVisitorComment" resultMap="VisitorCommentResult">
+		SELECT * 
+		FROM MEMBER M, VISITOR_COMMENT C
+ 		WHERE C.VISITOR_NO = #{visitorNo} AND M.ID = C.MY_ID 
+  	</select>
+
+	<resultMap id="VisitorCommentResult" type="VisitorComment">
+		<result property="visitorCommentNo" column="VISITOR_COMMENT_NO" />
+		<result property="visitorNo" column="VISITOR_NO" />
+		<result property="content" column="CONTENT" />
+		<result property="myId" column="MY_ID" />
+		<result property="writeDate" column="WRITE_DATE" />
+		<association property="member" javaType="MEMBER">
+			<result property="id" column="ID" />
+			<result property="name" column="NAME" />
+		</association>
+	</resultMap>
+</mapper>

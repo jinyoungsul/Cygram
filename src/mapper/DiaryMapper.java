@@ -18,4 +18,7 @@ public interface DiaryMapper {
 	public int selectDiaryCount(String id);	
 	public int selectDiaryFriendCount(String id);
 	public int selectDiaryPrivateCount(String id);
+	public int selectNewDiaryCount(String id);
+	public int selectNewDiaryFriendCount(String id);
+	public int selectNewDiaryPrivateCount(String id);
 }
