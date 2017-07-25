@@ -7,14 +7,6 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>다이어리 리스트</title>
 <style type="text/css">
-/* div#list { */
-/* 	margin-left: 250px; */
-/* 	margin-top: 120px; */
-/* } */
-/* div#commentDiaryList { */
-/* 	margin-left: 10px; */
-/* 	margin-top: 10px; */
-/* } */
 /*  ------------ 게시판 관련 스타일 적용 ------------ */
 .bbs_form {
 	margin: 0;
@@ -191,8 +183,8 @@ textarea {
 </script>
 </head>
 <body>
-	<div id="list">
-		<div id='diaryList'>
+	<div>
+		<div>
 			<c:choose>
 				<c:when test="${empty diaryPage.diaryList}">
 					<p>게시글이 아직 존재하지 않습니다.

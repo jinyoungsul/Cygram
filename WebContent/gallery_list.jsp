@@ -7,17 +7,6 @@
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 <title>사진첩 게시판</title>
 <style>
-body {
-	background-image: url("img/background2.png");
-}
-div#list {
-	margin-left: 250px;
-	margin-top: 120px;
-}
-div#GalleryCommentList {
-	margin-left: 10px;
-	margin-top: 10px;
-}
 /*  ------------ 게시판 관련 스타일 적용 ------------ */
 .bbs_form {
 	margin: 0;
@@ -165,8 +154,8 @@ textarea {
 </script>
 </head>
 <body>
-<div id="list">
-	<div id='galleryList'>
+<div>
+	<div>
 		<c:choose>
 			<c:when test="${empty galleryPage.galleryList}">
 					<p>게시글이 아직 존재하지 않습니다.<p>

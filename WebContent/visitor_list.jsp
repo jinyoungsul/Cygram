@@ -7,17 +7,6 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>방명록 리스트</title>
 <style type="text/css">
-body {
-	background-image: url("img/background2.png");
-}
-div#list {
-	margin-left: 250px;
-	margin-top: 120px;
-}
-div#commentVisitorList {
-	margin-left: 10px;
-	margin-top: 10px;
-}
 /*  ------------ 게시판 관련 스타일 적용 ------------ */
 .bbs_form {
 	margin: 0;

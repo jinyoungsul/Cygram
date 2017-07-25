@@ -235,9 +235,18 @@ article {
 #homepageMenu .menu_active a{
 	color: black;
 }
+#main_iframe {
+	border : none;
+}
+.img {
+	background-image : url(/Cygram/img/background.png);
+	height : 100vh;
+	background-size: cover;
+}
 </style>
 </head>
 <body>
+<div class="img">
 <header>
 	TODAY ${miniHomepage.today } / TOTAL ${miniHomepage.total }
 	<input type="text" name="title" id="title" style="border:none;" value="${miniHomepage.title }" size="40" readonly>
@@ -281,7 +290,7 @@ article {
 	</aside>
 	
 	<article>
-		<iframe id=""src="minihomepageHome.do?id=${miniHomepage.id}" width="500px" height="500px">
+		<iframe id="main_iframe" src="minihomepageHome.do?id=${miniHomepage.id}" width="500px" height="500px" name="main_iframe">
 		
 		</iframe>
 <!-- 		<div id="friendsSayList"></div> -->
@@ -293,11 +302,11 @@ article {
 	<aside id="homepageMenu">
 		<nav>
 			<ul id="menu">
-				<li class='menu_active'><a href="minihomepageHome.do?id=${miniHomepage.id}">홈</a></li>
-				<li><a href="readProfile.do?id=${miniHomepage.id}">프로필</a></li>
-				<li><a href="diaryList.do?id=${miniHomepage.id}">다이어리</a></li>
-				<li><a href="visitorList.do?id=${miniHomepage.id}">방명록</a></li>
-				<li><a href="galleryList.do?id=${miniHomepage.id}">갤러리</a></li>
+				<li class='menu_active'><a href="minihomepageHome.do?id=${miniHomepage.id}" target="main_iframe">홈</a></li>
+				<li><a href="readProfile.do?id=${miniHomepage.id}" target="main_iframe">프로필</a></li>
+				<li><a href="diaryList.do?id=${miniHomepage.id}" target="main_iframe">다이어리</a></li>
+				<li><a href="galleryList.do?id=${miniHomepage.id}" target="main_iframe">갤러리</a></li>
+				<li><a href="visitorList.do?id=${miniHomepage.id}" target="main_iframe">방명록</a></li>
 			</ul>
 		</nav>
 	</aside>
@@ -332,7 +341,7 @@ article {
 		<!-- 배경음악 플레이 리스트 끝 -->
 	</aside>
 </section>
-
+</div>
 <!-- 미니홈페이지 이동 시작 -->
 <form name="frmPopup">
 	<input type="hidden" name="id">
