@@ -96,4 +96,15 @@ public class GalleryService {
 		}
 		return result;
 	}
+	
+	public int delete(int galleryNo, List<GalleryImg> galleryImgList){
+		int result=0;
+		result = galleryDao.delete(galleryNo);
+		if(result>0){
+			for(GalleryImg galleryImg :galleryImgList){
+				galleryDao.updateImg(galleryImg);
+			}
+		}
+		return result;
+	}
 }

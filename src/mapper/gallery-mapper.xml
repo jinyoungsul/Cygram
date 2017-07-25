@@ -17,12 +17,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<update id="update" parameterType="Gallery">
 		UPDATE GALLERY SET TITLE=#{title}, CONTENT=#{content}, AUTHORITY_CODE=#{authorityCode}
 		WHERE GALLERY_NO=#{galleryNo}
-	</update>
+	</update> 
 
 	<update id="updateImg" parameterType="GalleryImg">
 		UPDATE GALLERY_IMG SET GALLERY_PATH=#{galleryPath}
 		WHERE GALLERY_IMG_NO=#{galleryImgNo}
 	</update>
+	
+	<delete id="delete" parameterType="Gallery">
+		DELETE FROM GALLERY
+		WHERE GALLERY_NO=#{galleryNo}
+	</delete>
+	
+	<delete id="deleteImg" parameterType="GalleryImg">
+		DELETE FROM GALLERY_IMG 
+		WHERE GALLERY_IMG_NO=#{galleryImgNo}
+	</delete>
 
 	<insert id="insertImg" parameterType="GalleryImg">
 		INSERT INTO

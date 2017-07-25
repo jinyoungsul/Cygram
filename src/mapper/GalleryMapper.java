@@ -12,6 +12,8 @@ public interface GalleryMapper {
 	public Gallery select(int galleryNo);
 	public int update(Gallery gallery);
 	public int updateImg(GalleryImg galleryImg);
+	public int delete(int galleryNo);
+	public int deleteImg(GalleryImg galleryImg);
 	
 	public List<Gallery> selectGalleryList(Map<String, Integer> map,String id);
 	public List<Gallery> selectGalleryList(Map<String, Object> map2);

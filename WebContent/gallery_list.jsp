@@ -162,6 +162,18 @@ textarea {
 			});
 		}
 	})
+	
+	function deleteCheck(galleryNo) {
+		var galleryNo = galleryNo;
+		alert(galleryNo)
+		if(confirm("삭제하시겠습니까?")){
+			alert("삭제버튼");
+			location.href = "deleteGallery.do?galleryNo="+galleryNo;
+		}else{
+			alert("삭제 취소되었습니다.");
+			return false;
+		}
+	}
 </script>
 </head>
 <body>
@@ -194,7 +206,8 @@ textarea {
 			<c:if test="${minihomepageId == sessionScope.loginId}">
 					         
 			<a href="modifyGalleryForm.do?galleryNo=${gallery.galleryNo}" class="edit">수정</a> | 
-			<a href="javascript:if (confirm('삭제하시겠습니까?')) { location='./delete.php?w=d&bo_table=<?=$bo_table?>&wr_id=<?=$list[$i][wr_id]?>&page=<?=$page?>';}" class="delete">삭제</a>		
+			<a href="#" onclick="deleteCheck(${gallery.galleryNo});" id="deleteGallery" class="delete">삭제</a> 
+					
 			
 			</c:if>
 			</td>

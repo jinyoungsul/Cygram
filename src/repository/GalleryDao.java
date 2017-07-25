@@ -46,6 +46,16 @@ public class GalleryDao {
 		return mapper.updateImg(galleryImg);		
 	}
 	
+	public int delete(int galleryNo){
+		GalleryMapper mapper = session.getMapper(GalleryMapper.class);
+		return mapper.delete(galleryNo);
+	}
+	
+	public int deleteIme(GalleryImg galleryImg){
+		GalleryMapper mapper = session.getMapper(GalleryMapper.class);
+		return mapper.deleteImg(galleryImg);
+	}
+	
 	//-----------사진첩 권한 설정 리스트 -----------------------------------//
 	public List<Gallery> selectGalleryList(int startRow, int count,String id){
 		System.out.println("selectList error");
